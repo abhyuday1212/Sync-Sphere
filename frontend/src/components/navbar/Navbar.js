@@ -9,23 +9,26 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center h-24 w-100 mx-auto px-4 text-white bg-[#000300] ">
+    <div className="flex justify-between items-center h-24 w-100 mx-auto px-4 text-[white] bg-[#000300] ">
       <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">
-        <Link className=" hover:text-[crimson]" to="/">
+        <Link className=" hover:text-[crimson] text-[#00df9a]" to="/">
           Sync Sphere.
         </Link>
       </h1>
-      <ul className="hidden md:flex">
+      <ul className="hidden md:flex ">
         <Link to="/">
-          <li className="p-4  hover:text-[crimson] hover:font-semibold">
+          <li className="p-4 text-[white]  hover:text-[crimson] hover:font-semibold">
             Home
           </li>
         </Link>
         <Link to="/projects">
-          <li className="p-4 hover:text-[crimson]">Projects</li>
+          <li className="p-4  text-[white] hover:text-[crimson]">Projects</li>
+        </Link>
+        <Link to="/about">
+          <li className="p-4  text-[white] hover:text-[crimson]">About</li>
         </Link>
         <Link to="/profile">
-          <li className="p-4 hover:text-[crimson]">Profile</li>
+          <li className="p-4 text-[white]  hover:text-[crimson]">Profile</li>
         </Link>
         {/* <Link to="/chats">
           <li className="p-4 hover:text-[crimson]">Chats</li>
@@ -42,21 +45,23 @@ const Navbar = () => {
         }
       >
         <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">
-          <Link to="/">Connect Vista</Link>
+          <Link className="text-[#00df9a]" to="/">
+            Sync Sphere
+          </Link>
         </h1>
         <Link to="/">
-          <li className="p-4  hover:text-[crimson] hover:font-semibold">
+          <li className="p-4 text-[white]  hover:text-[crimson] hover:font-semibold">
             Home
           </li>
         </Link>
         <Link to="/projects">
-          <li className="p-4 hover:text-[crimson]">Projects</li>
+          <li className="p-4 text-[white]  hover:text-[crimson]">Projects</li>
         </Link>
         <Link to="/about">
-          <li className="p-4 hover:text-[crimson]">About</li>
+          <li className="p-4 text-[white]  hover:text-[crimson]">About</li>
         </Link>
         <Link to="/profile">
-          <li className="p-4 hover:text-[crimson]">Profile</li>
+          <li className="p-4 text-[white]  hover:text-[crimson]">Profile</li>
         </Link>
         {/* <Link to="/chats">
           <li className="p-4 hover:text-[crimson]">Chats</li>
