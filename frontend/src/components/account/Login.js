@@ -14,6 +14,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
+// ==================================
+import { API } from "../../service/Api";
 // ===================================
 
 const Text = styled(Typography)`
@@ -63,15 +65,57 @@ const Wrapper = styled(Box)`
     margin-top: 20px;
   }
 `;
+const loginInitialValues = {
+  username: "",
+  password: "",
+};
+
+const signupInitialValues = {
+  name: "",
+  username: "",
+  password: "",
+};
 // =====js==========================
 
 const Login = () => {
   const [account, toggleAccount] = useState("login");
+  const [login, setLogin] = useState(loginInitialValues);
+  const [signup, setSignup] = useState(signupInitialValues);
+  const [error, setError] = useState("");
 
   const toggleSignUp = () => {
     account === "signup" ? toggleAccount("login") : toggleAccount("signup");
   };
 
+  const onValueChange = (e) => {
+    setLogin({ ...login, [e.target.name]: e.target.value });
+  };
+
+  const onInputChange = (e) => {
+    setSignup({ ...signup, [e.target.name]: e.target.value });
+  };
+
+  const signupUser = async () => {
+    let response = await API.userSignup(signup);
+    if (response.isSuccess) {
+      setError("");
+      setSignup(signupInitialValues);
+
+      toggleAccount("login");
+    } else {
+      setError("Something went wrong ! Please try again later");
+    }
+  };
+  const loginUser = async () => {};
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (account === "login") {
+      loginUser();
+    } else {
+      signupUser();
+    }
+  };
   // ============================
   return (
     <Container component="main" maxWidth="xs">
@@ -101,6 +145,7 @@ const Login = () => {
                 label="username"
                 autoComplete="username"
                 autoFocus
+                onChange={(e) => onValueChange(e)}
               />
               <TextField
                 margin="normal"
@@ -111,12 +156,15 @@ const Login = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => onValueChange(e)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <div className="">
+              <div>
+                {error && <Error>{error}</Error>}
+
                 <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                   Sign In
                 </Button>
@@ -138,9 +186,9 @@ const Login = () => {
               </div>
             </div>
           </div>
-          // ----------------------------------------
         ) : (
-          <div>
+          // ----------------------------------------
+          <form onSubmit={handleSubmit}>
             <Wrapper>
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />
@@ -156,6 +204,7 @@ const Login = () => {
                 label="Name"
                 autoComplete="name"
                 autoFocus
+                onChange={(e) => onInputChange(e)}
               />
               <TextField
                 variant="standard"
@@ -165,25 +214,32 @@ const Login = () => {
                 label="Username"
                 autoComplete="username"
                 autoFocus
+                onChange={(e) => onInputChange(e)}
               />
               <TextField
                 variant="standard"
                 required
                 fullWidth
-                // onChange={(e) => onInputChange(e)}
                 name="password"
                 label="Enter Password"
                 autoComplete="username"
                 autoFocus
+                onChange={(e) => onInputChange(e)}
               />
 
-              <SignupButton>Signup</SignupButton>
+              {error && <Error>{error}</Error>}
+              <SignupButton
+                onClick={() => signupUser()}
+                onSubmit={handleSubmit}
+              >
+                Signup
+              </SignupButton>
               <Text style={{ textAlign: "center" }}>OR</Text>
               <LoginButton variant="contained" onClick={() => toggleSignUp()}>
                 Already have an account
               </LoginButton>
             </Wrapper>
-          </div>
+          </form>
         )}
       </Box>
     </Container>
