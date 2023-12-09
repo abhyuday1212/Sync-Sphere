@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const Connection = async (username, password) => {
-  const URI = `mongodb+srv://${username}:${password}@syncsphere.hfdsupe.mongodb.net/your-database-name`;
+const Connection = async () => {
+  const URI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster1.zbqgq7z.mongodb.net/`;
 
   try {
     await mongoose.connect(URI);
