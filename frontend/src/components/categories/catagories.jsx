@@ -10,10 +10,11 @@ import {
   styled,
 } from "@mui/material";
 import { catagories } from "../constants/data";
-import { Link ,} from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./categories.css"
 
 const StyledTable = styled(Table)`
-  border: 1px solid rgba(224, 224, 224, 1);
+  border: 2px solid rgba(224, 224, 224, 1);
 `;
 const StyledButton = styled(Button)`
   margin: 20px;
@@ -24,21 +25,20 @@ const StyledButton = styled(Button)`
 `;
 function Categories() {
   const divStyle = {
-    maxHeight: "80vh",
+    maxHeight: "85vh",
     overflowX: "hidden",
-    border: "2px solid rgb(176 174 174)",
+    border: "2px solid grey",
     borderRadius: "14px",
-    padding: "10px",
+    padding: "5px",
+    margin:"1px",
   };
-
-
   return (
     <>
       <Grid container>
-        <div style={divStyle}>
+        <div style={divStyle} className="scrollbar">
           <Link to="/create">
             <StyledButton variant="contained" color="primary">
-              Create a Blog
+              New Project
             </StyledButton>
           </Link>
 

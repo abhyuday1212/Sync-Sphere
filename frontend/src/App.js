@@ -36,46 +36,36 @@ const App = () => {
           <Route path="/" element={<Home />} />
         </Route>
 
-
-
         <Route path="/projects" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
-        <Route path="/projects" element={<ProjectsHome />} />
+          <Route path="/projects" element={<ProjectsHome />} />
         </Route>
 
-
-
         <Route path='/create' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-              <Route path='/create' element={<CreatePost />} />
-            </Route>
-
+          <Route path='/create' element={<CreatePost />} />
+        </Route>
 
         <Route path='/join' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-              <Route path='/join' element={<Donate />} />
-            </Route>
-
+          <Route path='/join' element={<Donate />} />
+        </Route>
 
         <Route path='/details' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-              <Route path='/details' element={<Details />} />
-            </Route>
+          <Route path='/details' element={<Details />} />
+        </Route>
 
+        <Route path='projects/test' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="projects/test" element={<Test />} />
+        </Route>
 
+        <Route path='/about' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/about" element={<About />} />
+        </Route>
 
-
-        {/* <Route path="/:id" element={<Update />} /> */}
-
-        {/* ---------------------------------- */}
-
-        <Route path="projects/test" element={<Test />} />
-
-        {/* ---------------------------------- */}
-        <Route path="about" element={<About />} />
-
-        <Route path="profile" element={<Profile />} />
+        <Route path='/profile' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/profile" element={<Profile />} />
+        </Route>
 
         {/* ---------------------------------- */}
         <Route path="*" element={<NoMatch />} />
-
-
 
       </Routes>
     </div>
