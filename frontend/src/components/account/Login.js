@@ -6,16 +6,15 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
+import { useState, useContext } from "react";
 // ==================================
 import { API } from "../../service/Api";
+import { DataContext } from "../../context/DataProvider";
+import { useNavigate } from 'react-router-dom';
 // ===================================
 
 const Text = styled(Typography)`
@@ -77,11 +76,17 @@ const signupInitialValues = {
 };
 // =====js==========================
 
-const Login = () => {
+const Login = ({ isUserAuthenticated }) => {
   const [account, toggleAccount] = useState("login");
   const [login, setLogin] = useState(loginInitialValues);
   const [signup, setSignup] = useState(signupInitialValues);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { setAccount } = useContext(DataContext)
+
+
+
+
 
   const toggleSignUp = () => {
     account === "signup" ? toggleAccount("login") : toggleAccount("signup");
@@ -106,7 +111,23 @@ const Login = () => {
       setError("Something went wrong ! Please try again later");
     }
   };
-  const loginUser = async () => {};
+  const loginUser = async () => {
+    let response = await API.userLogin(login)
+
+    if (response.isSuccess) {
+      setError(' ')
+
+      sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`)
+      sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`)
+
+      setAccount({ username: response.data.username, name: response.data.name })
+      isUserAuthenticated(true)
+      navigate('/')
+    }
+    else {
+      setError("Something went wrong in Login,Please try back later")
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -116,6 +137,8 @@ const Login = () => {
       signupUser();
     }
   };
+
+
   // ============================
   return (
     <Container component="main" maxWidth="xs">
@@ -142,7 +165,7 @@ const Login = () => {
                 required
                 fullWidth
                 name="username"
-                label="username"
+                label="Enter username"
                 autoComplete="username"
                 autoFocus
                 onChange={(e) => onValueChange(e)}
@@ -152,7 +175,7 @@ const Login = () => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Enter Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -165,7 +188,8 @@ const Login = () => {
               <div>
                 {error && <Error>{error}</Error>}
 
-                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
+                  onClick={() => loginUser()}>
                   Sign In
                 </Button>
 

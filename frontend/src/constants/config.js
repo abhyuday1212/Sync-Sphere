@@ -30,6 +30,13 @@ export const API_NOTIFICATION_MESSAGES = {
 // NEED SERVICE CALL: { url: '/', method: 'POST/GET/PUT/DELETE' params: true / false } 
 
 export const SERVICE_URLS = {
+  // signup_api
   // userSignup->key ,{url: '/signup',method:'POST'} -> value
   userSignup: { url: "/signup", method: "POST" },
+
+  // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
+  //Login_Api
+  userLogin: { url: "/login", method: "POST" }
+
+  // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 };

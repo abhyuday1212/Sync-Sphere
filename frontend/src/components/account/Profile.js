@@ -1,9 +1,9 @@
 import React from 'react'
-import Login from './Login'
 const Profile = () => {
   return (
     <>
-    <Login/>
+      {/* Akhilesh add the main page of profile page here */}
+      This is profile page
     </>
   )
 }

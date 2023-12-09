@@ -30,6 +30,9 @@ const Navbar = () => {
         <Link to="/profile">
           <li className="p-4 text-[white]  hover:text-[crimson]">Profile</li>
         </Link>
+        <Link to="/profile">
+          <li className="p-4 text-[white]  hover:text-[crimson]">Logout</li>
+        </Link>
         {/* <Link to="/chats">
           <li className="p-4 hover:text-[crimson]">Chats</li>
         </Link> */}
@@ -62,6 +65,9 @@ const Navbar = () => {
         </Link>
         <Link to="/profile">
           <li className="p-4 text-[white]  hover:text-[crimson]">Profile</li>
+        </Link>
+        <Link to="/profile">
+          <li className="p-4 text-[white]  hover:text-[crimson]">Sign out</li>
         </Link>
         {/* <Link to="/chats">
           <li className="p-4 hover:text-[crimson]">Chats</li>
