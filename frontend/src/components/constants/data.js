@@ -4,6 +4,12 @@ export const catagories= [
     {id:3 , type:"Zero Hunger"},
     {id:4 , type:"Good Health and Well-being"},
     {id:5 , type:"Clean City"},
+    {id:5 , type:"Clean City"},
+    {id:5 , type:"Clean City"},
+    {id:5 , type:"Clean City"},
+    {id:5 , type:"Clean City"},
+    {id:5 , type:"Clean City"},
+    {id:5 , type:"Clean City"},
     {id:6 , type:"Gender Equality"},
     {id:7 , type:"Tree Plantation"},
     

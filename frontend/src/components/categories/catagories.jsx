@@ -57,7 +57,7 @@ const StyledLink = styled(Link)`
 
 function Categories() {
   const divStyle = {
-    maxHeight: "100vh",
+    maxHeight: "84vh",
     overflowX: "hidden",
     border: "2px solid grey",
     borderRadius: "14px",
