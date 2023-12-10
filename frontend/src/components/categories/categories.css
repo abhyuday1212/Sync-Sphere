@@ -1,18 +1,21 @@
 /* sidebar css */
-.scrollbar::-webkit-scrollbar {
+/* *::-webkit-scrollbar{
+    display:none;
+} */
+/* .scrollbar::-webkit-scrollbar {
     width: 12px;
     border-radius: 14px;
 }
 
 /* Track */
-.scrollbar::-webkit-scrollbar-track {
+/* .scrollbar::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 14px;
 }
 
 /* Handle */
-.scrollbar::-webkit-scrollbar-thumb {
+/* .scrollbar::-webkit-scrollbar-thumb {
     background: rgb(202, 202, 202);
     height: 1rem;
     border-radius: 15px;
-}
+} */ 
