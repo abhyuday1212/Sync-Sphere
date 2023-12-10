@@ -6,5 +6,4 @@ export const catagories= [
     {id:5 , type:"Clean City"},
     {id:6 , type:"Gender Equality"},
     {id:7 , type:"Tree Plantation"},
-    
 ]
