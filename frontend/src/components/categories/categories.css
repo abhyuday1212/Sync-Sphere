@@ -1,4 +1,7 @@
 /* sidebar css */
+*::-webkit-scrollbar{
+    display:none;
+}
 .scrollbar::-webkit-scrollbar {
     width: 12px;
     border-radius: 14px;
