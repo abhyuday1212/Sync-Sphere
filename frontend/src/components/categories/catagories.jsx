@@ -37,9 +37,14 @@ const StyledHead = styled(TableCell)`
   font-weight: 850;
   letter-spacing: 0.05em;
   text-align: center;
+  &:hover {
+    background: #e8e8e8;
+    color: crimson;
+  }
 `;
 const StyledTableCell = styled(TableCell)`
-  text-align: center;
+  display: flex;
+  align-items: center;
 
   &:hover {
     background: #e8e8e8;
@@ -49,11 +54,11 @@ const StyledTableCell = styled(TableCell)`
     // border: 2px solid #00df9a;
   }
 `;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 `;
-
 
 function Categories() {
   const divStyle = {
@@ -64,15 +69,18 @@ function Categories() {
     padding: "5px",
     margin: "1px",
   };
-  
+
   const [searchParams] = useSearchParams();
-  const category =searchParams.get('category')
+  const category = searchParams.get("category");
 
   return (
     <>
       <Grid container>
         <div style={divStyle} className="scrollbar">
-          <Link to={`/create?category=${category || ''}`}>
+          <Link
+            to={`/create?category=${category || ""}`}
+            style={{ textDecoration: "none" }}
+          >
             <StyledButton variant="contained" color="primary">
               New Project
             </StyledButton>
@@ -90,13 +98,9 @@ function Categories() {
             <TableBody>
               {catagories.map((category) => (
                 <TableRow key={category.id}>
-                  <StyledTableCell>
-                    
-                    <StyledLink to={`/projects/?category=${category.type}`}>
-                    {category.type}
-                    </StyledLink>
-                    
-                    </StyledTableCell>
+                  <StyledLink to={`/projects/?category_${category.type}`}>
+                    <StyledTableCell>{category.type}</StyledTableCell>
+                  </StyledLink>
                 </TableRow>
               ))}
             </TableBody>

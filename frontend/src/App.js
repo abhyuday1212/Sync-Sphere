@@ -12,6 +12,8 @@ import Test from "./components/jsx/test";
 import CreatePost from "./components/create/CreatePost";
 import Donate from "./components/details/Donate";
 import Details from "./components/details/DetailView";
+import FreePost from "./components/create/FreePost";
+import PaidPost from "./components/create/PaidPost";
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
   return isAuthenticated ?
@@ -42,6 +44,14 @@ const App = () => {
 
         <Route path='/create' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
           <Route path='/create' element={<CreatePost />} />
+        </Route>
+
+        <Route path='/create' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path='/create/free' element={<FreePost />} />
+        </Route>
+
+        <Route path='/create' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path='/create/paid' element={<PaidPost />} />
         </Route>
 
         <Route path='/join' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
