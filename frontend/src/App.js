@@ -10,10 +10,14 @@ import Login from "./components/account/Login";
 import Profile from "./components/account/Profile";
 import Test from "./components/jsx/test";
 import CreatePost from "./components/create/CreatePost";
-import Donate from "./components/details/Donate";
 import Details from "./components/details/DetailView";
 import FreePost from "./components/create/FreePost";
 import PaidPost from "./components/create/PaidPost";
+import Join from "./components/details/Join";
+import Company from "./components/details/Company";
+import Individual from "./components/details/Individual";
+import Volunteer from "./components/details/volunteer";
+
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
   return isAuthenticated ?
@@ -55,7 +59,7 @@ const App = () => {
         </Route>
 
         <Route path='/join' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-          <Route path='/join' element={<Donate />} />
+          <Route path='/join' element={<Join />} />
         </Route>
 
         <Route path='/details' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
@@ -72,6 +76,19 @@ const App = () => {
 
         <Route path='/profile' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
           <Route path="/profile" element={<Profile />} />
+        </Route>
+
+        <Route path='/company' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/company" element={<Company />} />
+        </Route>
+
+        <Route path='/individual' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/individual" element={<Individual />} />
+        </Route>
+
+        <Route path='/volunteer' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/volunteer" element={<Volunteer />} />
+    
         </Route>
 
         {/* ---------------------------------- */}
