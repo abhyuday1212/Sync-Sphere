@@ -1,7 +1,8 @@
-import express from "express";
-import dotenv from "dotenv";
+import express from 'express';
+import dotenv from 'dotenv';
 import cors from 'cors';
-import bodyParser from "body-parser"; 
+import bodyParser from 'body-parser';
+
 //express ko pta hi nhi h post api handle kaise hoti hai ,so for handling post api we needed to body parser
 
 import Connection from "./database/db.js";
@@ -11,10 +12,11 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors())
-app.use(bodyParser.json({ extended: true }))
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use("/", Router);
+app.use(cors());
+app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', Router);
+
 
 const PORT = process.env.PORT || 8000;
 

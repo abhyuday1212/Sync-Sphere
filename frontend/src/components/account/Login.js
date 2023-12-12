@@ -166,6 +166,7 @@ const Login = ({ isUserAuthenticated }) => {
                 fullWidth
                 name="username"
                 label="Enter username"
+                key={"username"}
                 autoComplete="username"
                 autoFocus
                 onChange={(e) => onValueChange(e)}
@@ -177,6 +178,7 @@ const Login = ({ isUserAuthenticated }) => {
                 name="password"
                 label="Enter Password"
                 type="password"
+                key={"password"}
                 id="password"
                 autoComplete="current-password"
                 onChange={(e) => onValueChange(e)}

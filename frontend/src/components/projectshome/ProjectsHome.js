@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import Post from "../post/post";
+import Posts from "../post/Posts";
 import Categories from "../categories/catagories";
 
 function ProjectsHome() {
@@ -11,7 +11,7 @@ function ProjectsHome() {
           <Categories />
         </Grid>
         <Grid item lg={10} sm={10} xs={12}>
-          <Post />
+          <Posts />
         </Grid>
       </Grid>
     </>

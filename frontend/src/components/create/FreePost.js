@@ -1,6 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
+import { useContext } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { API } from "../../service/Api"
+import { DataContext } from '../../context/DataProvider';
+// material-ui
 import {
     Box,
     styled,
@@ -17,7 +21,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-
+// -----------------------------------------
 // const magicx = keyframes`
 //   0% {
 //     background-position: 0 50%;
@@ -74,7 +78,7 @@ const InputTextField = styled(InputBase)`
   font-size: 20px;
   font-weight: 370;
   width: 1rem;
-  background;#e0eff9;
+  background:#e0eff9;
 `;
 
 const Textarea = styled(TextareaAutosize)`
@@ -152,13 +156,29 @@ const TextInformationarea = styled(TextareaAutosize)`
     opacity: 0.6;
   }
 `;
+const Image = styled(Box)`
+    width: 100%;
+    background: url(https://images.pexels.com/photos/1485894/pexels-photo-1485894.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1) center/contain no-repeat #000300;
+    height: 50vh;
+    display: flex;
+    border-radius: 14px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+
 
 const initialPost = {
-    title: "",
-    description: "",
-    picture: "",
-    username: "",
-    categories: "",
+    title: '',
+    summary: '',
+    budget: '',
+    number: '',
+    email: '',
+    address: '',
+    addressurl: '',
+    username: '',
+    categories: '',
     createdDate: new Date(),
 };
 
@@ -167,12 +187,16 @@ function FreePost() {
     const [title, setTitle] = useState("");
     const [number, setNumber] = useState("");
     const [budget, setBudget] = useState("");
-    // const navigate = useNavigate();
-    // const location = useLocation();
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const [post, setPost] = useState(initialPost);
-    const [file, setFile] = useState("");
-    // const { account } = useContext(DataContext);
+    // const [file, setFile] = useState('');
+    const { account } = useContext(DataContext);
+
+    const url = post.picture ? post.picture : `https://images.pexels.com/photos/1485894/pexels-photo-1485894.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`;
+
 
     // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
 
@@ -212,170 +236,202 @@ function FreePost() {
         setBudget(restrictedInput);
     };
 
+
+    // -==-=-=-==-=-=Image display portion to be done at last
+
     useEffect(() => {
-        const getImage = () => {
-            if (file) {
-                const data = new FormData();
-                data.append("name", file.name);
-                data.append("file", file);
+        // const getImage = async () => {
+        //     if (file) {
+        //         const data = new FormData();
+        //         data.append("file", file);
+        //         console.log("FormData entries:");
+        //         for (let pair of data.entries()) {
+        //             console.log(pair[0], pair[1]);
+        //         }
 
-                // API Call
-                post.picture = '' //To be done later
-            }
-        };
-        getImage()
-        // post.categories 
-    }, []);
+        //         const response = await API.uploadFile(data);
+        //         post.picture = response.data;
+        //     }
+        // }
+        // getImage();
+        post.categories = location.search?.split('=')[1] || 'All';
+        post.username = account.username;
+    }, [])
 
+    const handleFileChange = (e) => {
+        // const selectedFile = e.target.files[0];
+
+        // if (selectedFile && selectedFile instanceof File) {
+        //     setFile(selectedFile);
+        // }
+    };
+    // -===-=-==-=-=-==-=--==
+    const savePost = async () => {
+        let response = await API.createPost(post);
+
+        if (response.isSuccess) {
+            navigate('/projects');
+        }
+    }
     const handleChange = (e) => {
         setPost({ ...post, [e.target.name]: e.target.value });
-    };
+    }
+
     // -=-==-=-=-=-=-=-=-=-=-=-=-=-=-=--=-===-=
 
     return (
         <div>
             <Container>
                 <InsideContainer>
-                    <StyledFormControl>
-                        <InputTextField
-                            placeholder="Enter Project Title.."
-                            value={title}
-                            required
-                            name="title"
-                            onChange={(e) => {
-                                handleTitleChange(e);
-                                handleChange(e);
-                            }}
-                        />
-
-                        <Button variant="contained">Publish</Button>
-                    </StyledFormControl>
-
-                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
-
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            margin: "7px 0px",
-                        }}
-                    >
-                        <label
-                            htmlFor="fileInput"
-                            style={{ display: "flex", alignItems: "center" }}
-                            name="image"
-                        >
-                            <Add fontSize="large" />
-                            Choose Image
-                        </label>
-                        <input
-                            type="file"
-                            id="fileInput"
-                            style={{ display: "none" }}
-                            onChange={(e) => setFile(e.target.files[0])}
-                        />
-                        <Textarea
-                            placeholder="Write Summary of project...(Max 110 Charater)"
-                            name="summary"
-                            value={summary}
-                            required
-                            inputProps={{
-                                maxLength: 110,
-                            }}
-                            onChange={(e) => {
-                                handleSummaryChange(e);
-                                handleChange(e);
-                            }}
-                        />
-                    </div>
-                    {/* *-*--*-*-*-*-*-*-*- budget*-*-*-**-**-*-*-*/}
-
-                    <div className="flex flex-row items-center">
-                        <CurrencyRupeeOutlinedIcon fontSize="large" />
-                        <TextDescriptionarea
-                            placeholder="Project budget in Rupees (<= 5000)..."
-                            name="budget"
-                            value={budget}
-                            required
-                            onChange={(e) => {
-                                handleBudgetChange(e);
-                                handleChange(e);
-                            }}
-                        />
-                    </div>
-                    {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            margin: "5px 0px",
-                            padding: "5px 0px",
-                        }}
-                    >
-
-                        <div className="flex flex-row items-center">
-                            < LocalPhoneOutlinedIcon />
-                            <TextInformationarea
-                                placeholder="Enter Mobile number (+91 **********)"
-                                name="number"
-                                // style={{ width: "100%" }}
-                                value={number}
+                    <form>
+                        <StyledFormControl>
+                            <InputTextField
+                                placeholder="Enter Project Title.."
+                                value={title}
                                 required
+                                name="title"
                                 onChange={(e) => {
-                                    handleNumberChange(e);
+                                    handleTitleChange(e);
+                                    handleChange(e);
+                                }}
+                            />
+                        </StyledFormControl>
+
+                        {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                margin: "7px 0px",
+                            }}
+                        >
+                            <label
+                                htmlFor="fileInput"
+                                style={{ display: "flex", alignItems: "center" }}
+                                name="image"
+                            >
+                                <Add fontSize="large" />
+                                Choose Image
+                            </label>
+                            <input
+                                type="file"
+                                id="fileInput"
+                                key="fileInput"
+                                style={{ display: "none" }}
+                                onChange={handleFileChange}
+                            />
+                            <Textarea
+                                placeholder="Write Summary of project...(Max 110 Charater)"
+                                name="summary"
+                                value={summary}
+                                required
+                                inputProps={{
+                                    maxLength: 110,
+                                }}
+                                onChange={(e) => {
+                                    handleSummaryChange(e);
                                     handleChange(e);
                                 }}
                             />
                         </div>
+                        {/* *-*--*-*-*-*-*-*-*- budget*-*-*-**-**-*-*-*/}
 
                         <div className="flex flex-row items-center">
-                            <EmailOutlinedIcon />
-                            <TextInformationarea
-                                placeholder="Enter Email (***@gmail.com)"
-                                name="email"
+                            <CurrencyRupeeOutlinedIcon fontSize="large" />
+                            <TextDescriptionarea
+                                placeholder="Project budget in Rupees (<= 9999)..."
+                                required
+                                name="budget"
+                                key="budget"
+                                value={budget}
+                                onChange={(e) => {
+                                    handleBudgetChange(e);
+                                    handleChange(e);
+                                }}
+                            />
+                        </div>
+                        {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                margin: "5px 0px",
+                                padding: "5px 0px",
+                            }}
+                        >
+
+                            <div className="flex flex-row items-center">
+                                < LocalPhoneOutlinedIcon />
+                                <TextInformationarea
+                                    placeholder="Enter Mobile number (+91 **********)"
+                                    name="number"
+                                    // style={{ width: "100%" }}
+                                    value={number}
+                                    required
+                                    onChange={(e) => {
+                                        handleNumberChange(e);
+                                        handleChange(e);
+                                    }}
+                                />
+                            </div>
+
+                            <div className="flex flex-row items-center">
+                                <EmailOutlinedIcon />
+                                <TextInformationarea
+                                    placeholder="Enter Email (***@gmail.com)"
+                                    name="email"
+                                    required
+                                    onChange={(e) => handleChange(e)}
+                                />
+                            </div>
+                        </div>
+                        {/* *-*--*-*-*-*-* addresss -*-*-**-*-*-*-*-**-**-*-*-*/}
+                        <div className="flex flex-row items-center">
+                            <HomeOutlinedIcon />
+                            <Textarea2
+                                placeholder="Project Venue address..."
+                                name="address"
+                                required
+                                onChange={(e) => handleChange(e)}
+                            />
+
+                        </div>
+                        {/* *-*--*-*-*- Google Url-*-**-*-*-*-*-**-**-*-*-*/}
+                        <div className="flex flex-row items-center">
+                            <LanguageOutlinedIcon />
+                            <Textarea2
+                                placeholder="Paste Google Maps Location URL..."
+                                name="addressurl"
                                 required
                                 onChange={(e) => handleChange(e)}
                             />
                         </div>
-                    </div>
-                    {/* *-*--*-*-*-*-* addresss -*-*-**-*-*-*-*-**-**-*-*-*/}
-                    <div className="flex flex-row items-center">
-                        <HomeOutlinedIcon />
-                        <Textarea2
-                            placeholder="Project Venue address..."
-                            name="address"
-                            required
-                            onChange={(e) => handleChange(e)}
-                        />
+                        {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
 
-                    </div>
-                    {/* *-*--*-*-*- Google Url-*-**-*-*-*-*-**-**-*-*-*/}
-                    <div className="flex flex-row items-center">
-                        <LanguageOutlinedIcon />
-                        <Textarea2
-                            placeholder="Paste Google Maps Location URL..."
-                            name="addressurl"
-                            onChange={(e) => handleChange(e)}
-                        />
-                    </div>
-                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+                        <div className="flex flex-row items-center">
+                            <DescriptionOutlinedIcon />
+                            <Textarea2
+                                placeholder="Write description..."
+                                name="description"
+                                required
+                                onChange={(e) => handleChange(e)}
+                            />
 
-                    <div className="flex flex-row items-center">
-                        <DescriptionOutlinedIcon />
-                        <Textarea2
-                            placeholder="Write description..."
-                            name="description"
-                            required
-                            onChange={(e) => handleChange(e)}
-                        />
+                        </div>
+                        {/* *-*--*-*-*-*-*-*-*-*--*img*-*-*-*-*-**-**-*-*-*/}
+                        <Image src={url} alt="Uploaded img..." />
 
-                    </div>
-                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
 
+                        {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+                        <div style={{ display: "flex", justifyContent: "center",marginTop:"12px" }}>
+                            <Button type="submit" variant="contained">Publish</Button>
+                        </div>
+                    </form>
                 </InsideContainer>
             </Container>
         </div>

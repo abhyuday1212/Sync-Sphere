@@ -30,13 +30,30 @@ export const API_NOTIFICATION_MESSAGES = {
 // NEED SERVICE CALL: { url: '/', method: 'POST/GET/PUT/DELETE' params: true / false } 
 
 export const SERVICE_URLS = {
-  // signup_api
+  // signup_api_Call
   // userSignup->key ,{url: '/signup',method:'POST'} -> value
-  userSignup: { url: "/signup", method: "POST" },
+  userSignup: { url: '/signup', method: 'POST' },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
+
   //Login_Api
-  userLogin: { url: "/login", method: "POST" }
+  userLogin: { url: '/login', method: 'POST' },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
+
+  // image_Api
+  // uploadFile: { url: 'file/upload', method: 'POST' },
+
+  // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
+
+  createPost: { url: '/create', method: 'POST' },
+
+  // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
+
+  // Fetch Projects
+  getAllPosts: { url: '/posts', method: 'GET' }
+
+  // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
+
+
 };

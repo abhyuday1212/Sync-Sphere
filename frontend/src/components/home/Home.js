@@ -27,7 +27,7 @@ const Home = () => {
         <p className="md:text-2xl text-xl font-bold text-gray-500">
           Common Goals, Uncommon Solutions: Pioneering Global Collaboration.
         </p>
-        <Link to="/profile">
+        <Link to="/projects">
           <button className="bg-[#00df9a] rounded-md hover:text-[crimson] hover:bg-[white] hover:border-[black]  w-[200px] py-3 text-black  font-medium my-6 mx-auto  ">
             Get Started
           </button>

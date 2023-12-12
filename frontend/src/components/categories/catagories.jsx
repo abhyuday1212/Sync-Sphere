@@ -98,7 +98,7 @@ function Categories() {
             <TableBody>
               {catagories.map((category) => (
                 <TableRow key={category.id}>
-                  <StyledLink to={`/projects/?category_${category.type}`}>
+                  <StyledLink to={`/projects/?category=${category.type}`}>
                     <StyledTableCell>{category.type}</StyledTableCell>
                   </StyledLink>
                 </TableRow>
