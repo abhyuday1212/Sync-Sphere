@@ -429,7 +429,7 @@ function PaidPost() {
 
                         {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
                         <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
-                            <Button type="submit" variant="contained">Publish</Button>
+                            <Button  variant="contained" onClick={() => savePost()}>Publish</Button>
                         </div>
                     </form>
                 </InsideContainer>

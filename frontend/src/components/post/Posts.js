@@ -61,10 +61,11 @@ function Posts() {
 
   return (
     <>
+    <Grid container style={containerStyle}>
       {posts && posts.length > 0 ? (
         posts.map((post) => (
           <div key={post._id}>
-            <Grid container style={containerStyle}>
+            
               <Paper elevation={4} sx={{ ...paperStyle, gap: 20 }}>
                 <CardActionArea>
                   <CardMedia
@@ -86,9 +87,9 @@ function Posts() {
                     <Typography variant="body2" color="text.secondary">
                       {post.summary}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    {/* <Typography variant="body2" color="text.secondary">
                       Category : {post.categories}
-                    </Typography>
+                    </Typography> */}
                   </CardContent>
 
                   <CardActions style={{ justifyContent: "space-between" }}>
@@ -138,13 +139,14 @@ function Posts() {
                   </CardActions>
                 </CardActionArea>
               </Paper>
-            </Grid>
 
+            
           </div>
         ))
       ) : (
         <Box style={{ color: '878787', margin: '30px 30px', fontsize: 18 }}>No Data Available to display</Box>
       )}
+      </Grid>
 
 
 
