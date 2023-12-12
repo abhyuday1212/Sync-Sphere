@@ -283,155 +283,155 @@ function FreePost() {
         <div>
             <Container>
                 <InsideContainer>
-                    <form>
-                        <StyledFormControl>
-                            <InputTextField
-                                placeholder="Enter Project Title.."
-                                value={title}
-                                required
-                                name="title"
-                                onChange={(e) => {
-                                    handleTitleChange(e);
-                                    handleChange(e);
-                                }}
-                            />
-                        </StyledFormControl>
 
-                        {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
-
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                margin: "7px 0px",
+                    <StyledFormControl>
+                        <InputTextField
+                            placeholder="Enter Project Title.."
+                            value={title}
+                            required
+                            name="title"
+                            onChange={(e) => {
+                                handleTitleChange(e);
+                                handleChange(e);
                             }}
-                        >
-                            <label
-                                htmlFor="fileInput"
-                                style={{ display: "flex", alignItems: "center" }}
-                                name="image"
-                            >
-                                <Add fontSize="large" />
-                                Choose Image
-                            </label>
-                            <input
-                                type="file"
-                                id="fileInput"
-                                key="fileInput"
-                                style={{ display: "none" }}
-                                onChange={handleFileChange}
-                            />
-                            <Textarea
-                                placeholder="Write Summary of project...(Max 110 Charater)"
-                                name="summary"
-                                value={summary}
-                                required
-                                inputProps={{
-                                    maxLength: 110,
-                                }}
-                                onChange={(e) => {
-                                    handleSummaryChange(e);
-                                    handleChange(e);
-                                }}
-                            />
-                        </div>
-                        {/* *-*--*-*-*-*-*-*-*- budget*-*-*-**-**-*-*-*/}
+                        />
+                    </StyledFormControl>
 
-                        <div className="flex flex-row items-center">
-                            <CurrencyRupeeOutlinedIcon fontSize="large" />
-                            <TextDescriptionarea
-                                placeholder="Project budget in Rupees (<= 9999)..."
-                                required
-                                name="budget"
-                                key="budget"
-                                value={budget}
-                                onChange={(e) => {
-                                    handleBudgetChange(e);
-                                    handleChange(e);
-                                }}
-                            />
-                        </div>
-                        {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                margin: "5px 0px",
-                                padding: "5px 0px",
+                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            margin: "7px 0px",
+                        }}
+                    >
+                        <label
+                            htmlFor="fileInput"
+                            style={{ display: "flex", alignItems: "center" }}
+                            name="image"
+                        >
+                            <Add fontSize="large" />
+                            Choose Image
+                        </label>
+                        <input
+                            type="file"
+                            id="fileInput"
+                            key="fileInput"
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                        />
+                        <Textarea
+                            placeholder="Write Summary of project...(Max 110 Charater)"
+                            name="summary"
+                            value={summary}
+                            required
+                            inputProps={{
+                                maxLength: 110,
                             }}
-                        >
+                            onChange={(e) => {
+                                handleSummaryChange(e);
+                                handleChange(e);
+                            }}
+                        />
+                    </div>
+                    {/* *-*--*-*-*-*-*-*-*- budget*-*-*-**-**-*-*-*/}
 
-                            <div className="flex flex-row items-center">
-                                < LocalPhoneOutlinedIcon />
-                                <TextInformationarea
-                                    placeholder="Enter Mobile number (+91 **********)"
-                                    name="number"
-                                    // style={{ width: "100%" }}
-                                    value={number}
-                                    required
-                                    onChange={(e) => {
-                                        handleNumberChange(e);
-                                        handleChange(e);
-                                    }}
-                                />
-                            </div>
+                    <div className="flex flex-row items-center">
+                        <CurrencyRupeeOutlinedIcon fontSize="large" />
+                        <TextDescriptionarea
+                            placeholder="Project budget in Rupees (<= 9999)..."
+                            required
+                            name="budget"
+                            key="budget"
+                            value={budget}
+                            onChange={(e) => {
+                                handleBudgetChange(e);
+                                handleChange(e);
+                            }}
+                        />
+                    </div>
+                    {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            margin: "5px 0px",
+                            padding: "5px 0px",
+                        }}
+                    >
 
-                            <div className="flex flex-row items-center">
-                                <EmailOutlinedIcon />
-                                <TextInformationarea
-                                    placeholder="Enter Email (***@gmail.com)"
-                                    name="email"
-                                    required
-                                    onChange={(e) => handleChange(e)}
-                                />
-                            </div>
-                        </div>
-                        {/* *-*--*-*-*-*-* addresss -*-*-**-*-*-*-*-**-**-*-*-*/}
                         <div className="flex flex-row items-center">
-                            <HomeOutlinedIcon />
-                            <Textarea2
-                                placeholder="Project Venue address..."
-                                name="address"
+                            < LocalPhoneOutlinedIcon />
+                            <TextInformationarea
+                                placeholder="Enter Mobile number (+91 **********)"
+                                name="number"
+                                // style={{ width: "100%" }}
+                                value={number}
+                                required
+                                onChange={(e) => {
+                                    handleNumberChange(e);
+                                    handleChange(e);
+                                }}
+                            />
+                        </div>
+
+                        <div className="flex flex-row items-center">
+                            <EmailOutlinedIcon />
+                            <TextInformationarea
+                                placeholder="Enter Email (***@gmail.com)"
+                                name="email"
                                 required
                                 onChange={(e) => handleChange(e)}
                             />
-
                         </div>
-                        {/* *-*--*-*-*- Google Url-*-**-*-*-*-*-**-**-*-*-*/}
-                        <div className="flex flex-row items-center">
-                            <LanguageOutlinedIcon />
-                            <Textarea2
-                                placeholder="Paste Google Maps Location URL..."
-                                name="addressurl"
-                                required
-                                onChange={(e) => handleChange(e)}
-                            />
-                        </div>
-                        {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+                    </div>
+                    {/* *-*--*-*-*-*-* addresss -*-*-**-*-*-*-*-**-**-*-*-*/}
+                    <div className="flex flex-row items-center">
+                        <HomeOutlinedIcon />
+                        <Textarea2
+                            placeholder="Project Venue address..."
+                            name="address"
+                            required
+                            onChange={(e) => handleChange(e)}
+                        />
 
-                        <div className="flex flex-row items-center">
-                            <DescriptionOutlinedIcon />
-                            <Textarea2
-                                placeholder="Write description..."
-                                name="description"
-                                required
-                                onChange={(e) => handleChange(e)}
-                            />
+                    </div>
+                    {/* *-*--*-*-*- Google Url-*-**-*-*-*-*-**-**-*-*-*/}
+                    <div className="flex flex-row items-center">
+                        <LanguageOutlinedIcon />
+                        <Textarea2
+                            placeholder="Paste Google Maps Location URL..."
+                            name="addressurl"
+                            required
+                            onChange={(e) => handleChange(e)}
+                        />
+                    </div>
+                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
 
-                        </div>
-                        {/* *-*--*-*-*-*-*-*-*-*--*img*-*-*-*-*-**-**-*-*-*/}
-                        <Image src={url} alt="Uploaded img..." />
+                    <div className="flex flex-row items-center">
+                        <DescriptionOutlinedIcon />
+                        <Textarea2
+                            placeholder="Write description..."
+                            name="description"
+                            required
+                            onChange={(e) => handleChange(e)}
+                        />
+
+                    </div>
+                    {/* *-*--*-*-*-*-*-*-*-*--*img*-*-*-*-*-**-**-*-*-*/}
+                    <Image src={url} alt="Uploaded img..." />
 
 
-                        {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
-                        <div style={{ display: "flex", justifyContent: "center",marginTop:"12px" }}>
-                            <Button  variant="contained" onClick={() => savePost()}>Publish</Button>
-                        </div>
-                    </form>
+                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+                    <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
+                        <Button variant="contained" onClick={() => savePost()}>Publish</Button>
+                    </div>
+
                 </InsideContainer>
             </Container>
         </div>

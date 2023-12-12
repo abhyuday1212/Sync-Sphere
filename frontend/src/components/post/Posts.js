@@ -93,7 +93,7 @@ function Posts() {
                   </CardContent>
 
                   <CardActions style={{ justifyContent: "space-between" }}>
-                    <Typography>{post.budget}</Typography>
+                    <Typography>Budget : {post.budget}</Typography>
                     <Typography>20+Joined</Typography>
                   </CardActions>
                   <CardActions style={{ justifyContent: "space-between" }}>
