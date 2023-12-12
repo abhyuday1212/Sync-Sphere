@@ -87,9 +87,9 @@ function Posts() {
                     <Typography variant="body2" color="text.secondary">
                       {post.summary}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    {/* <Typography variant="body2" color="text.secondary">
                       Category : {post.categories}
-                    </Typography>
+                    </Typography> */}
                   </CardContent>
 
                   <CardActions style={{ justifyContent: "space-between" }}>
