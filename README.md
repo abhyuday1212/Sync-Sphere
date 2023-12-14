@@ -53,15 +53,16 @@ git clone https://github.com/abhyuday1212/PitchTember-NITP.git
   npm i
 ```
 - If any ERR ocured in terminal the use this command and reinstall the dependencies using this line
-  ```bash
+```bash
   npm i --force
 ```
 - Install the dependencies using this command for frontend
-  ```bash
+
+```bash
   cd frontend
 ```
 - If any ERR ocured in terminal the use this command and reinstall the dependencies using this line
-  ```bash
+```bash
   npm i --force
 ```
 - Now Rename .confi.env to .env
@@ -75,21 +76,21 @@ git clone https://github.com/abhyuday1212/PitchTember-NITP.git
 - Goto root folder that is PitchTember-NITP folder and run these commands in your powershell
 
 - Open a new powershell and write this command to move to backend directory.
-  ```bash
+```bash
   cd backend
 ```
 - Run the backend Server.
-  ```bash
+```bash
   npm run dev
-  ```
+```
 - If terminal returns Port started successfully at ${PORT} & Databse connected successfully than you are good to go.
 
 - Open a new powershell and write this command to move to frontend directory from the root folder.
-  ```bash
+```bash
   cd frontend
 ```
 - Write this command to start the react server at 3000.
-  ```bash
+```bash
   npm start
 ```
 # 5.0 Project Overview
