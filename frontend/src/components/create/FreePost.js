@@ -197,13 +197,26 @@ function FreePost() {
 
     const url = post.picture ? post.picture : `https://images.pexels.com/photos/1485894/pexels-photo-1485894.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`;
 
+    const [formErrors, setFormErrors] = useState({
+        title: false,
+        summary: false,
+        budget: false,
+        number: false,
+        email: false,
+        address: false,
+        addressurl: false,
+        description: false,
+    });
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
 
     // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
 
     const handleSummaryChange = (e) => {
         const inputValue = e.target.value;
 
-        const RestrictedInput = inputValue.slice(0, 110);
+        const RestrictedInput = inputValue.slice(0, 300);
 
         setSummary(RestrictedInput);
     };
@@ -266,13 +279,46 @@ function FreePost() {
         // }
     };
     // -===-=-==-=-=-==-=--==
-    const savePost = async () => {
-        let response = await API.createPost(post);
 
-        if (response.isSuccess) {
-            navigate('/projects');
+    const validateForm = () => {
+        const errors = {
+            title: !post.title || !post.title.trim(),
+            summary: !post.summary || !post.summary.trim(),
+            budget: !post.budget || !post.budget.trim(),
+            number: !post.number || !post.number.trim(),
+            email: !post.email || !post.email.trim(),
+            address: !post.address || !post.address.trim(),
+            addressurl: !post.addressurl || !post.addressurl.trim(),
+            description: !post.description || !post.description.trim(),
+        };
+
+        setFormErrors(errors);
+        const formIsValid = Object.values(errors).every((value) => !value);
+        setShowError(!formIsValid);
+        return formIsValid;
+    };
+
+
+
+
+    const savePost = async () => {
+        if (validateForm()) {
+            try {
+                let response = await API.createPost(post);
+                if (response.isSuccess) {
+                    navigate('/projects');
+                }
+                else {
+                    setErrorMessage('Error saving post. Please try again.');
+                }
+
+            } catch (error) {
+                setErrorMessage('An unexpected error occurred. Please try again later.');
+
+            }
         }
     }
+
     const handleChange = (e) => {
         setPost({ ...post, [e.target.name]: e.target.value });
     }
@@ -428,6 +474,15 @@ function FreePost() {
 
 
                     {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+
+                    {showError && (
+                        <div style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
+                            {errorMessage || 'Please fill out all the required fields.'}
+
+                        </div>
+                    )}
+                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+
                     <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
                         <Button variant="contained" onClick={() => savePost()}>Publish</Button>
                     </div>

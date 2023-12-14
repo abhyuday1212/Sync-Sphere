@@ -1,9 +1,9 @@
-export const catagories= [
-    {id:1 , type:"Quality Education"},
-    {id:2 , type:"Clean Water and Sanitation"},
-    {id:3 , type:"Zero Hunger"},
-    {id:4 , type:"Good Health and Well-being"},
-    {id:5 , type:"Clean City"},
-    {id:6 , type:"Gender Equality"},
-    {id:7 , type:"Tree Plantation"},
+export const catagories = [
+    { id: 1, type: "Education" },
+    { id: 7, type: "Environment" },
+    { id: 2, type: "Hygiene" },
+    { id: 3, type: "Nourish" },
+    { id: 4, type: "Wellness" },
+    { id: 5, type: "Cleaniness" },
+    { id: 6, type: "Greenify" },
 ]
