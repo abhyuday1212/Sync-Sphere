@@ -41,29 +41,29 @@ It provides its users a platform to create a project and shows the listing to th
 
 Install the project by cloning this repo from your cmd.
 
-bash
+```bash
 git clone https://github.com/abhyuday1212/PitchTember-NITP.git
-
+```
 - Go to the #PitchTember-NITP folder,open terminal in VS-Code and write this command
-  bash
+ ``` bash
   cd backend
-
+```
 - Install the dependencies using this command for backend
-  bash
+ ``` bash
   npm i
-
+```
 - If any ERR ocured in terminal the use this command and reinstall the dependencies using this line
-  bash
+  ```bash
   npm i --force
-
+```
 - Install the dependencies using this command for frontend
-  bash
+  ```bash
   cd frontend
-
+```
 - If any ERR ocured in terminal the use this command and reinstall the dependencies using this line
-  bash
+  ```bash
   npm i --force
-
+```
 - Now Rename .confi.env to .env
 
 - Add the Prerequisite asked their.Since we are working with payment architecture so we cannot provide the secret_client_id and client_secret.
@@ -75,22 +75,23 @@ git clone https://github.com/abhyuday1212/PitchTember-NITP.git
 - Goto root folder that is PitchTember-NITP folder and run these commands in your powershell
 
 - Open a new powershell and write this command to move to backend directory.
-  bash
+  ```bash
   cd backend
-
+```
 - Run the backend Server.
-  bash
+  ```bash
   npm run dev
+  ```
 - If terminal returns Port started successfully at ${PORT} & Databse connected successfully than you are good to go.
 
 - Open a new powershell and write this command to move to frontend directory from the root folder.
-  bash
+  ```bash
   cd frontend
-
+```
 - Write this command to start the react server at 3000.
-  bash
+  ```bash
   npm start
-
+```
 # 5.0 Project Overview
 
 - _Empowering NGOs :_ We presents a groundbreaking solution to NGOs' funding challenges by showcasing their causes to a vast network of over 19,000 CSR-engaged companies. our platform not only facilitates funding connections but also offers a unique feature – the provision of volunteers to NGOs. This comprehensive approach ensures a holistic and impactful collaboration between NGOs ,Volunteers and companies.
@@ -137,4 +138,4 @@ Mob Num : 6391909757
 - We Will be Providing the github repo from which we are working with the features by our ibdivuidual team mates Harsh and Aditya.
 
 [Harsh_Chat_App]{https://github.com/kharsh560/chatApp.git}
-[Aditya_Payment_Interface]{https://stormbreaker2022.github.io/NITP_Hackatho_Aditya/}
+[Aditya_Payment_Interface]{https://github.com/StormBreaker2022/NITP_Hackatho_Aditya.git}
