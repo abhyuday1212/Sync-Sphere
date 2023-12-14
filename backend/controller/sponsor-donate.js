@@ -1,12 +1,18 @@
 import paypal from 'paypal-rest-sdk';
+import dotenv from 'dotenv'
+
+dotenv.config();
+const client_id = process.env.DB_URI;
+const client_secret = process.env.DB_URI_AD;
 
 
 // Configure PayPal
-paypal.configure({
-    mode: 'sandbox',
-    client_id: 'AaVDqsVejYIohtYFyAfTqj_dJX8WITLh22mYIQngEFgrzn9SQE6UbOGadEaFa4WqaOy0mv8R_-2R6uH9',
-    client_secret: 'EI-gW8QWXfCnlAtaFi6By9iCxDonoB9vGqhmwDWDsnaw4OGHI8ukC_3FNR-zmyjGXjaBpo_eRkv1h41Q',
-});
+
+// paypal.configure({
+//     mode: 'sandbox',
+//     const client_id: process.env.CLIENT_SECRET,
+//     const client_secret: process.env.CLIENT_ID,
+// });
 
 
 export const sponsorDonatePage = async (req, res) => {
