@@ -61,11 +61,11 @@ const StyledLink = styled(Link)`
 `;
 
 function Categories() {
+
   const divStyle = {
-    maxHeight: "84vh",
+    height: "100%",
+    width:"100%",
     overflowX: "hidden",
-    border: "2px solid grey",
-    borderRadius: "14px",
     padding: "5px",
     margin: "1px",
   };

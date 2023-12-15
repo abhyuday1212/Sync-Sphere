@@ -20,11 +20,11 @@ import Box from "@mui/material/Box";
 const Container = styled(Box)`
   border: 1px solid #d3cede;
   border-radius: 10px;
-  margin: 3px;
+  margin: 5px;
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 31rem;
+  height: 32rem;
   & > img,
   & > p {
     padding: 0 5px 5px 5px;
@@ -55,7 +55,7 @@ const Details = styled(Typography)`
 const StyledCardContent = styled(CardContent)`
   positon:relative;
   bottom:0;
-  padding: 5px 2px 0px 2px;
+  padding: 5px 3px 0px 2px;
   margin: 0px 2px 0px 2px;
   height:300px;
 `;
@@ -82,10 +82,17 @@ function PostData({ post }) {
     return (
         <>
             <Container>
-                <StyledCardContent>
+                <StyledCardContent
+                    style={{
+                        position: "relative",
+                        width: "100%",
+                        padding:"6px"
+                    }}>
                     <Image
                         component="img"
                         height="200px"
+                        position="absolute"
+                        top="0"
                         style={{
                             backgroundImage: url,
                             backgroundSize: "cover",
@@ -96,24 +103,78 @@ function PostData({ post }) {
                         }}
                     />
 
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h5" component="div"
+                        style={{
+                            position: "absolute",
+                            top: "13.3rem"
+
+                        }}
+                    >
+
                         {addElippsis(post.title, 18)}
                     </Typography>
 
-                    <Details variant="body2" color="text.secondary">
-                        {addElippsis(post.summary, 250)}
+                    <Details variant="body2" color="text.secondary"
+                        style={{
+                            position: "absolute",
+                            top: "16rem"
+
+                        }}>
+                        {addElippsis(post.summary, 165)}
                     </Details>
 
-                    <Text variant="body2" color="text.secondary">
+                    <Typography
+                        style={{
+                            position: "absolute",
+                            top: "21.4rem"
+
+                        }}>
+                        Author : {post.username}
+                    </Typography>
+
+                    <Text variant="body2" color="text.secondary"
+                        style={{
+                            position: "absolute",
+                            top: "23rem"
+
+                        }}>
                         Category : {post.categories}
                     </Text>
 
-                    <Typography>Budget : {post.budget}</Typography>
+                    <Typography
+                        style={{
+                            position: "absolute",
+                            top: "24.3rem"
 
-                    <Typography>People Joined : 0</Typography>
+                        }}
+                    >Project Budget:<CurrencyRupeeOutlinedIcon fontSize="icon" />{post.budget}</Typography>
+
+                    <Text variant="body2" color="text.secondary"
+                        style={{
+                            position: "absolute",
+                            top: "25.9rem"
+
+                        }}>People Joined : 0</Text>
+
+                    <Typography
+                        style={{
+                            position: "absolute",
+                            top: "27.2rem"
+
+                        }}
+                    >CSR Verrified : ✅</Typography>
 
 
-                    <CardActions style={{ justifyContent: "space-between" }}>
+
+                    <CardActions style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        position: "absolute",
+                        top: "28.9rem",
+                        width: "85%",
+                        margin: "2px",
+                        height: "2.2rem"
+                    }}>
                         <Link to={"/join"}>
                             <Button
                                 size="small"
@@ -121,7 +182,7 @@ function PostData({ post }) {
                                     gap: 10,
                                     transition: "transform 0.3s ease-in-out",
                                     "&:hover": {
-                                        transform: "scale(1.2)",
+                                        transform: "scale(1)",
                                         border: "2px solid rgba(140, 109, 189, 0.245)",
                                     },
                                 }}
@@ -136,7 +197,7 @@ function PostData({ post }) {
                                     gap: 10,
                                     transition: "transform 0.3s ease-in-out",
                                     "&:hover": {
-                                        transform: "scale(1.2)",
+                                        transform: "scale(1)",
                                         border: "2px solid rgba(140, 109, 189, 0.245)",
                                     },
                                 }}

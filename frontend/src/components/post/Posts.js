@@ -36,7 +36,11 @@ const Posts = () => {
       {
         posts && posts.length > 0 ? posts.map(post => (
           <Grid item lg={4} sm={3} xs={1}>
-            <Link style={{ textDecoration: 'none', color: 'inherit' }} to={``}>
+            <Link
+              style={{
+                textDecoration: 'none', color: 'inherit',
+                transition: 'color 0.3s',
+              }} to={``}>
               <PostData post={post} />
             </Link>
           </Grid>
