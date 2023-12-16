@@ -1,17 +1,19 @@
 # Sync Sphere
 
-This Project is made under PitchTember-Nit,Patna by
+This Project is made under PitchTember-Nit,Patna by -
 
-# Team | Alpha Coder
+# Team | Alpha Coders
 
-- [Abhyuday_Pratap_Singh](https://www.linkedin.com/in/abhyuday12/)
+- [Abhyuday Pratap Singh](https://www.linkedin.com/in/abhyuday12/)
+- [Aditya Jaiswal](https://www.linkedin.com/in/aditya-jaiswal-14b453241/)
 - [Akhilesh](https://www.linkedin.com/in/akhilesh-malik-44989b258/)
-- [Aditya_Jaiswal](https://www.linkedin.com/in/aditya-jaiswal-14b453241/)
-- [Kumar_Harsh](https://www.linkedin.com/in/kumar-harsh-468a22253)
+- [Kumar Harsh](https://www.linkedin.com/in/kumar-harsh-468a22253)
 
-[Working_Prototype,Project_Explaination, All_resources](https://drive.google.com/drive/folders/1ebpinrDJRa6qmq6rUbSVv83nTx9dIkB6?usp=sharing)
+</br>
 
-[PPT](https://docs.google.com/presentation/d/1JhpZvwCMAZx6U0Q2KRqERU-o5V2fHWss/edit?usp=drive_link&ouid=102958168798562091089&rtpof=true&sd=true)
+### Resources
+[Pototype](https://youtu.be/RDQCm57UlHk?si=4PrAnCIKCGos55bQ)
+[Drive](https://drive.google.com/drive/folders/1ebpinrDJRa6qmq6rUbSVv83nTx9dIkB6?usp=sharing) [PPT](https://docs.google.com/presentation/d/1JhpZvwCMAZx6U0Q2KRqERU-o5V2fHWss/edit?usp=drive_link&ouid=102958168798562091089&rtpof=true&sd=true)
 
 # 1. Introduction
 
@@ -31,11 +33,21 @@ It provides its users a platform to create a project and shows the listing to th
 
 # 2.0 Prequisite
 
-- MoongoDB (atlas) account ,
-- PayPal business account and
+- MoongoDB (atlas) account
+- PayPal business account
 - PayPal SendBox account
 - PayPal SandBox App client_id
 - PayPal SandBox App client_secret Code
+
+</br>
+
+- You can create a database by signing in here and creating a cluster for yourself later on.
+
+```bash
+https://account.mongodb.com/account/login?n=https%3A%2F%2Fcloud.mongodb.com%2Fv2&nextHash=%23org%2F655ca82e2a92b8144c5786e5%2Fsettings%2Fgeneral&signedOut=true
+```
+</br>
+
 
 # 3.0 Installation
 
@@ -67,7 +79,7 @@ git clone https://github.com/abhyuday1212/PitchTember-NITP.git
 ```
 - Now Rename .confi.env to .env
 
-- Add the Prerequisite asked their.Since we are working with payment architecture so we cannot provide the secret_client_id and client_secret.
+- Add the Prerequisite asked their. Since we are working with payment architecture so we cannot provide the secret data of client_id and client_secret.
 
 # 4.0 Run Project
 
@@ -105,6 +117,7 @@ git clone https://github.com/abhyuday1212/PitchTember-NITP.git
 
 - _6.1 Donate as Individual :_
   Our app empowers individuals to contribute directly to NGO projects. Streamlining the donation process, users can effortlessly support causes that resonate with them. Experience the simplicity of making a meaningful impact as we connect you directly with projects that align with your philanthropic vision.
+
 - _6.2 Join as Volunteer:_
   Our app goes beyond donations; individuals can explore NGO posts and seamlessly join as volunteers for specific projects. Experience a holistic approach to giving by connecting directly with causes, contributing funds, and actively participating in projects that align with your passion for positive change.
 
@@ -113,6 +126,7 @@ git clone https://github.com/abhyuday1212/PitchTember-NITP.git
 
 - _6.4 Ease for Companies to view NGO's Listing :_
   In our project, we provide a comprehensive listing spanning various categories such as environmental sustainability, hunger alleviation, urban cleanliness, and educational excellence. This curated platform ensures that CSR companies and corporations can effortlessly discover diverse, impactful projects. By centralizing these initiatives, we optimize the search process, saving valuable time for companies and facilitating meaningful corporate social responsibility engagements.
+
 - _6.5 Get CSR Documents :_
   Simplify corporate social responsibility decisions with our app. Big companies can effortlessly acquire CSR documents directly from NGOs, enabling a swift and efficient evaluation process. This direct access ensures transparency and empowers companies to make informed decisions on the eligibility of NGOs for Corporate Social Responsibility initiatives, fostering impactful and transparent corporate-community collaborations.
 
@@ -121,7 +135,7 @@ git clone https://github.com/abhyuday1212/PitchTember-NITP.git
 
 # 7.0 Tech Stack
 
-_Client:_ React , TailwindCSS ,Material UI
+_Client:_ React , TailwindCSS ,Material UI , Chakra UI
 
 _Server:_ MongoDB , Express.js , Node.js
 
@@ -129,6 +143,7 @@ _Server:_ MongoDB , Express.js , Node.js
 
 For support, email us on -
 Abhyuday Pratap singh : apsworks1212@gmail.com
+</br>
 Mob Num : 6391909757
 
 # Note
@@ -138,5 +153,6 @@ Mob Num : 6391909757
 
 - We Will be Providing the github repo from which we are working with the features by our ibdivuidual team mates Harsh and Aditya.
 
-[Harsh_Chat_App]{https://github.com/kharsh560/chatApp.git}
-[Aditya_Payment_Interface]{https://github.com/StormBreaker2022/NITP_Hackatho_Aditya.git}
+[Harsh | Chat App](https://github.com/kharsh560/chatApp.git)
+</br>
+[Aditya | Payment Interface](https://github.com/StormBreaker2022/NITP_Hackatho_Aditya.git)

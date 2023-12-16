@@ -18,7 +18,6 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import { flattenTokens } from "@chakra-ui/react";
 
 // const magicx = keyframes`
 //   0% {
