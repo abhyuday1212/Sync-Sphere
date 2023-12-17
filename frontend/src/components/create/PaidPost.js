@@ -158,7 +158,7 @@ const TextInformationarea = styled(TextareaAutosize)`
 `;
 const Image = styled(Box)`
     width: 100%;
-    background: url(https://images.pexels.com/photos/1485894/pexels-photo-1485894.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1) center/contain no-repeat #000300;
+    background: url(https://lh3.googleusercontent.com/u/0/drive-viewer/AEYmBYQtDwIavTxu3fvFxnAmUhWSQKxI3ahloPwsbbj_H7JQwyD4NigXLx3W0ZwXUSLQdvTfdvtfCLsN55XaPDOlDE5Y7d6bBg=w1920-h853) center/contain no-repeat #000300;
     height: 50vh;
     display: flex;
     border-radius: 14px;
