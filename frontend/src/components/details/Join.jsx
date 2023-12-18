@@ -91,7 +91,7 @@ function Join() {
                     justifyContent: "center",
                   }}
                 >
-                  Donate as Company
+                  Join as Company
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   <Typography>
@@ -164,7 +164,7 @@ function Join() {
                     justifyContent: "center",
                   }}
                 >
-                  Donate as Individual
+                  Join as Individual
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   <Typography>
@@ -237,7 +237,7 @@ function Join() {
                     justifyContent: "center",
                   }}
                 >
-                  Join as an volunteer
+                  Join as volunteer
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   <Typography>
