@@ -12,7 +12,7 @@ This Project is made under PitchTember-Nit,Patna by -
 </br>
 
 ### Resources
-[Pototype](https://youtu.be/RDQCm57UlHk?si=4PrAnCIKCGos55bQ)
+[Pototype](https://youtu.be/8Q1m73rQItk)
 [Drive](https://drive.google.com/drive/folders/1ebpinrDJRa6qmq6rUbSVv83nTx9dIkB6?usp=sharing) [PPT](https://docs.google.com/presentation/d/1JhpZvwCMAZx6U0Q2KRqERU-o5V2fHWss/edit?usp=drive_link&ouid=102958168798562091089&rtpof=true&sd=true)
 
 # 1. Introduction
