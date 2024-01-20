@@ -10,7 +10,7 @@ import Login from "./components/account/Login";
 import Profile from "./components/account/Profile";
 import Test from "./components/jsx/test";
 import CreatePost from "./components/create/CreatePost";
-import Details from "./components/details/DetailView";
+import DetailView from "./components/details/DetailView";
 import FreePost from "./components/create/FreePost";
 import PaidPost from "./components/create/PaidPost";
 import Join from "./components/details/Join";
@@ -62,8 +62,8 @@ const App = () => {
           <Route path='/join' element={<Join />} />
         </Route>
 
-        <Route path='/details' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-          <Route path='/details' element={<Details />} />
+        <Route path='/projects/details/:id' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+          <Route path='/projects/details/:id' element={<DetailView />} />
         </Route>
 
         <Route path='projects/test' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
@@ -88,7 +88,7 @@ const App = () => {
 
         <Route path='/volunteer' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
           <Route path="/volunteer" element={<Volunteer />} />
-    
+
         </Route>
 
         {/* ---------------------------------- */}

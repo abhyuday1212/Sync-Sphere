@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { addElippsis } from "../../utils/frontend-utils";
+import DetailView from "../details/DetailView";
 // ----------------------
 import { Paper } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -64,7 +65,7 @@ const StyledCardContent = styled(CardContent)`
 
 // --------------------------
 
-function PostData({ post }) {
+const PostData = ({ post }) => {
     const paperStyle = {
         width: "97%",
         borderRadius: 3,
@@ -86,7 +87,7 @@ function PostData({ post }) {
                     style={{
                         position: "relative",
                         width: "100%",
-                        padding:"6px"
+                        padding: "6px"
                     }}>
                     <Image
                         component="img"
@@ -175,22 +176,24 @@ function PostData({ post }) {
                         margin: "2px",
                         height: "2.2rem"
                     }}>
-                        <Link to={"/join"}>
-                            <Button
-                                size="small"
-                                sx={{
-                                    gap: 10,
-                                    transition: "transform 0.3s ease-in-out",
-                                    "&:hover": {
-                                        transform: "scale(1)",
-                                        border: "2px solid rgba(140, 109, 189, 0.245)",
-                                    },
-                                }}
-                            >
+
+                        <Button
+                            size="small"
+                            sx={{
+                                gap: 10,
+                                transition: "transform 0.3s ease-in-out",
+                                "&:hover": {
+                                    transform: "scale(1)",
+                                    border: "2px solid rgba(140, 109, 189, 0.245)",
+                                },
+                            }}
+                        >
+                            <Link to={"/join"}>
                                 Join
-                            </Button>
-                        </Link>
-                        <Link to={"/details"}>
+                            </Link>
+                        </Button>
+
+                        <Link to={`details/${post._id}`}>
                             <Button
                                 size="small"
                                 sx={{
@@ -202,8 +205,10 @@ function PostData({ post }) {
                                     },
                                 }}
                             >
+
                                 See Details
                             </Button>
+
                         </Link>
 
                         <AvatarGroup

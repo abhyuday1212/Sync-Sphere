@@ -54,6 +54,11 @@ export const SERVICE_URLS = {
   getAllPosts: { url: '/posts', method: 'GET', params: true},
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
+
+  // fetchprojects via there id
+  getPostById: { url: '/post', method: 'GET', query: true },
+
+  // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
   // Aditya Sponsor Donation
 
   sponsorDonatePage: { url: '/sponsordonate', method: 'POST' }
