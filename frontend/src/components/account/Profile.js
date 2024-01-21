@@ -2,6 +2,10 @@ import React from 'react';
 import { Container, Card, CardActions, CardContent, Typography, Button, Paper } from '@mui/material';
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
+import { useContext } from "react";
+import { DataContext } from '../../context/DataProvider';
+import { useState, useEffect } from 'react';
+
 const StyledPaper = styled(Paper)`
   display: flex;
   align-items: center;
@@ -15,21 +19,72 @@ const StyledLink = styled(Link)`
   &:hover {   
     color: #000;
     font-wight:700;
-    scale: 1.1;
   }
 `;
 const StyledButton = styled(Button)`
   text-decoration: none;
+  background-color: #d14b4b;
+  color:#000;
+  boder:2px solid black
+  &:hover {
+      background-color: #ffffff;
+    color: #d14b4b;
+    text-size:25;
+    border:2px solid #534
+
+  }
+`;
+const StyledPassButton = styled(Button)`
+  text-decoration: none;
+  background-color: grey;
+  border:2px solid black;
   color:#000;
   &:hover {   
     text-size:22;
-    color: red;
-    border-color: #A9B388;
-    
-    scale: 1.4;
+    background-color: white;
+    bg-color: white;
+    color: crimson;
+    border-color: black;  
   }
 `;
+
+const initialUser = {
+  name: '',
+  username: ''
+};
+
+// const initialPass = {
+//   password: ''
+// };
+
 const Profile = () => {
+
+  const [user, setUser] = useState(initialUser);
+
+  // const [userpassword, setpassword] = useState(initialPass)
+
+  const { account } = useContext(DataContext);
+
+  // const [loading, setLoading] = useState(true);
+
+  user.name = account.name
+  user.username = account.username
+
+  // const handlePassResponse = async () => {
+  //   try {
+  //     const response = await API.userDetails();
+  //     console.log("API Response:", response);
+
+  //     console.log("Decrypted Password:", response.data.password);
+  //     userpassword.password = response.data.password
+
+  //   } catch (error) {
+  //     console.error("Error fetching decrypted password:", error);
+  //   }
+  // };
+
+
+
   return (
 
 
@@ -67,11 +122,8 @@ const Profile = () => {
               justifyContent: "center"
 
             }}>
-              <Typography gutterBottom variant="h5">
-                Name:
-              </Typography>
               <Typography variant="h5" color="text.secondary">
-                Name of user
+                Account Details :
               </Typography>
             </div>
           </CardActions>
@@ -80,29 +132,45 @@ const Profile = () => {
               display: "flex",
               justifyContent: "center"
             }}>
+
               <Typography gutterBottom variant="h5">
-                UserName:
+                Name :
               </Typography>
               <Typography variant="h5" color="text.secondary">
-                plalnt@pacho.com
+                &nbsp;{user.name}
               </Typography>
             </div>
           </CardActions>
           <CardActions>
+            <div style={{
+              display: "flex",
+              justifyContent: "center"
+            }}>
+
+              <Typography gutterBottom variant="h5">
+                UserName :
+              </Typography>
+              <Typography variant="h5" color="text.secondary">
+                &nbsp;{user.username}
+              </Typography>
+            </div>
+          </CardActions>
+          
+          {/* <CardActions>
 
             <div style={{
               display: "flex",
               justifyContent: "center"
 
             }}>
-              <Typography gutterBottom variant="h5">
-                Password:
-              </Typography>
+              <StyledPassButton gutterBottom variant="h5" onClick={() => handlePassResponse()}>
+                View Password
+              </StyledPassButton>
               <Typography variant="h5" color="text.secondary">
-                *********
+                {user.password}
               </Typography>
             </div>
-          </CardActions>
+          </CardActions> */}
 
 
           <CardActions >

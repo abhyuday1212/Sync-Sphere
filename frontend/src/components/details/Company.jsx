@@ -242,7 +242,7 @@ function Company() {
           // background:"#86868666"
         }}
       >
-        <div style={{ display: "flex", gap: 56 }}>
+        <div style={{ display: "flex", gap: 56,margin:"20px 0px" }}>
           <div>
             <Card
               style={{
@@ -266,7 +266,6 @@ function Company() {
                 border: "2px solid black",
                 padding: 4,
                 borderRadius: 9,
-                marginBottom: 40,
               }}
             >
               <div
@@ -331,11 +330,24 @@ function Company() {
             </div>
           </div>
         </div>
-
+        <div
+          style={
+            {
+              margin: "5px 0px",
+              // display: "flex",
+              // justifyContent: "flex-start",
+              // alignItems:"flex-start"
+            }
+          }
+        >
+          *If you want to get Physical verification Specifically from us for the
+          NGO, than you will be charged based on the slabbings.
+        </div>
         <Card
           style={{
             fontSize: "39px",
             color: "#000300",
+            marginTop: "60px",
           }}
         >
           Donate For The Cause
