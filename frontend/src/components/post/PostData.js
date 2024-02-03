@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { addElippsis } from "../../utils/frontend-utils";
 import DetailView from "../details/DetailView";
+import { useEffect, useState } from "react";
+import { DataContext } from "../../context/DataProvider";
+import { API } from "../../service/Api";
 // ----------------------
 import { Paper } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -32,10 +35,11 @@ const Container = styled(Box)`
   }
 `;
 
-const Image = styled("img")({
+const Image = styled('img')({
     width: "100%",
-    objectFit: "cover",
-    borderRadius: "10px 10px 0 0",
+    aspectRatio: "4/3",
+    objectFit: "content",
+    borderRadius: "10px 10px 6px 6px",
     height: "200px",
 });
 
@@ -66,18 +70,32 @@ const StyledCardContent = styled(CardContent)`
 // --------------------------
 
 const PostData = ({ post }) => {
+
     const paperStyle = {
         width: "97%",
         borderRadius: 3,
-        // backgroundColor: "red",
         height: "450px",
-        // padding: "6px",
         margin: "5px",
     };
-
     // ---------------------------------
     // js
-    const url = post.picture ? post.picture : 'url("https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")';
+    const [csrSymbol, setCsrSymbol] = useState("NOT VERRIFIED ❌")
+
+
+    useEffect(() => {
+        function changeCsrSymbol() {
+            if (post.csrfile !== "" && post.csrfile !== null && post.csrfile !== undefined) {
+                setCsrSymbol("Verified ✅");
+            } else {
+                setCsrSymbol("NOT VERIFIED ❌");
+            }
+        }
+        changeCsrSymbol();
+    }, [post.csrfile]);
+
+
+
+    const url = post.picture ? post.picture : 'https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 
     // ------------------------
     return (
@@ -90,18 +108,15 @@ const PostData = ({ post }) => {
                         padding: "6px"
                     }}>
                     <Image
+                        src={post.picture || url}
                         component="img"
-                        height="200px"
-                        position="absolute"
-                        top="0"
-                        style={{
-                            backgroundImage: url,
-                            backgroundSize: "cover",
-                            borderTopLeftRadius: "8px",
-                            borderTopRightRadius: "8px",
+                    // style={{
+                    //     backgroundSize: "cover",
+                    //     borderTopLeftRadius: "8px",
+                    //     borderTopRightRadius: "8px",
 
 
-                        }}
+                    // }}
                     />
 
                     <Typography gutterBottom variant="h5" component="div"
@@ -155,7 +170,7 @@ const PostData = ({ post }) => {
                             position: "absolute",
                             top: "25.9rem"
 
-                        }}>People Joined : 0</Text>
+                        }}>Email : {post.email}</Text>
 
                     <Typography
                         style={{
@@ -163,7 +178,7 @@ const PostData = ({ post }) => {
                             top: "27.2rem"
 
                         }}
-                    >CSR Verrified : ✅</Typography>
+                    >CSR Verrified :  {csrSymbol}</Typography>
 
 
 

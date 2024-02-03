@@ -31,12 +31,16 @@ const StyledButton = styled(Button)`
   }
 `;
 const StyledHead = styled(TableCell)`
+  width: 100%;
+  height: 3rem;
   font-size: 1rem;
   background: #e8e8e8;
   color: black;
   font-weight: 850;
   letter-spacing: 0.05em;
   text-align: center;
+  padding: 0px 0px;
+
   &:hover {
     background: #e8e8e8;
     color: crimson;
@@ -58,13 +62,23 @@ const StyledTableCell = styled(TableCell)`
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
+  width: 100%;
+  height: 100%;
+  padding: 0px 0px;
 `;
 
 function Categories() {
-
-  const divStyle = {
+  const divStyle1 = {
     height: "100%",
-    width:"100%",
+    width: "100%",
+    overflowX: "hidden",
+    padding: "5px",
+    margin: "1px",
+  };
+
+  const divStyle2 = {
+    height: "100%",
+    width: "100%",
     overflowX: "hidden",
     padding: "5px",
     margin: "1px",
@@ -76,35 +90,37 @@ function Categories() {
   return (
     <>
       <Grid container>
-        <div style={divStyle} className="scrollbar">
-          <Link
-            to={`/create?category=${category || ""}`}
-            style={{ textDecoration: "none" }}
-          >
-            <StyledButton variant="contained" color="primary">
-              New Project
-            </StyledButton>
-          </Link>
+        <div style={divStyle1} className="outer-div">
+          <div style={divStyle2} className="inner-div">
+            <Link
+              to={`/create?category=${category || ""}`}
+              style={{ textDecoration: "none" }}
+            >
+              <StyledButton variant="contained" color="primary">
+                New Project
+              </StyledButton>
+            </Link>
 
-          <StyledTable>
-            <TableHead>
-              <TableRow>
-                <StyledHead>
-                  <StyledLink to={"/projects"}>All Categories</StyledLink>
-                </StyledHead>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {catagories.map((category) => (
-                <TableRow key={category.id}>
-                  <StyledLink to={`/projects/?category=${category.type}`}>
-                    <StyledTableCell>{category.type}</StyledTableCell>
-                  </StyledLink>
+            <StyledTable>
+              <TableHead>
+                <TableRow>
+                  <StyledHead>
+                    <StyledLink to={"/projects/"}>All Categories</StyledLink>
+                  </StyledHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </StyledTable>
+              </TableHead>
+
+              <TableBody>
+                {catagories.map((category) => (
+                  <TableRow key={category.id}>
+                    <StyledLink to={`/projects/?category=${category.type}`}>
+                      <StyledTableCell>{category.type}</StyledTableCell>
+                    </StyledLink>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </StyledTable>
+          </div>
         </div>
       </Grid>
     </>

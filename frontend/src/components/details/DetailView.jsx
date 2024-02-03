@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { API } from "../../service/Api";
 
 import { Link } from "react-router-dom";
+
 // -------------------------
 import {
   Box,
@@ -33,8 +34,11 @@ const Container = styled(Box)(({ theme }) => ({
 
 const Image = styled("img")({
   width: "100%",
-  height: "50vh",
-  objectFit: "cover",
+  height: "63vh",
+  aspectRatio: "3/2",
+  aspectRatio: "16/10",
+  objectFit: "content",
+  borderRadius: "10px",
 });
 
 const Heading = styled(Typography)`
@@ -75,21 +79,42 @@ const Author = styled(Box)(({ theme }) => ({
 function DetailView() {
   const { id } = useParams();
 
-  const url =
-    "https://t4.ftcdn.net/jpg/04/29/64/57/360_F_429645702_EXZw2TFIzZBjegrXvBzg68gzd4aD62kB.jpg";
-
   const [post, setPost] = useState({});
+
+  const [csrSymbol, setCsrSymbol] = useState("NOT VERRIFIED ❌");
 
   useEffect(() => {
     const fetchData = async () => {
       let response = await API.getPostById(id);
-      console.log("response from the backend", response);
       if (response.isSuccess) {
         setPost(response.data);
       }
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    function changeCsrSymbol() {
+      if (
+        post.csrfile !== "" &&
+        post.csrfile !== null &&
+        post.csrfile !== undefined
+      ) {
+        setCsrSymbol("Verified ✅");
+      } else {
+        setCsrSymbol("NOT VERIFIED ❌");
+      }
+    }
+    changeCsrSymbol();
+  }, [post.csrfile]);
+
+  const creatorName = post.name;
+  console.log(creatorName);
+  const userType = post.usertype;
+
+  const url = post.picture
+    ? post.picture
+    : "https://t4.ftcdn.net/jpg/04/29/64/57/360_F_429645702_EXZw2TFIzZBjegrXvBzg68gzd4aD62kB.jpg";
 
   return (
     <>
@@ -103,6 +128,8 @@ function DetailView() {
             borderRadius: "6px",
           }}
         >
+          <Heading>Project : {post.title}</Heading>
+
           <Image src={url} alt="post" />
           <Box style={{ float: "right" }}>
             {/* <CardActions>
@@ -113,7 +140,6 @@ function DetailView() {
                         </Link>
                     </CardActions>  */}
           </Box>
-          <Heading>Project : {post.title}</Heading>
           <Box
             style={{
               display: "flex",
@@ -166,18 +192,19 @@ function DetailView() {
                 }}
               >
                 <Typography>
-                  <span style={{ fontWeight: 600 }}>Created As : </span>
-                  Individual
-                </Typography>
-
-                <Typography>
-                  <span style={{ fontWeight: 600 }}>Created By :</span> Abhyuday
-                  Pratap Singh
+                  <span style={{ fontWeight: 600 }}>Created As :</span>
+                  {userType}
                 </Typography>
 
                 <Typography>
                   <span style={{ fontWeight: 600 }}>
-                    CSR Status : Verrified
+                    Created By : {creatorName}
+                  </span>
+                </Typography>
+
+                <Typography>
+                  <span style={{ fontWeight: 600 }}>
+                    CSR Status : {csrSymbol}
                   </span>
                 </Typography>
 
@@ -207,7 +234,7 @@ function DetailView() {
               </Typography>
 
               <Typography>
-                <span style={{ fontWeight: 600 }}>Locatoin URL: </span>{" "}
+                <span style={{ fontWeight: 600 }}>YouTube: </span>
                 {post.address}
               </Typography>
             </Box>

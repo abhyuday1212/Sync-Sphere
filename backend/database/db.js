@@ -7,23 +7,17 @@ const Connection = async () => {
   const URI_AD = process.env.DB_URI_AD;
 
   try {
-    const connection = await mongoose.connect(URI);
-    const connectionAd = await mongoose.createConnection(URI_AD);
+    const connection = await mongoose.connect(URI, { useNewUrlParser: true });
+    console.log("Connected to Main Database successfully");
 
-    console.log("First database connected successfully");
-    console.log("Second database connected successfully");
+    const connectionAd = await mongoose.createConnection(URI_AD, { useNewUrlParser: true });
+    console.log("Connected to Payment Database successfully");
 
     return { connection, connectionAd };
+
   } catch (error) {
     console.log("Error while connecting to the databases", error);
   }
 };
-
-// In your main code:
-
-// const { connection, connectionAd } = await Connection();
-
-// Use `connection` and `connectionAd` for your respective database interactions
-
 
 export default Connection;

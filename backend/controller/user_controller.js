@@ -36,14 +36,19 @@ export const signupUser = async (request, response) => {
 
 export const loginUser = async (request, response) => {
   try {
-    let user = await UserModel.findOne({ username: request.body.username });
+    let user = await UserModel.findOne({ username: { $regex: new RegExp('^' + request.body.username + '$', 'i') } });
+
     if (!user) {
-      return response.status(400).json({ msg: "Username Does not match" });
+      return response.status(400).json({ msg: "Invalid credentials" });
+
     }
 
     try {
       let match = await bcrypt.compare(request.body.password, user.password);
       if (match) {
+
+        console.log("Match:", match);
+
         const accessToken = jwt.sign(
           user.toJSON(),
           process.env.ACCESS_SECRET_KEY,

@@ -4,14 +4,19 @@ import { useContext } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { API } from "../../service/Api"
 import { DataContext } from '../../context/DataProvider';
+import { FaBan } from "react-icons/fa";
+import { TbSelect } from "react-icons/tb";
 // material-ui
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import {
     Box,
     styled,
     FormControl,
     InputBase,
     Button,
-    TextareaAutosize,
+    // Text area autosize is giving resize error
+    TextareaAutosize
 } from "@mui/material";
 // icons
 import { AddCircle as Add } from "@mui/icons-material";
@@ -21,18 +26,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-// -----------------------------------------
-// const magicx = keyframes`
-//   0% {
-//     background-position: 0 50%;
-//   }
-//   50% {
-//     background-position: 100% 50%;
-//   }
-//   100% {
-//     background-position: 0 50%;
-//   }
-// `;
+import Slabbing from '../assets/slabbing.png'
 
 const Container = styled(Box)`
   margin: 0px 0px;
@@ -58,6 +52,18 @@ const InsideContainer = styled(Box)`
   // z-index:100;
 `;
 
+const StyledFileInput = styled(Box)`
+  width: 33.5vw;
+  margin: 0px 0px;
+  padding: 0px 0px;
+  display:flex;
+  justify-content: space-around;
+  align-items:center;
+  border: 2px solid #d5edff;
+    border-radius: 10px;
+  border-shadow: 0 5px 25px rgba(14, 21, 37, 0.8);
+`;
+
 const StyledFormControl = styled(FormControl)`
   margin-top: 10px;
   display: flex;
@@ -71,14 +77,22 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 const InputTextField = styled(InputBase)`
-  flex: 1;
-  margin: 0 10px;
-  padding: 5px 2px;
+  width: 100%;
+  border: 2px solid #d5edff;
+  border-radius: 10px;
+  margin: 2px 0px;
+  padding: 3px 2px;
   padding-left: 8px;
-  font-size: 20px;
-  font-weight: 370;
-  width: 1rem;
-  background:#e0eff9;
+  font-size: 21px;
+  font-weight: 700;
+  background: #e0eff9;
+  resize:none;
+  &:focus-visible {
+    outline: 2px solid grey;
+  }
+  ::placeholder {
+    opacity: 0.6;
+  }
 `;
 
 const Textarea = styled(TextareaAutosize)`
@@ -119,27 +133,50 @@ const Textarea2 = styled(TextareaAutosize)`
   }
 `;
 
-const TextDescriptionarea = styled(TextareaAutosize)`
-  width: 100%;
+const BudgetArea = styled(TextareaAutosize)`
+  width: 31vw;
+  padding: 8px 5px;
   border: 2px solid #d5edff;
   border-radius: 10px;
-  margin: 7px 0px;
-  padding: 10px 2px;
-  padding-left: 8px;
+  margin:2px 2px;
+  margin-left:7px;
   font-size: 17px;
   font-weight: 350;
-  resize: none;
   background: #e0eff9;
+  resize:none;
   &:focus-visible {
-    outline: 2px solid grey;
+    outline: 2px solid green;
+    z-index:10;
   }
   ::placeholder {
     opacity: 0.6;
   }
 `;
 
+const StyledSelect = styled(Select)`
+  width: 31vw;
+  height : 2.48rem;
+  padding: 0px 5px;
+  border: 2px solid #d5edff;
+  border-radius: 10px;
+  margin:2px 2px;
+  margin-left:7px;
+  font-size: 17px;
+  font-weight: 350;
+  background: #e0eff9;
+  &:focus-visible { 
+  }
+  ::placeholder {
+    opacity: 0.6;
+  }
+   &:focus-visible {
+    outline: 2px solid grey;
+  }
+`;
+
+
 const TextInformationarea = styled(TextareaAutosize)`
-  width: 28vw;
+  width: 31vw;
   padding: 8px 5px;
   border: 2px solid #d5edff;
   border-radius: 10px;
@@ -156,27 +193,29 @@ const TextInformationarea = styled(TextareaAutosize)`
     opacity: 0.6;
   }
 `;
-const Image = styled(Box)`
-    width: 100%;
-    background: url(https://lh3.googleusercontent.com/u/0/drive-viewer/AEYmBYQtDwIavTxu3fvFxnAmUhWSQKxI3ahloPwsbbj_H7JQwyD4NigXLx3W0ZwXUSLQdvTfdvtfCLsN55XaPDOlDE5Y7d6bBg=w1920-h853) center/contain no-repeat #000300;
-    height: 50vh;
-    display: flex;
-    border-radius: 14px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
+const Image = styled('img')({
+    width: '100%',
+    height: '50vh',
+    aspectRatio: "3/2",
+    objectFit: 'contain',
+    borderRadius: '14px',
+});
 
 
 
 const initialPost = {
+    name: '',
     title: '',
     summary: '',
     budget: '',
+    usertype: 'Individual',
+    picture: '',
+    csrfile: '',
     number: '',
     email: '',
     address: '',
-    addressurl: '',
+    yturl: '',
+    description: '',
     username: '',
     categories: '',
     createdDate: new Date(),
@@ -192,10 +231,32 @@ function PaidPost() {
     const location = useLocation();
 
     const [post, setPost] = useState(initialPost);
-    // const [file, setFile] = useState('');
+
+    const [file, setFile] = useState('');
+
+    const [csrfile, setCsrPdf] = useState('')
+
+    const defaultUserType = 'Individual'
+    const [usertype, setUserType] = useState(defaultUserType)
+
     const { account } = useContext(DataContext);
 
-    const url = post.picture ? post.picture : `https://images.pexels.com/photos/1485894/pexels-photo-1485894.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`;
+
+
+
+    const [formErrors, setFormErrors] = useState({
+        title: false,
+        summary: false,
+        budget: false,
+        number: false,
+        email: false,
+        address: false,
+        yturl: false,
+        description: false,
+    });
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
 
 
     // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
@@ -203,7 +264,7 @@ function PaidPost() {
     const handleSummaryChange = (e) => {
         const inputValue = e.target.value;
 
-        const RestrictedInput = inputValue.slice(0, 110);
+        const RestrictedInput = inputValue.slice(0, 300);
 
         setSummary(RestrictedInput);
     };
@@ -215,6 +276,13 @@ function PaidPost() {
 
         setTitle(RestrictedInput);
     };
+
+    const handleUserTypeChange = (e) => {
+        const inputValue = e.target.value;
+        // console.log('Selected UserType:', inputValue);
+        setUserType(inputValue);
+        handleChange(e);
+    }
 
     const handleNumberChange = (e) => {
         const inputValue = e.target.value;
@@ -231,50 +299,112 @@ function PaidPost() {
 
         const numericInput = inputValue.replace(/[^0-9]/g, "");
 
-        const restrictedInput = numericInput.slice(0, 9);
+        const restrictedInput = numericInput.slice(0, 10);
 
         setBudget(restrictedInput);
     };
 
-
-    // -==-=-=-==-=-=Image display portion to be done at last
+    const url = Slabbing;
 
     useEffect(() => {
-        // const getImage = async () => {
-        //     if (file) {
-        //         const data = new FormData();
-        //         data.append("file", file);
-        //         console.log("FormData entries:");
-        //         for (let pair of data.entries()) {
-        //             console.log(pair[0], pair[1]);
-        //         }
+        try {
+            const getImage = async () => {
+                if (file) {
+                    const data = new FormData();
+                    data.append('name', file.name);
+                    data.append('file', file);
+                    const response = await API.uploadFile(data);
+                    setPost({ ...post, picture: response.data.imageUrl })
+                }
+            }
+            getImage();
 
-        //         const response = await API.uploadFile(data);
-        //         post.picture = response.data;
-        //     }
-        // }
-        // getImage();
+
+
+        } catch (error) {
+            console.log("Error");
+        }
+
         post.categories = location.search?.split('=')[1] || 'All';
         post.username = account.username;
-    }, [])
+        post.name = account.name;
 
-    const handleFileChange = (e) => {
-        // const selectedFile = e.target.files[0];
+    }, [file])
 
-        // if (selectedFile && selectedFile instanceof File) {
-        //     setFile(selectedFile);
-        // }
-    };
+
+
+    useEffect(() => {
+        const getCsrFile = async () => {
+            if (csrfile) {
+                const data = new FormData();
+                data.append("name", csrfile.name);
+                data.append("csrfile", csrfile);
+
+                const response = await API.uploadPdfFile(data);
+                setPost({ ...post, csrfile: response.data.pdfUrl })
+                console.log(response);
+
+            }
+
+        }
+        getCsrFile();
+
+    }, [csrfile])
+
+
+
+    useEffect(() => {
+        post.usertype = usertype;
+    }, [usertype])
+
+
+
+
     // -===-=-==-=-=-==-=--==
-    const savePost = async () => {
-        let response = await API.createPost(post);
 
-        if (response.isSuccess) {
-            navigate('/projects');
+    const validateForm = () => {
+        const errors = {
+            title: !post.title || !post.title.trim(),
+            summary: !post.summary || !post.summary.trim(),
+            budget: !post.budget || !post.budget.trim(),
+            number: !post.number || !post.number.trim(),
+            email: !post.email || !post.email.trim(),
+            address: !post.address || !post.address.trim(),
+            yturl: !post.yturl || !post.yturl.trim(),
+            description: !post.description || !post.description.trim(),
+        };
+
+        setFormErrors(errors);
+        const formIsValid = Object.values(errors).every((value) => !value);
+        setShowError(!formIsValid);
+        return formIsValid;
+    };
+
+    const categoryParam = location.search?.split('=')[1] || 'All';
+
+
+    const savePost = async () => {
+        if (validateForm()) {
+            try {
+                // setLoading(true);
+                let response = await API.createPost(post);
+                if (response.isSuccess) {
+                    navigate(`/projects/?category=${categoryParam}`);
+                }
+                else {
+                    setErrorMessage('Error saving post. Please try again.');
+                }
+
+            } catch (error) {
+                setErrorMessage('An unexpected error occurred. Please try again later.');
+
+            }
         }
     }
+
     const handleChange = (e) => {
         setPost({ ...post, [e.target.name]: e.target.value });
+        // console.log(post);
     }
 
     // -=-==-=-=-=-=-=-=-=-=-=-=-=-=-=--=-===-=
@@ -282,67 +412,112 @@ function PaidPost() {
     return (
         <div>
             <Container>
+
                 <InsideContainer>
-                    <form>
-                        <StyledFormControl>
-                            <InputTextField
-                                placeholder="Enter Project Title.."
-                                value={title}
-                                required
-                                name="title"
-                                onChange={(e) => {
-                                    handleTitleChange(e);
-                                    handleChange(e);
-                                }}
-                            />
-                        </StyledFormControl>
 
-                        {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+                    <div style={{
 
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                margin: "7px 0px",
+                    }}>
+                        <InputTextField
+                            placeholder="Enter Project Title.."
+                            value={title}
+                            required
+                            autoFocus
+                            name="title"
+                            onChange={(e) => {
+                                handleTitleChange(e);
+                                handleChange(e);
                             }}
-                        >
+                        />
+                    </div>
+
+
+                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            margin: "5px 0px",
+                        }}
+                    >
+
+                        <StyledFileInput>
                             <label
-                                htmlFor="fileInput"
-                                style={{ display: "flex", alignItems: "center" }}
                                 name="image"
+                                htmlFor="fileInput"
+                                style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
                             >
                                 <Add fontSize="large" />
-                                Choose Image
+                                Choose Banner Image (PNG*)
                             </label>
+
                             <input
                                 type="file"
                                 id="fileInput"
                                 key="fileInput"
                                 style={{ display: "none" }}
-                                onChange={handleFileChange}
+                                accept=".png"
+                                onChange={(e) => setFile(e.target.files[0])}
                             />
-                            <Textarea
-                                placeholder="Write Summary of project...(Max 110 Charater)"
-                                name="summary"
-                                value={summary}
-                                required
-                                inputProps={{
-                                    maxLength: 110,
-                                }}
-                                onChange={(e) => {
-                                    handleSummaryChange(e);
-                                    handleChange(e);
-                                }}
-                            />
-                        </div>
-                        {/* *-*--*-*-*-*-*-*-*- budget*-*-*-**-**-*-*-*/}
 
-                        <div className="flex flex-row items-center">
-                            <CurrencyRupeeOutlinedIcon fontSize="large" />
-                            <TextDescriptionarea
-                                placeholder="Project budget in Rupees (<= 99 Cr)..."
+                        </StyledFileInput>
+                        <StyledFileInput>
+                            <label
+                                htmlFor="csrfile"
+                                name="csrfile"
+                                style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
+                            >
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }} >
+                                    <Add fontSize="large" />
+                                    Upload CSR
+                                    <span style={{ fontStyle: "italic", fontSize: "15px", color: "green" }}>&nbsp;&nbsp;(Charges below*)</span>
+                                </div>
+
+                            </label>
+
+                            <input
+                                name="csrfile"
+                                type="file"
+                                id="csrfile"
+                                key="csrfile"
+                                accept=".pdf"
+                                style={{ display: "none" }}
+                                onChange={(e) => setCsrPdf(e.target.files[0])}
+                            />
+                        </StyledFileInput>
+                    </div>
+                    {/* *-*--*-*-*-*-*-*-*- summary -*-*-**-**-*-*-*/}
+
+                    <Textarea
+                        placeholder="Write Summary of project...(Max 110 Charater)"
+                        name="summary"
+                        value={summary}
+                        required
+                        inputprops={{
+                            maxLength: 110,
+                        }}
+                        onChange={(e) => {
+                            handleSummaryChange(e);
+                            handleChange(e);
+                        }}
+                    />
+
+                    {/* -------------------budget -------- */}
+
+                    <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-arround",
+                        margin: "5px 0px",
+                        padding: "5px 0px",
+                    }}>
+                        <div className="flex flex-row items-center w-full">
+                            <CurrencyRupeeOutlinedIcon />
+                            <BudgetArea
+                                placeholder="Project budget in Rupees (<= 100 Cr)..."
                                 required
                                 name="budget"
                                 key="budget"
@@ -353,89 +528,120 @@ function PaidPost() {
                                 }}
                             />
                         </div>
-                        {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                margin: "5px 0px",
-                                padding: "5px 0px",
-                            }}
-                        >
 
-                            <div className="flex flex-row items-center">
-                                < LocalPhoneOutlinedIcon />
-                                <TextInformationarea
-                                    placeholder="Enter Mobile number (+91 **********)"
-                                    name="number"
-                                    // style={{ width: "100%" }}
-                                    value={number}
-                                    required
-                                    onChange={(e) => {
-                                        handleNumberChange(e);
-                                        handleChange(e);
-                                    }}
-                                />
-                            </div>
+                        <div className="flex flex-row items-center w-full">
+                            <TbSelect fontSize="1.45rem" />
 
-                            <div className="flex flex-row items-center">
-                                <EmailOutlinedIcon />
-                                <TextInformationarea
-                                    placeholder="Enter Email (***@gmail.com)"
-                                    name="email"
-                                    required
-                                    onChange={(e) => handleChange(e)}
-                                />
-                            </div>
+                            <StyledSelect
+                                id="usertype"
+                                value={usertype}
+                                label="Post as..."
+                                name="usertype"
+                                onChange={handleUserTypeChange}
+                            >
+                                <MenuItem value={defaultUserType}>Individual</MenuItem>
+
+                                <MenuItem value="Ngo">Non-Profit Orgz.</MenuItem>
+
+                                <MenuItem value="Company">Company</MenuItem>
+                            </StyledSelect>
                         </div>
-                        {/* *-*--*-*-*-*-* addresss -*-*-**-*-*-*-*-**-**-*-*-*/}
-                        <div className="flex flex-row items-center">
-                            <HomeOutlinedIcon />
-                            <Textarea2
-                                placeholder="Project Venue address..."
-                                name="address"
+                    </div >
+
+                    {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
+                    <div
+                        style={{
+                            display: "flex",
+                            flexShrink: "1",
+                            alignItems: "center",
+                            justifyContent: "space-arround",
+                            margin: "5px 0px",
+                            padding: "5px 0px",
+                        }}
+                    >
+
+                        <div className="flex flex-row items-center w-full">
+                            < LocalPhoneOutlinedIcon />
+                            <TextInformationarea
+                                placeholder="Enter Mobile number (+91 **********)"
+                                name="number"
+                                // style={{ width: "100%" }}
+                                value={number}
+                                required
+                                onChange={(e) => {
+                                    handleNumberChange(e);
+                                    handleChange(e);
+                                }}
+                            />
+                        </div>
+
+                        <div className="flex flex-row items-center w-full">
+                            <EmailOutlinedIcon />
+                            <TextInformationarea
+                                placeholder="Enter Email (***@gmail.com)"
+                                name="email"
                                 required
                                 onChange={(e) => handleChange(e)}
                             />
+                        </div>
+                    </div>
+                    {/* *-*--*-*-*-*-* addresss -*-*-**-*-*-*-*-**-**-*-*-*/}
+                    <div className="flex flex-row items-center">
+                        <HomeOutlinedIcon />
+                        <Textarea2
+                            placeholder="Project Venue address(Google location url preffered)..."
+                            name="address"
+                            required
+                            onChange={(e) => handleChange(e)}
+                        />
+
+                    </div>
+                    {/* *-*--*-*-*- Google Url-*-**-*-*-*-*-**-**-*-*-*/}
+                    <div className="flex flex-row items-center">
+                        <LanguageOutlinedIcon />
+                        <Textarea2
+                            placeholder="Paste any YouTube link/URL showcasing the problem..."
+                            name="yturl"
+                            required
+                            onChange={(e) => handleChange(e)}
+                        />
+                    </div>
+                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+
+                    <div className="flex flex-row items-center">
+                        <DescriptionOutlinedIcon />
+                        <Textarea2
+                            placeholder="Write detailed description in Headings and points..."
+                            name="description"
+                            required
+                            onChange={(e) => handleChange(e)}
+                        />
+
+                    </div>
+                    {/* *-*--*-*-*-*-*-*-*-*--*img*-*-*-*-*-**-**-*-*-*/}
+                    <Image src={url} alt="Banner img..." />
+
+
+                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+
+                    {showError && (
+                        <div style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
+                            {errorMessage || 'Please fill out all the required fields.'}
 
                         </div>
-                        {/* *-*--*-*-*- Google Url-*-**-*-*-*-*-**-**-*-*-*/}
-                        <div className="flex flex-row items-center">
-                            <LanguageOutlinedIcon />
-                            <Textarea2
-                                placeholder="Paste Google Maps Location URL..."
-                                name="addressurl"
-                                required
-                                onChange={(e) => handleChange(e)}
-                            />
-                        </div>
-                        {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+                    )}
+                    {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
 
-                        <div className="flex flex-row items-center">
-                            <DescriptionOutlinedIcon />
-                            <Textarea2
-                                placeholder="Write description..."
-                                name="description"
-                                required
-                                onChange={(e) => handleChange(e)}
-                            />
+                    <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
+                        <Button variant="contained" onClick={() => savePost()}>Publish</Button>
+                    </div>
 
-                        </div>
-                        {/* *-*--*-*-*-*-*-*-*-*--*img*-*-*-*-*-**-**-*-*-*/}
-                        <Image src={url} alt="Uploaded img..." />
-
-
-                        {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
-                        <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
-                            <Button  variant="contained" onClick={() => savePost()}>Publish</Button>
-                        </div>
-                    </form>
                 </InsideContainer>
             </Container>
         </div>
     );
 }
 
-export default PaidPost;
+
+
+export default PaidPost

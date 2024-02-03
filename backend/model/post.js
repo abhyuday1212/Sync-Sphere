@@ -1,11 +1,21 @@
 import mongoose from 'mongoose';
 
 const PostSchema = mongoose.Schema({
-
+    name: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         required: true,
-        unique: true
+    },
+    picture: {
+        type: String,
+        required: false
+    },
+    csrfile: {
+        type: String,
+        required: false
     },
     summary: {
         type: String,
@@ -14,6 +24,10 @@ const PostSchema = mongoose.Schema({
     budget: {
         type: Number,
         required: true
+    },
+    usertype: {
+        type: String,
+        required:false
     },
     number: {
         type: Number,
@@ -27,18 +41,14 @@ const PostSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    addressurl: {
+    yturl: {
         type: String,
-        required: true
+        required: false,
     },
     description: {
         type: String,
         required: true
     },
-    // picture: {
-    //     type: String,
-    //     required: false
-    // },
     username: {
         type: String,
         required: true

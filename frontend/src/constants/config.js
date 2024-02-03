@@ -42,7 +42,10 @@ export const SERVICE_URLS = {
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
   // image_Api
-  // uploadFile: { url: 'file/upload', method: 'POST' },
+  uploadFile: { url: 'file/upload', method: 'POST' },
+
+  //pdf_api
+  uploadPdfFile: { url: 'csr/pdfupload', method: 'POST' },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 

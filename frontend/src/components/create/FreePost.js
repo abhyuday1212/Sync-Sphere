@@ -4,14 +4,19 @@ import { useContext } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { API } from "../../service/Api"
 import { DataContext } from '../../context/DataProvider';
+import { FaBan } from "react-icons/fa";
+import { TbSelect } from "react-icons/tb";
 // material-ui
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import {
     Box,
     styled,
     FormControl,
     InputBase,
     Button,
-    TextareaAutosize,
+    // Text area autosize is giving resize error
+    TextareaAutosize, FormLabel, FormHelperText,
 } from "@mui/material";
 // icons
 import { AddCircle as Add } from "@mui/icons-material";
@@ -21,19 +26,10 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-// -----------------------------------------
-// const magicx = keyframes`
-//   0% {
-//     background-position: 0 50%;
-//   }
-//   50% {
-//     background-position: 100% 50%;
-//   }
-//   100% {
-//     background-position: 0 50%;
-//   }
-// `;
+import bannerImage from '../assets/banner.png'
 
+// -----------------------------------------
+ 
 const Container = styled(Box)`
   margin: 0px 0px;
   padding: 0px 2px;
@@ -58,6 +54,18 @@ const InsideContainer = styled(Box)`
   // z-index:100;
 `;
 
+const StyledFileInput = styled(Box)`
+  width: 33.5vw;
+  margin: 0px 0px;
+  padding: 0px 0px;
+  display:flex;
+  justify-content: space-around;
+  align-items:center;
+  border: 2px solid #d5edff;
+    border-radius: 10px;
+  border-shadow: 0 5px 25px rgba(14, 21, 37, 0.8);
+`;
+
 const StyledFormControl = styled(FormControl)`
   margin-top: 10px;
   display: flex;
@@ -71,14 +79,22 @@ const StyledFormControl = styled(FormControl)`
 `;
 
 const InputTextField = styled(InputBase)`
-  flex: 1;
-  margin: 0 10px;
-  padding: 5px 2px;
+  width: 100%;
+  border: 2px solid #d5edff;
+  border-radius: 10px;
+  margin: 2px 0px;
+  padding: 3px 2px;
   padding-left: 8px;
-  font-size: 20px;
-  font-weight: 370;
-  width: 1rem;
-  background:#e0eff9;
+  font-size: 21px;
+  font-weight: 700;
+  background: #e0eff9;
+  resize:none;
+  &:focus-visible {
+    outline: 2px solid grey;
+  }
+  ::placeholder {
+    opacity: 0.6;
+  }
 `;
 
 const Textarea = styled(TextareaAutosize)`
@@ -119,27 +135,50 @@ const Textarea2 = styled(TextareaAutosize)`
   }
 `;
 
-const TextDescriptionarea = styled(TextareaAutosize)`
-  width: 100%;
+const BudgetArea = styled(TextareaAutosize)`
+  width: 31vw;
+  padding: 8px 5px;
   border: 2px solid #d5edff;
   border-radius: 10px;
-  margin: 7px 0px;
-  padding: 10px 2px;
-  padding-left: 8px;
+  margin:2px 2px;
+  margin-left:7px;
   font-size: 17px;
   font-weight: 350;
-  resize: none;
   background: #e0eff9;
+  resize:none;
   &:focus-visible {
-    outline: 2px solid grey;
+    outline: 2px solid green;
+    z-index:10;
   }
   ::placeholder {
     opacity: 0.6;
   }
 `;
 
+const StyledSelect = styled(Select)`
+  width: 31vw;
+  height : 2.48rem;
+  padding: 0px 5px;
+  border: 2px solid #d5edff;
+  border-radius: 10px;
+  margin:2px 2px;
+  margin-left:7px;
+  font-size: 17px;
+  font-weight: 350;
+  background: #e0eff9;
+  &:focus-visible { 
+  }
+  ::placeholder {
+    opacity: 0.6;
+  }
+   &:focus-visible {
+    outline: 2px solid grey;
+  }
+`;
+
+
 const TextInformationarea = styled(TextareaAutosize)`
-  width: 28vw;
+  width: 31vw;
   padding: 8px 5px;
   border: 2px solid #d5edff;
   border-radius: 10px;
@@ -156,27 +195,28 @@ const TextInformationarea = styled(TextareaAutosize)`
     opacity: 0.6;
   }
 `;
-const Image = styled(Box)`
-    width: 100%;
-    background: url(https://images.pexels.com/photos/1485894/pexels-photo-1485894.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1) center/contain no-repeat #000300;
-    height: 50vh;
-    display: flex;
-    border-radius: 14px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
-
+const Image = styled('img')({
+    width: '100%',
+    height: '50vh',
+    aspectRatio: "3/2",
+    objectFit: 'contain',
+    borderRadius: '14px',
+});
 
 
 const initialPost = {
+    name: '',
     title: '',
     summary: '',
     budget: '',
+    usertype: 'Individual',
+    picture: '',
+    csrpdf: '',
     number: '',
     email: '',
     address: '',
-    addressurl: '',
+    yturl: '',
+    description: '',
     username: '',
     categories: '',
     createdDate: new Date(),
@@ -192,10 +232,16 @@ function FreePost() {
     const location = useLocation();
 
     const [post, setPost] = useState(initialPost);
-    // const [file, setFile] = useState('');
+
+    const [file, setFile] = useState('');
+
+    const [csrpdf, setCsrPdf] = useState('')
+
+    const defaultUserType = 'Individual'
+    const [usertype, setUserType] = useState(defaultUserType)
+
     const { account } = useContext(DataContext);
 
-    const url = post.picture ? post.picture : `https://images.pexels.com/photos/1485894/pexels-photo-1485894.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`;
 
     const [formErrors, setFormErrors] = useState({
         title: false,
@@ -204,13 +250,23 @@ function FreePost() {
         number: false,
         email: false,
         address: false,
-        addressurl: false,
+        yturl: false,
         description: false,
     });
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
 
+    // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
+    const [loaderVisible, setLoaderVisible] = useState(false);
+
+    const showLoader = () => {
+        setLoaderVisible(true);
+    };
+
+    const hideLoader = () => {
+        setLoaderVisible(false);
+    };
     // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
 
     const handleSummaryChange = (e) => {
@@ -228,6 +284,13 @@ function FreePost() {
 
         setTitle(RestrictedInput);
     };
+
+    const handleUserTypeChange = (e) => {
+        const inputValue = e.target.value;
+        // console.log('Selected UserType:', inputValue);
+        setUserType(inputValue);
+        handleChange(e);
+    }
 
     const handleNumberChange = (e) => {
         const inputValue = e.target.value;
@@ -249,35 +312,43 @@ function FreePost() {
         setBudget(restrictedInput);
     };
 
-
-    // -==-=-=-==-=-=Image display portion to be done at last
+    const url = post.picture ? post.picture : bannerImage;
 
     useEffect(() => {
-        // const getImage = async () => {
-        //     if (file) {
-        //         const data = new FormData();
-        //         data.append("file", file);
-        //         console.log("FormData entries:");
-        //         for (let pair of data.entries()) {
-        //             console.log(pair[0], pair[1]);
-        //         }
+        try {
+            const getImage = async () => {
+                if (file) {
+                    const data = new FormData();
+                    data.append("name", file.name);
+                    data.append("file", file);
+                    
+                    console.log(file);
+                    const response = await API.uploadFile(data);
+                    setPost({ ...post, picture: response.data.imageUrl })
+                }
+            }
+            getImage();
 
-        //         const response = await API.uploadFile(data);
-        //         post.picture = response.data;
-        //     }
-        // }
-        // getImage();
+
+
+        } catch (error) {
+            console.log("Error");
+        }
+
         post.categories = location.search?.split('=')[1] || 'All';
         post.username = account.username;
-    }, [])
+        post.name = account.name;
 
-    const handleFileChange = (e) => {
-        // const selectedFile = e.target.files[0];
+    }, [file])
 
-        // if (selectedFile && selectedFile instanceof File) {
-        //     setFile(selectedFile);
-        // }
-    };
+
+    useEffect(() => {
+        post.usertype = usertype;
+    }, [usertype])
+
+
+
+
     // -===-=-==-=-=-==-=--==
 
     const validateForm = () => {
@@ -288,7 +359,7 @@ function FreePost() {
             number: !post.number || !post.number.trim(),
             email: !post.email || !post.email.trim(),
             address: !post.address || !post.address.trim(),
-            addressurl: !post.addressurl || !post.addressurl.trim(),
+            yturl: !post.yturl || !post.yturl.trim(),
             description: !post.description || !post.description.trim(),
         };
 
@@ -298,15 +369,16 @@ function FreePost() {
         return formIsValid;
     };
 
-
+    const categoryParam = location.search?.split('=')[1] || 'All';
 
 
     const savePost = async () => {
         if (validateForm()) {
             try {
+                // setLoading(true);
                 let response = await API.createPost(post);
                 if (response.isSuccess) {
-                    navigate('/projects');
+                    navigate(`/projects/?category=${categoryParam}`);
                 }
                 else {
                     setErrorMessage('Error saving post. Please try again.');
@@ -321,6 +393,7 @@ function FreePost() {
 
     const handleChange = (e) => {
         setPost({ ...post, [e.target.name]: e.target.value });
+        // console.log(post);
     }
 
     // -=-==-=-=-=-=-=-=-=-=-=-=-=-=-=--=-===-=
@@ -328,20 +401,24 @@ function FreePost() {
     return (
         <div>
             <Container>
-                <InsideContainer>
+                <InsideContainer >
 
-                    <StyledFormControl>
+                    <div style={{
+
+                    }}>
                         <InputTextField
                             placeholder="Enter Project Title.."
                             value={title}
                             required
+                            autoFocus
                             name="title"
                             onChange={(e) => {
                                 handleTitleChange(e);
                                 handleChange(e);
                             }}
                         />
-                    </StyledFormControl>
+                    </div>
+
 
                     {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
 
@@ -351,67 +428,131 @@ function FreePost() {
                             flexDirection: "row",
                             alignItems: "center",
                             justifyContent: "space-between",
-                            margin: "7px 0px",
+                            margin: "5px 0px",
                         }}
                     >
-                        <label
-                            htmlFor="fileInput"
-                            style={{ display: "flex", alignItems: "center" }}
-                            name="image"
-                        >
-                            <Add fontSize="large" />
-                            Choose Image
-                        </label>
-                        <input
-                            type="file"
-                            id="fileInput"
-                            key="fileInput"
-                            style={{ display: "none" }}
-                            onChange={handleFileChange}
-                        />
-                        <Textarea
-                            placeholder="Write Summary of project...(Max 110 Charater)"
-                            name="summary"
-                            value={summary}
-                            required
-                            inputProps={{
-                                maxLength: 110,
-                            }}
-                            onChange={(e) => {
-                                handleSummaryChange(e);
-                                handleChange(e);
-                            }}
-                        />
-                    </div>
-                    {/* *-*--*-*-*-*-*-*-*- budget*-*-*-**-**-*-*-*/}
 
-                    <div className="flex flex-row items-center">
-                        <CurrencyRupeeOutlinedIcon fontSize="large" />
-                        <TextDescriptionarea
-                            placeholder="Project budget in Rupees (<= 9999)..."
-                            required
-                            name="budget"
-                            key="budget"
-                            value={budget}
-                            onChange={(e) => {
-                                handleBudgetChange(e);
-                                handleChange(e);
-                            }}
-                        />
+                        <StyledFileInput>
+                            <label
+                                htmlFor="fileInput"
+                                style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
+                                name="image"
+                            >
+                                <Add fontSize="large" />
+                                Choose Banner Image (PNG*)
+                            </label>
+
+                            <input
+                                type="file"
+                                id="fileInput"
+                                key="fileInput"
+                                style={{ display: "none" }}
+                                accept=".png"
+
+                                onChange={(e) => setFile(e.target.files[0])}
+                            />
+
+                        </StyledFileInput>
+                        <StyledFileInput>
+                            <label
+                                htmlFor="csrPdf"
+                                name="csrpdf"
+                                style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
+                            >
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }} >
+                                    <Add fontSize="large" />
+                                    CSR <span style={{ fontStyle: "italic", fontSize: "15px", color: "red" }}>&nbsp;&nbsp;(Paid Only*)</span>
+                                </div>
+
+                                <FaBan style={{
+                                    color: "red",
+                                    marginRight: "8px"
+                                }} fontSize="large" />
+                            </label>
+
+                            <input
+                                type="file"
+                                id="csrPdf"
+                                key="csrPdf"
+                                accept=".pdf"
+                                disabled={true}
+                                style={{ display: "none" }}
+                                onChange={(e) => setCsrPdf(e.target.files[0])}
+                            />
+                        </StyledFileInput>
                     </div>
+                    {/* *-*--*-*-*-*-*-*-*- summary -*-*-**-**-*-*-*/}
+
+                    <Textarea
+                        placeholder="Write Summary of project...(Max 110 Charater)"
+                        name="summary"
+                        value={summary}
+                        required
+                        inputprops={{
+                            maxLength: 110,
+                        }}
+                        onChange={(e) => {
+                            handleSummaryChange(e);
+                            handleChange(e);
+                        }}
+                    />
+
+                    {/* -------------------budget -------- */}
+
+                    <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-arround",
+                        margin: "5px 0px",
+                        padding: "5px 0px",
+                    }}>
+                        <div className="flex flex-row items-center w-full">
+                            <CurrencyRupeeOutlinedIcon />
+                            <BudgetArea
+                                placeholder="Project budget in Rupees (<= 9999)..."
+                                required
+                                name="budget"
+                                key="budget"
+                                value={budget}
+                                onChange={(e) => {
+                                    handleBudgetChange(e);
+                                    handleChange(e);
+                                }}
+                            />
+                        </div>
+
+                        <div className="flex flex-row items-center w-full">
+                            <TbSelect fontSize="1.45rem" />
+
+                            <StyledSelect
+                                id="usertype"
+                                value={usertype}
+                                label="Post as..."
+                                name="usertype"
+                                onChange={handleUserTypeChange}
+                            >
+                                <MenuItem value={defaultUserType}>Individual</MenuItem>
+
+                                <MenuItem value="Ngo">Non-Profit Orgz.</MenuItem>
+
+                                <MenuItem value="Company">Company</MenuItem>
+                            </StyledSelect>
+                        </div>
+                    </div >
+
                     {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
                     <div
                         style={{
                             display: "flex",
-                            flexDirection: "row",
+                            flexShrink: "1",
                             alignItems: "center",
-                            justifyContent: "space-between",
+                            justifyContent: "space-arround",
                             margin: "5px 0px",
                             padding: "5px 0px",
                         }}
                     >
 
-                        <div className="flex flex-row items-center">
+                        <div className="flex flex-row items-center w-full">
                             < LocalPhoneOutlinedIcon />
                             <TextInformationarea
                                 placeholder="Enter Mobile number (+91 **********)"
@@ -426,7 +567,7 @@ function FreePost() {
                             />
                         </div>
 
-                        <div className="flex flex-row items-center">
+                        <div className="flex flex-row items-center w-full">
                             <EmailOutlinedIcon />
                             <TextInformationarea
                                 placeholder="Enter Email (***@gmail.com)"
@@ -440,7 +581,7 @@ function FreePost() {
                     <div className="flex flex-row items-center">
                         <HomeOutlinedIcon />
                         <Textarea2
-                            placeholder="Project Venue address..."
+                            placeholder="Project Venue address(Google location url preffered)..."
                             name="address"
                             required
                             onChange={(e) => handleChange(e)}
@@ -451,8 +592,8 @@ function FreePost() {
                     <div className="flex flex-row items-center">
                         <LanguageOutlinedIcon />
                         <Textarea2
-                            placeholder="Paste Google Maps Location URL..."
-                            name="addressurl"
+                            placeholder="Paste any YouTube link/URL showcasing the problem..."
+                            name="yturl"
                             required
                             onChange={(e) => handleChange(e)}
                         />
@@ -462,7 +603,7 @@ function FreePost() {
                     <div className="flex flex-row items-center">
                         <DescriptionOutlinedIcon />
                         <Textarea2
-                            placeholder="Write description..."
+                            placeholder="Write detailed description in Headings and points..."
                             name="description"
                             required
                             onChange={(e) => handleChange(e)}
@@ -470,7 +611,7 @@ function FreePost() {
 
                     </div>
                     {/* *-*--*-*-*-*-*-*-*-*--*img*-*-*-*-*-**-**-*-*-*/}
-                    <Image src={url} alt="Uploaded img..." />
+                    <Image src={url} alt="Banner img..." />
 
 
                     {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
@@ -493,4 +634,6 @@ function FreePost() {
     );
 }
 
-export default FreePost;
+
+
+export default FreePost

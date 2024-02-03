@@ -59,6 +59,17 @@ const initialUser = {
 
 const Profile = () => {
 
+  // -*-*-*-*-*  Loader -*-*-*-*-*-*-*-*-*-*-*-**
+  const [loaderVisible, setCategoriesLoaderVisible] = useState(false);
+
+  const showCategoriesLoader = () => {
+    setCategoriesLoaderVisible(true);
+  };
+
+  const hideCategoriesLoader = () => {
+    setCategoriesLoaderVisible(false);
+  };
+// ----------------------------------------
   const [user, setUser] = useState(initialUser);
 
   // const [userpassword, setpassword] = useState(initialPass)

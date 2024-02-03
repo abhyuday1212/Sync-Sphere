@@ -111,26 +111,37 @@ const Login = ({ isUserAuthenticated }) => {
       setError("Something went wrong ! Please try again later");
     }
   };
+
   const loginUser = async () => {
-    let response = await API.userLogin(login)
+    // console.log("Login Request Body:", login);
 
-    if (response.isSuccess) {
-      setError(' ')
 
-      sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`)
-      sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`)
-
-      setAccount({ username: response.data.username, name: response.data.name })
-      isUserAuthenticated(true)
-      navigate('/')
+    if (!login.username || !login.password) {
+      setError("Username and password are required");
+      return;
     }
-    else {
-      setError("Something went wrong in Login,Please try back later")
+
+    try {
+      let response = await API.userLogin(login);
+
+      if (response.isSuccess) {
+        setError(' ');
+
+        sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
+        sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
+
+        setAccount({ username: response.data.username, name: response.data.name });
+        isUserAuthenticated(true);
+        navigate('/');
+      }
+    } catch (error) {
+      console.error("Error in loginUser API call:", error);
+      setError("Something went wrong during login. Please try again later.");
     }
+
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (account === "login") {
       loginUser();
     } else {
@@ -152,66 +163,72 @@ const Login = ({ isUserAuthenticated }) => {
         }}
       >
         {account === "login" ? (
-          <div>
+          <form onSubmit={handleSubmit}>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="username"
+              label="Enter username"
+              key={"username"}
+              autoComplete="username"
+              autoFocus
+              onChange={(e) => onValueChange(e)}
+            />
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Enter Password"
+              type="password"
+              key={"password"}
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => onValueChange(e)}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+
             <div>
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Sign in
-              </Typography>
-              <TextField
-                margin="normal"
-                required
+              {error && <Error>{error}</Error>}
+
+              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
+                onClick={() => handleSubmit()}
+              >
+                Sign In
+              </Button>
+
+              {/* <input type="submit" value="Submit">Sign In</input> */}
+
+              <Text style={{ textAlign: "center" }}>OR</Text>
+
+              <Button
                 fullWidth
-                name="username"
-                label="Enter username"
-                key={"username"}
-                autoComplete="username"
-                autoFocus
-                onChange={(e) => onValueChange(e)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Enter Password"
-                type="password"
-                key={"password"}
-                id="password"
-                autoComplete="current-password"
-                onChange={(e) => onValueChange(e)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <div>
-                {error && <Error>{error}</Error>}
-
-                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
-                  onClick={() => loginUser()}>
-                  Sign In
-                </Button>
-
-                <Text style={{ textAlign: "center" }}>OR</Text>
-
-                <Button
-                  fullWidth
-                  variant="contained"
-                  style={{
-                    backgroundColor: "#ff9757cf",
-                    color: "black",
-                  }}
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => toggleSignUp()}
-                >
-                  Create Account
-                </Button>
-              </div>
+                variant="contained"
+                style={{
+                  backgroundColor: "#ff9757cf",
+                  color: "black",
+                }}
+                sx={{ mt: 3, mb: 2 }}
+                // onClick={() => toggleSignUp()}
+                type="submit"
+              >
+                Create Account
+              </Button>
             </div>
-          </div>
+          </form>
+
         ) : (
           // ----------------------------------------
           <form onSubmit={handleSubmit}>
@@ -255,8 +272,7 @@ const Login = ({ isUserAuthenticated }) => {
 
               {error && <Error>{error}</Error>}
               <SignupButton
-                onClick={() => signupUser()}
-                onSubmit={handleSubmit}
+                onClick={() => handleSubmit()}
               >
                 Signup
               </SignupButton>

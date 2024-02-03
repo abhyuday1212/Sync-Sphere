@@ -17,6 +17,7 @@ import Join from "./components/details/Join";
 import Company from "./components/details/Company";
 import Individual from "./components/details/Individual";
 import Volunteer from "./components/details/volunteer";
+import Gemini from "./components/gemini/Gemini";
 
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
@@ -42,8 +43,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
         </Route>
 
-        <Route path="/projects" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
-          <Route path="/projects" element={<ProjectsHome />} />
+        <Route path="/projects/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+          <Route path="/projects/" element={<ProjectsHome />} />
         </Route>
 
         <Route path='/create' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
@@ -66,8 +67,12 @@ const App = () => {
           <Route path='/projects/details/:id' element={<DetailView />} />
         </Route>
 
-        <Route path='projects/test' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-          <Route path="projects/test" element={<Test />} />
+        <Route path='/gemini' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/gemini" element={<Gemini />} />
+        </Route>
+
+        <Route path='/test' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/test" element={<Test />} />
         </Route>
 
         <Route path='/about' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >

@@ -21,7 +21,7 @@ const Navbar = () => {
             Home
           </li>
         </Link>
-        <Link to="/projects">
+        <Link to="/projects/">
           <li className="p-4  text-[white] hover:text-[crimson]">Projects</li>
         </Link>
         <Link to="/about">
@@ -30,6 +30,13 @@ const Navbar = () => {
         <Link to="/profile">
           <li className="p-4 text-[white]  hover:text-[crimson]">Profile</li>
         </Link>
+
+        <Link to="/gemini">
+          <li className="p-4 text-[white]  hover:text-[crimson]">Gemini</li>
+        </Link>
+        {/* <Link to="/test">
+          <li className="p-4 text-[white]  hover:text-[crimson]">Test</li>
+        </Link> */}
         {/* <Link to="/chats">
           <li className="p-4 hover:text-[crimson]">Chats</li>
         </Link> */}
@@ -54,7 +61,7 @@ const Navbar = () => {
             Home
           </li>
         </Link>
-        <Link to="/projects">
+        <Link to="/projects/">
           <li className="p-4 text-[white]  hover:text-[crimson]">Projects</li>
         </Link>
         <Link to="/about">
@@ -63,6 +70,13 @@ const Navbar = () => {
         <Link to="/profile">
           <li className="p-4 text-[white]  hover:text-[crimson]">Profile</li>
         </Link>
+
+        <Link to="/gemini">
+          <li className="p-4 text-[white]  hover:text-[crimson]">Gemini</li>
+        </Link>
+        {/* <Link to="/test">
+          <li className="p-4 text-[white]  hover:text-[crimson]">Test</li>
+        </Link> */}
         {/* <Link to="/chats">
           <li className="p-4 hover:text-[crimson]">Chats</li>
         </Link> */}
