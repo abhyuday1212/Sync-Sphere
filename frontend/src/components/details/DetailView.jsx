@@ -260,7 +260,7 @@ function DetailView() {
                 marginTop: 5,
               }}
             >
-              <Link to={"/join"}>
+              <Link to={`/projects/join/${post._id}`}>
                 <Button variant="contained">Join</Button>
               </Link>
             </Typography>

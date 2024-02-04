@@ -203,7 +203,7 @@ const PostData = ({ post }) => {
                                 },
                             }}
                         >
-                            <Link to={"/join"}>
+                            <Link to={`join/${post._id}`}>
                                 Join
                             </Link>
                         </Button>

@@ -1,5 +1,10 @@
 import React from "react";
+
 import { useState, useEffect } from "react";
+
+import { useParams } from "react-router-dom";
+
+import { API } from "../../service/Api";
 
 import {
   Box,
@@ -11,7 +16,7 @@ import {
   Card,
 } from "@mui/material";
 // icons
-import { AddCircle as Add } from "@mui/icons-material";
+import { AddCircle as Add, Login } from "@mui/icons-material";
 import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -154,36 +159,40 @@ const TextInformationarea = styled(TextareaAutosize)`
   }
 `;
 
-const initialPost = {
-  title: "",
-  description: "",
-  picture: "",
-  username: "",
-  categories: "",
+const initialPayment = {
+  name: "",
+  projectID: "",
+  donationAmount: "",
+  number: "",
   createdDate: new Date(),
 };
 
 function Company() {
-  const [summary, setSummary] = useState("");
+  // Aditya this is the id where you can relate the payment with the project
+  const { id } = useParams();
+
+  console.log(id);
+
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let response = await API.getPostById(id);
+      if (response.isSuccess) {
+        setPost(response.data);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
   const [number, setNumber] = useState("");
   const [budget, setBudget] = useState("");
-  // const navigate = useNavigate();
-  // const location = useLocation();
 
-  const [post, setPost] = useState(initialPost);
-  const [file, setFile] = useState("");
-  // const { account } = useContext(DataContext);
+  const [payment, setPayment] = useState(initialPayment);
 
   // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
-
-  const handleSummaryChange = (e) => {
-    const inputValue = e.target.value;
-
-    const RestrictedInput = inputValue.slice(0, 110);
-
-    setSummary(RestrictedInput);
-  };
 
   const handleTitleChange = (e) => {
     const inputValue = e.target.value;
@@ -213,23 +222,11 @@ function Company() {
     setBudget(restrictedInput);
   };
 
-  useEffect(() => {
-    const getImage = () => {
-      if (file) {
-        const data = new FormData();
-        data.append("name", file.name);
-        data.append("file", file);
-
-        // API Call
-        post.picture = ""; //To be done later
-      }
-    };
-    getImage();
-    // post.categories
-  }, []);
-
+  const viewpdf = () => {
+    // call the pdf api here and then navigate it to a new pdf page
+  };
   const handleChange = (e) => {
-    setPost({ ...post, [e.target.name]: e.target.value });
+    setPayment({ ...payment, [e.target.name]: e.target.value, projectID: id });
   };
   // -=-==-=-=-=-=-=-=-=-=-=-=-=-=-=--=-===-=
 
@@ -242,7 +239,7 @@ function Company() {
           // background:"#86868666"
         }}
       >
-        <div style={{ display: "flex", gap: 56,margin:"20px 0px" }}>
+        <div style={{ display: "flex", gap: 56, margin: "20px 0px" }}>
           <div>
             <Card
               style={{
@@ -254,7 +251,7 @@ function Company() {
                 justifyContent: "center",
               }}
             >
-              Request CSR Documents
+             View CSR Documents
             </Card>
             <div
               style={{
@@ -281,7 +278,7 @@ function Company() {
                 />
               </div>
               <div>
-                <Button variant="contained">Submit</Button>
+                <Button variant="contained">View</Button>
               </div>
             </div>
           </div>
@@ -331,14 +328,12 @@ function Company() {
           </div>
         </div>
         <div
-          style={
-            {
-              margin: "5px 0px",
-              // display: "flex",
-              // justifyContent: "flex-start",
-              // alignItems:"flex-start"
-            }
-          }
+          style={{
+            margin: "5px 0px",
+            // display: "flex",
+            // justifyContent: "flex-start",
+            // alignItems:"flex-start"
+          }}
         >
           *If you want to get Physical verification Specifically from us for the
           NGO, than you will be charged based on the slabbings.

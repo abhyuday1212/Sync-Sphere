@@ -59,8 +59,8 @@ const App = () => {
           <Route path='/create/paid' element={<PaidPost />} />
         </Route>
 
-        <Route path='/join' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-          <Route path='/join' element={<Join />} />
+        <Route path='/projects/join/:id' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path='/projects/join/:id' element={<Join />} />
         </Route>
 
         <Route path='/projects/details/:id' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
@@ -83,16 +83,16 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
         </Route>
 
-        <Route path='/company' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-          <Route path="/company" element={<Company />} />
+        <Route path='/projects/join/:id/company' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/projects/join/:id/company" element={<Company />} />
         </Route>
 
-        <Route path='/individual' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-          <Route path="/individual" element={<Individual />} />
+        <Route path='/projects/join/:id/individual' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/projects/join/:id/individual" element={<Individual />} />
         </Route>
 
-        <Route path='/volunteer' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
-          <Route path="/volunteer" element={<Volunteer />} />
+        <Route path='/projects/join/:id/volunteer' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+          <Route path="/projects/join/:id/volunteer" element={<Volunteer />} />
 
         </Route>
 

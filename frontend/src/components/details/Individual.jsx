@@ -1,6 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
+import { useParams } from "react-router-dom";
+
+import { API } from "../../service/Api";
 import {
   Box,
   styled,
@@ -154,36 +157,40 @@ const TextInformationarea = styled(TextareaAutosize)`
   }
 `;
 
-const initialPost = {
-  title: "",
-  description: "",
-  picture: "",
-  username: "",
-  categories: "",
+const initialPayment = {
+  name: "",
+  projectID: "",
+  donationAmount: "",
+  number: "",
   createdDate: new Date(),
 };
 
 function Individual() {
-  const [summary, setSummary] = useState("");
+  // Aditya this is the id where you can relate the payment with the project
+  const { id } = useParams();
+
+  console.log(id);
+
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let response = await API.getPostById(id);
+      if (response.isSuccess) {
+        setPost(response.data);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
   const [number, setNumber] = useState("");
   const [budget, setBudget] = useState("");
-  // const navigate = useNavigate();
-  // const location = useLocation();
 
-  const [post, setPost] = useState(initialPost);
-  const [file, setFile] = useState("");
-  // const { account } = useContext(DataContext);
+  const [payment, setPayment] = useState(initialPayment);
 
   // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
-
-  const handleSummaryChange = (e) => {
-    const inputValue = e.target.value;
-
-    const RestrictedInput = inputValue.slice(0, 110);
-
-    setSummary(RestrictedInput);
-  };
 
   const handleTitleChange = (e) => {
     const inputValue = e.target.value;
@@ -213,23 +220,14 @@ function Individual() {
     setBudget(restrictedInput);
   };
 
-  useEffect(() => {
-    const getImage = () => {
-      if (file) {
-        const data = new FormData();
-        data.append("name", file.name);
-        data.append("file", file);
+  const viewpdf = () => {
+    // call the pdf api here and then navigate it to a new pdf page
+  };
 
-        // API Call
-        post.picture = ""; //To be done later
-      }
-    };
-    getImage();
-    // post.categories
-  }, []);
+  // create a function to handle the payment interface
 
   const handleChange = (e) => {
-    setPost({ ...post, [e.target.name]: e.target.value });
+    setPayment({ ...payment, [e.target.name]: e.target.value, projectID: id });
   };
   // -=-==-=-=-=-=-=-=-=-=-=-=-=-=-=--=-===-=
 
@@ -318,41 +316,9 @@ function Individual() {
                 />
               </div>
             </div>
-            {/* *-*--*-*-*-*-* addresss -*-*-**-*-*-*-*-**-**-*-*-*/}
-            {/* <div className="flex flex-row items-center">
-                        <HomeOutlinedIcon />
-                        <Textarea2
-                            placeholder="Project Venue address..."
-                            name="address"
-                            required
-                            onChange={(e) => handleChange(e)}
-                        />
 
-                    </div> */}
-            {/* *-*--*-*-*- Google Url-*-**-*-*-*-*-**-**-*-*-*/}
-            {/* <div className="flex flex-row items-center">
-                        <LanguageOutlinedIcon />
-                        <Textarea2
-                            placeholder="Paste Google Maps Location URL..."
-                            name="addressurl"
-                            onChange={(e) => handleChange(e)}
-                        />
-                    </div> */}
-            {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
-
-            {/* <div className="flex flex-row items-center">
-                        <DescriptionOutlinedIcon />
-                        <Textarea2
-                            placeholder="Write description..."
-                            name="description"
-                            required
-                            onChange={(e) => handleChange(e)}
-                        />
-
-                    </div> */}
-            {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
             <div style={{ display: "flex", justifyContent: "center" }}>
-              {/* add button type= submit later for backend integration of Aditya */}
+              {/* add button type= submit later for backend integration of Aditya or call a functiion using onclick*/}
               <Button variant="contained">Donate</Button>
             </div>
           </form>

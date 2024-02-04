@@ -11,6 +11,12 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+import { useParams } from "react-router-dom";
+
+import { API } from "../../service/Api";
+ 
+import { useState, useEffect } from "react";
+
 const StyledPaper = styled(Paper)`
   display: flex;
   align-items: center;
@@ -29,6 +35,20 @@ const StyledLink = styled(Link)`
 `;
 
 function Join() {
+  const { id } = useParams();
+
+  const [post, setPost] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let response = await API.getPostById(id);
+      if (response.isSuccess) {
+        setPost(response.data);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <Card
       sx={{
@@ -38,12 +58,11 @@ function Join() {
         height: "84.5vh",
         bgcolor: "#f09d7a2e",
         fontSize: 27,
-        gap: 4,    
+        gap: 4,
       }}
     >
-      
       {/* company */}
-      <StyledLink to={"/company"}>
+      <StyledLink to={`/projects/join/${post._id}/company`}>
         <StyledPaper
           elevation={12}
           sx={{
@@ -109,7 +128,7 @@ function Join() {
                 </Typography>
               </CardContent>
               <CardActions style={{ justifyContent: "center" }}>
-                <Link to={"/company"}>
+                <Link to={`/projects/join/${post._id}/company`}>
                   <Button variant="outlined">Explore</Button>
                 </Link>
               </CardActions>
@@ -119,7 +138,7 @@ function Join() {
       </StyledLink>
 
       {/* individual */}
-      <StyledLink to={"/individual"}>
+      <StyledLink to={`/projects/join/${post._id}/individual`}>
         <StyledPaper
           elevation={12}
           sx={{
@@ -131,14 +150,17 @@ function Join() {
             justifyContent: "center",
           }}
         >
-          <Paper elevation={4} sx={{
+          <Paper
+            elevation={4}
+            sx={{
               gap: 10,
               transition: "transform 0.3s ease-in-out",
               "&:hover": {
                 transform: "scale(1.1)",
                 border: "2px solid rgba(140, 109, 189, 0.245)",
               },
-            }}>
+            }}
+          >
             <CardActionArea>
               <CardMedia
                 component="img"
@@ -182,7 +204,7 @@ function Join() {
                 </Typography>
               </CardContent>
               <CardActions style={{ justifyContent: "center" }}>
-                <Link to={"/individual"}>
+                <Link to={`/projects/join/${post._id}/individual`}>
                   <Button variant="outlined">Explore</Button>
                 </Link>
               </CardActions>
@@ -192,7 +214,7 @@ function Join() {
       </StyledLink>
 
       {/* volunteer */}
-      <StyledLink to={"/volunteer"}>
+      <StyledLink to={`/projects/join/${post._id}/volunteer`}>
         <StyledPaper
           elevation={12}
           sx={{
@@ -204,14 +226,17 @@ function Join() {
             justifyContent: "center",
           }}
         >
-          <Paper elevation={12} sx={{
+          <Paper
+            elevation={12}
+            sx={{
               gap: 10,
               transition: "transform 0.3s ease-in-out",
               "&:hover": {
                 transform: "scale(1.1)",
                 border: "2px solid rgba(140, 109, 189, 0.245)",
               },
-            }}>
+            }}
+          >
             <CardActionArea>
               <CardMedia
                 component="img"
@@ -256,7 +281,7 @@ function Join() {
                 </Typography>
               </CardContent>
               <CardActions style={{ justifyContent: "center" }}>
-                <Link to={"/volunteer"}>
+                <Link to={`/projects/join/${post._id}/volunteer`}>
                   <Button variant="outlined">Explore</Button>
                 </Link>
               </CardActions>
@@ -264,7 +289,6 @@ function Join() {
           </Paper>
         </StyledPaper>
       </StyledLink>
-
     </Card>
   );
 }
