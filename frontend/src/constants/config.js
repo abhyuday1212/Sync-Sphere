@@ -34,6 +34,8 @@ export const SERVICE_URLS = {
   // userSignup->key ,{url: '/signup',method:'POST'} -> value
   userSignup: { url: '/signup', method: 'POST' },
 
+  checkUsername: { url: '/username', method: 'POST' },
+
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
   //Login_Api
@@ -54,7 +56,7 @@ export const SERVICE_URLS = {
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
   // Fetch Projects
-  getAllPosts: { url: '/posts', method: 'GET', params: true},
+  getAllPosts: { url: '/posts', method: 'GET', params: true },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 

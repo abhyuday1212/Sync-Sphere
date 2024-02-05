@@ -1,5 +1,5 @@
 import express from "express";
-import { signupUser, loginUser } from "../controller/user_controller.js";
+import { signupUser, loginUser, checkUsername } from "../controller/user_controller.js";
 
 import upload from "../utils/upload.js";
 import { uploadImage, getImage } from "../controller/image_controller.js";
@@ -18,6 +18,7 @@ import { sponsorDonatePage } from "../controller/sponsor-donate.js";
 const router = express.Router();
 
 router.post('/signup', signupUser);
+router.post('/username', checkUsername);
 router.post('/login', loginUser);
 
 router.post('/file/upload', upload.single('file'), uploadImage);

@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import Token from "../model/token.js";
 dotenv.config();
-
+import mongoose from "mongoose";
 // *-*-*-*-**-*-*-*-*-*-*-*-*-***-*-*-*-*--
 
 export const signupUser = async (request, response) => {
@@ -75,5 +75,21 @@ export const loginUser = async (request, response) => {
   } catch (error) {
     console.log("Error:", error);
     return response.status(500).json({ msg: "Error while Loging in the user" });
+  }
+};
+
+export const checkUsername = async (request, response) => {
+  const { username } = request.body;
+
+  try {
+  
+    const user = await UserModel.findOne({ username });
+
+    const exists = !!user;
+
+    response.status(200).json({ isSuccess: !exists });
+  } catch (error) {
+    console.error('Error checking username:', error);
+    response.status(500).json({ error: 'Internal Server Error' });
   }
 };

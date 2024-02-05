@@ -23,12 +23,27 @@ const Text = styled(Typography)`
 `;
 
 const Error = styled(Typography)`
-  font-size: 10px;
+  font-size: 12px;
   color: #ff6161;
   line-height: 0;
   margin-top: 10px;
   font-weight: 600;
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
+
+const Success = styled(Typography)`
+  font-size: 12px;
+  color: green;
+  line-height: 0;
+  margin-top: 10px;
+  font-weight: 600;
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
 const LoginButton = styled(Button)`
   text-transform: none;
   background: #fb641b;
@@ -74,6 +89,10 @@ const signupInitialValues = {
   username: "",
   password: "",
 };
+
+const usernameInitialValues = {
+  username: ""
+};
 // =====js==========================
 
 const Login = ({ isUserAuthenticated }) => {
@@ -81,10 +100,11 @@ const Login = ({ isUserAuthenticated }) => {
   const [login, setLogin] = useState(loginInitialValues);
   const [signup, setSignup] = useState(signupInitialValues);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
   const { setAccount } = useContext(DataContext)
 
-
+  const [username, setUsername] = useState(usernameInitialValues)
 
 
 
@@ -100,7 +120,40 @@ const Login = ({ isUserAuthenticated }) => {
     setSignup({ ...signup, [e.target.name]: e.target.value });
   };
 
+
+  async function handleUsername(e) {
+    const updatedUsername = { ...username, [e.target.name]: e.target.value };
+    setUsername(updatedUsername);
+    console.log(updatedUsername);
+
+    try {
+      let response = await API.checkUsername(updatedUsername);
+
+      if (response.data.isSuccess === true) {
+        setSuccess("Username available...");
+        setError("");
+
+        setTimeout(() => {
+          setSuccess("");
+        }, 3000);
+
+      } else {
+        setSuccess("");
+        setError("Username unavailable...");
+      }
+    } catch (error) {
+      console.error('Error checking username:', error);
+    }
+  }
+
+
+
   const signupUser = async () => {
+    if (!signup.username || !signup.name || !signup.password) {
+      setError("Please fill all the details...");
+      return;
+    }
+
     let response = await API.userSignup(signup);
     if (response.isSuccess) {
       setError("");
@@ -113,7 +166,7 @@ const Login = ({ isUserAuthenticated }) => {
   };
 
   const loginUser = async () => {
-    // console.log("Login Request Body:", login);
+    console.log("Login Request Body:", login);
 
 
     if (!login.username || !login.password) {
@@ -125,7 +178,7 @@ const Login = ({ isUserAuthenticated }) => {
       let response = await API.userLogin(login);
 
       if (response.isSuccess) {
-        setError(' ');
+        setError('');
 
         sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
         sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
@@ -141,7 +194,8 @@ const Login = ({ isUserAuthenticated }) => {
 
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (account === "login") {
       loginUser();
     } else {
@@ -152,83 +206,79 @@ const Login = ({ isUserAuthenticated }) => {
 
   // ============================
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" display="flex" alignItems="center" justifyContent="center">
       <CssBaseline />
       <Box
         sx={{
+          width: "fitContent",
           marginTop: 8,
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
+          marginBottom: "5rem"
         }}
       >
         {account === "login" ? (
-          <form onSubmit={handleSubmit}>
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="username"
-              label="Enter username"
-              key={"username"}
-              autoComplete="username"
-              autoFocus
-              onChange={(e) => onValueChange(e)}
-            />
-
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Enter Password"
-              type="password"
-              key={"password"}
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => onValueChange(e)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-
+          <div >
             <div>
-              {error && <Error>{error}</Error>}
-
-              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
-                onClick={() => handleSubmit()}
-              >
-                Sign In
-              </Button>
-
-              {/* <input type="submit" value="Submit">Sign In</input> */}
-
-              <Text style={{ textAlign: "center" }}>OR</Text>
-
-              <Button
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign in
+              </Typography>
+              <TextField
+                margin="normal"
+                required
                 fullWidth
-                variant="contained"
-                style={{
-                  backgroundColor: "#ff9757cf",
-                  color: "black",
-                }}
-                sx={{ mt: 3, mb: 2 }}
-                // onClick={() => toggleSignUp()}
-                type="submit"
-              >
-                Create Account
-              </Button>
-            </div>
-          </form>
+                name="username"
+                label="Enter username"
+                key={"username"}
+                autoComplete="username"
+                autoFocus
+                onChange={(e) => onValueChange(e)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Enter Password"
+                type="password"
+                key={"password"}
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => onValueChange(e)}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <div>
+                {error && <Error>{error}</Error>}
 
+                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
+                  onClick={() => loginUser()}>
+                  Sign In
+                </Button>
+
+                <Text style={{ textAlign: "center" }}>OR</Text>
+
+                <Button
+                  fullWidth
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#ff9757cf",
+                    color: "black",
+                  }}
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => toggleSignUp()}
+                >
+                  Create Account
+                </Button>
+              </div>
+            </div>
+          </div>
         ) : (
           // ----------------------------------------
           <form onSubmit={handleSubmit}>
@@ -239,13 +289,13 @@ const Login = ({ isUserAuthenticated }) => {
               <Typography component="h1" variant="h5">
                 Sign UP
               </Typography>
+
               <TextField
                 variant="standard"
                 required
                 fullWidth
                 name="name"
                 label="Name"
-                autoComplete="name"
                 autoFocus
                 onChange={(e) => onInputChange(e)}
               />
@@ -255,9 +305,10 @@ const Login = ({ isUserAuthenticated }) => {
                 fullWidth
                 name="username"
                 label="Username"
-                autoComplete="username"
-                autoFocus
-                onChange={(e) => onInputChange(e)}
+                onChange={(e) => {
+                  handleUsername(e)
+                  onInputChange(e)
+                }}
               />
               <TextField
                 variant="standard"
@@ -265,14 +316,14 @@ const Login = ({ isUserAuthenticated }) => {
                 fullWidth
                 name="password"
                 label="Enter Password"
-                autoComplete="username"
-                autoFocus
                 onChange={(e) => onInputChange(e)}
               />
 
               {error && <Error>{error}</Error>}
+              {success && <Success>{success}</Success>}
               <SignupButton
-                onClick={() => handleSubmit()}
+                onClick={() => signupUser()}
+                onSubmit={handleSubmit}
               >
                 Signup
               </SignupButton>
@@ -288,4 +339,4 @@ const Login = ({ isUserAuthenticated }) => {
   );
 };
 
-export default Login;
+export default Login; 
