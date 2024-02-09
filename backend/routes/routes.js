@@ -13,6 +13,7 @@ import { authenticateToken } from "../controller/jwt-controller.js";
 
 import { sponsorDonate, individualDonate } from "../controller/donations-controller.js";
 
+import { geminiController } from "../controller/gemini-controller.js";
 
 
 const router = express.Router();
@@ -36,6 +37,9 @@ router.post('/sponsordonate', sponsorDonate)
 router.post('/individualdonate', individualDonate)
 
 // router.get('/success', successPage)
+
+// gemini routes
+router.post("/gemini", authenticateToken, geminiController);
 
 
 export default router;
