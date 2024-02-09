@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 
@@ -158,14 +158,81 @@ const TextInformationarea = styled(TextareaAutosize)`
 `;
 
 const initialPayment = {
-  name: "",
+  title: "",
+  number: "", 
+  budget: "",
   projectID: "",
-  donationAmount: "",
-  number: "",
+  paymentID: "",
+  payerID: "",
   createdDate: new Date(),
 };
 
 function Individual() {
+
+  const [checkout, setCheckout] = useState(false);
+
+  const handleCheckout = () => {
+    setCheckout(true);
+  };
+
+  const handleCancelCheckout = () => {
+    setCheckout(false);
+  };
+
+  const paypal = useRef();
+
+  useEffect(() => {
+    if (checkout ) {
+        window.paypal.Buttons({
+            createOrder: (data, actions, err) => {
+                return actions.order.create({
+                    intent: "CAPTURE",
+                    purchase_units: [
+                        {
+                            description: "Donation",
+                            amount: {
+                                currency_code: "USD",
+                                value: budget,
+                            }
+                        }
+                    ]
+                });
+            },
+            onApprove: async (data, actions) => {
+                const order = await actions.order.capture();
+                console.log(order);
+                
+                payment.payerID = order.payer.payer_id;
+                payment.paymentID = order.purchase_units[0].payments.captures[0].id;
+                console.log(payment);
+                try {
+                
+                  let response = await API.individualDonate(payment);
+                  if (response.isSuccess) {
+                      console.log("donation successful");
+                  }
+                  else {
+                      setErrorMessage('Error saving donation in DB!!!');
+                  }
+
+                } 
+                catch (error) {
+                  setErrorMessage('An unexpected error in saving data.');
+                }
+                
+            },
+            onError: (err) => {
+                console.log(err);
+            }
+        }).render(paypal.current); // Render the PayPal buttons inside the div referenced by 'paypal'
+
+    }
+}, [checkout]);
+
+
+
+
+
   // Aditya this is the id where you can relate the payment with the project
   const { id } = useParams();
 
@@ -189,6 +256,8 @@ function Individual() {
   const [budget, setBudget] = useState("");
 
   const [payment, setPayment] = useState(initialPayment);
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
 
@@ -319,7 +388,14 @@ function Individual() {
 
             <div style={{ display: "flex", justifyContent: "center" }}>
               {/* add button type= submit later for backend integration of Aditya or call a functiion using onclick*/}
-              <Button variant="contained">Donate</Button>
+              {checkout ? (
+                  <div >
+                  <div ref={paypal}></div>
+                  <Button variant="contained" onClick={handleCancelCheckout}>Cancel</Button></div>
+                ) : 
+                
+                (<Button variant="contained" onClick={handleCheckout}>Checkout</Button>)     
+              }
             </div>
           </form>
         </InsideContainer>

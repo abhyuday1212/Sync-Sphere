@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useRef,useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 
@@ -24,6 +24,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
+import { DataContext } from "../../context/DataProvider";
 // const magicx = keyframes`
 //   0% {
 //     background-position: 0 50%;
@@ -160,15 +161,80 @@ const TextInformationarea = styled(TextareaAutosize)`
 `;
 
 const initialPayment = {
-  name: "",
+  title: "",
+  number: "", 
+  budget: "",
   projectID: "",
-  donationAmount: "",
-  number: "",
+  paymentID: "",
+  payerID: "",
   createdDate: new Date(),
 };
 
 function Company() {
   // Aditya this is the id where you can relate the payment with the project
+
+  const [checkout, setCheckout] = useState(false);
+
+  const handleCheckout = () => {
+    setCheckout(true);
+  };
+
+  const handleCancelCheckout = () => {
+    setCheckout(false);
+  };
+
+  const paypal = useRef();
+
+  useEffect(() => {
+    if (checkout ) {
+        window.paypal.Buttons({
+            createOrder: (data, actions, err) => {
+                return actions.order.create({
+                    intent: "CAPTURE",
+                    purchase_units: [
+                        {
+                            description: "Donation",
+                            amount: {
+                                currency_code: "USD",
+                                value: budget,
+                            }
+                        }
+                    ]
+                });
+            },
+            onApprove: async (data, actions) => {
+                const order = await actions.order.capture();
+                console.log(order);
+                
+                payment.payerID = order.payer.payer_id;
+                payment.paymentID = order.purchase_units[0].payments.captures[0].id;
+                console.log(payment);
+                try {
+                
+                  let response = await API.sponsorDonate(payment);
+                  if (response.isSuccess) {
+                      console.log("donation successful");
+                  }
+                  else {
+                      setErrorMessage('Error saving donation in DB!!!');
+                  }
+
+                } 
+                catch (error) {
+                  setErrorMessage('An unexpected error in saving data.');
+                }
+                
+            },
+            onError: (err) => {
+                console.log(err);
+            }
+        }).render(paypal.current); // Render the PayPal buttons inside the div referenced by 'paypal'
+
+    }
+}, [checkout]);
+
+
+
   const { id } = useParams();
 
   console.log(id);
@@ -191,6 +257,8 @@ function Company() {
   const [budget, setBudget] = useState("");
 
   const [payment, setPayment] = useState(initialPayment);
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
 
@@ -232,6 +300,7 @@ function Company() {
 
   return (
     <div>
+      {console.log("compamy")}
       <Container
         style={{
           display: "flex",
@@ -434,7 +503,16 @@ function Company() {
             {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
             <div style={{ display: "flex", justifyContent: "center" }}>
               {/* add button type= submit later for backend integration of Aditya */}
-              <Button variant="contained">Donate</Button>
+              
+              
+              {checkout ? (
+                  <div >
+                  <div ref={paypal}></div>
+                  <Button variant="contained" onClick={handleCancelCheckout}>Cancel</Button></div>
+                ) : 
+                
+                (<Button variant="contained" onClick={handleCheckout}>Checkout</Button>)     
+              }
             </div>
           </form>
         </InsideContainer>

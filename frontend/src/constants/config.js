@@ -66,7 +66,8 @@ export const SERVICE_URLS = {
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
   // Aditya Sponsor Donation
 
-  sponsorDonatePage: { url: '/sponsordonate', method: 'POST' }
+  sponsorDonate: { url: '/sponsordonate', method: 'POST' },
+  individualDonate: { url: '/individualdonate', method: 'POST' }
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 

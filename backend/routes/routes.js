@@ -11,7 +11,7 @@ import { createPost, getAllPosts, getPost } from "../controller/post-controller.
 
 import { authenticateToken } from "../controller/jwt-controller.js";
 
-import { sponsorDonatePage } from "../controller/sponsor-donate.js";
+import { sponsorDonate, individualDonate } from "../controller/donations-controller.js";
 
 
 
@@ -32,7 +32,8 @@ router.get('/posts', authenticateToken, getAllPosts)
 router.get('/post/:id', authenticateToken, getPost)
 
 // Don Aditya routes
-router.post('/sponsordonate', sponsorDonatePage)
+router.post('/sponsordonate', sponsorDonate)
+router.post('/individualdonate', individualDonate)
 
 // router.get('/success', successPage)
 
