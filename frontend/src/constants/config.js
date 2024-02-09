@@ -24,51 +24,51 @@ export const API_NOTIFICATION_MESSAGES = {
   },
 };
 
-
 // API service CAll
-// SAMPLE REQUEST 
-// NEED SERVICE CALL: { url: '/', method: 'POST/GET/PUT/DELETE' params: true / false } 
+// SAMPLE REQUEST
+// NEED SERVICE CALL: { url: '/', method: 'POST/GET/PUT/DELETE' params: true / false }
 
 export const SERVICE_URLS = {
   // signup_api_Call
   // userSignup->key ,{url: '/signup',method:'POST'} -> value
-  userSignup: { url: '/signup', method: 'POST' },
+  userSignup: { url: "/signup", method: "POST" },
 
-  checkUsername: { url: '/username', method: 'POST' },
+  checkUsername: { url: "/username", method: "POST" },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
   //Login_Api
-  userLogin: { url: '/login', method: 'POST' },
+  userLogin: { url: "/login", method: "POST" },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
   // image_Api
-  uploadFile: { url: 'file/upload', method: 'POST' },
+  uploadFile: { url: "file/upload", method: "POST" },
 
   //pdf_api
-  uploadPdfFile: { url: 'csr/pdfupload', method: 'POST' },
+  uploadPdfFile: { url: "csr/pdfupload", method: "POST" },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
-  createPost: { url: '/create', method: 'POST' },
+  createPost: { url: "/create", method: "POST" },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
   // Fetch Projects
-  getAllPosts: { url: '/posts', method: 'GET', params: true },
+  getAllPosts: { url: "/posts", method: "GET", params: true },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
   // fetchprojects via there id
-  getPostById: { url: '/post', method: 'GET', query: true },
+  getPostById: { url: "/post", method: "GET", query: true },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
   // Aditya Sponsor Donation
 
-  sponsorDonatePage: { url: '/sponsordonate', method: 'POST' }
+  sponsorDonatePage: { url: "/sponsordonate", method: "POST" },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
-
+  // gemini
+  gemini: { url: "/gemini", method: "POST" },
 };
