@@ -153,6 +153,6 @@ Mob Num : 6391909757
 
 - We Will be Providing the github repo from which we are working with the features by our ibdivuidual team mates Harsh and Aditya.
 
-[Harsh | Chat App](https://github.com/kharsh560/chatApp.git)
+[Harsh | Chat App](https://github.com/kharsh560/ChatApp)
 </br>
-[Aditya | Payment Interface](https://github.com/StormBreaker2022/NITP_Hackatho_Aditya.git)
+[Aditya | Payment Interface](https://github.com/StormBreaker2022/NITP_Hackatho_Aditya)

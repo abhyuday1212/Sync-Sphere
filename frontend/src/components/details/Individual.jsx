@@ -21,6 +21,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import CategoriesLoader from "../loader/CategoriesLoader";
 
 // const magicx = keyframes`
 //   0% {
@@ -298,10 +299,21 @@ function Individual() {
   const handleChange = (e) => {
     setPayment({ ...payment, [e.target.name]: e.target.value, projectID: id });
   };
+  const [loader, setLoaderVisible] = useState(false);
+
+  useEffect(() => {
+    setLoaderVisible(true);
+    setTimeout(() => {
+      setLoaderVisible(false);
+    }, 500);
+  }, []);
   // -=-==-=-=-=-=-=-=-=-=-=-=-=-=-=--=-===-=
 
   return (
     <div>
+      {loader ? (
+        <CategoriesLoader />
+      ) : (
       <Container
         style={{
           display: "flex",
@@ -400,6 +412,7 @@ function Individual() {
           </form>
         </InsideContainer>
       </Container>
+      )}
     </div>
   );
 }

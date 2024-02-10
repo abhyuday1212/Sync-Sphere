@@ -1,8 +1,21 @@
 import { Card } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import CategoriesLoader from "../loader/CategoriesLoader";
 
 function Volunteer() {
+  const [loader, setLoaderVisible] = useState(false);
+
+  useEffect(() => {
+    setLoaderVisible(true);
+    setTimeout(() => {
+      setLoaderVisible(false);
+    }, 300);
+  }, []);
   return (
+    <>
+   {loader ? (
+        <CategoriesLoader />
+      ) : (
     <div
       style={{
         display: "flex",
@@ -24,6 +37,8 @@ function Volunteer() {
         This section is working And Will be integrated soon from Harsh Chat App
       </Card>
     </div>
+      )}
+    </>
   );
 }
 

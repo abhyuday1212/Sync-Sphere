@@ -23,7 +23,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-
+import CategoriesLoader from "../loader/CategoriesLoader";
 import { DataContext } from "../../context/DataProvider";
 // const magicx = keyframes`
 //   0% {
@@ -170,6 +170,9 @@ const initialPayment = {
   createdDate: new Date(),
 };
 
+
+const URL ='https://drive.google.com/file/d/1SuyOr8eucpXBxNSYugKdiJmvLwGRuuR-/preview'
+
 function Company() {
   // Aditya this is the id where you can relate the payment with the project
 
@@ -290,17 +293,35 @@ function Company() {
     setBudget(restrictedInput);
   };
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   const viewpdf = () => {
     // call the pdf api here and then navigate it to a new pdf page
+ setModalOpen(true)
+  };
+
+  const cloaspdf = () => {
+    setModalOpen(false);
   };
   const handleChange = (e) => {
     setPayment({ ...payment, [e.target.name]: e.target.value, projectID: id });
   };
+
+  const [loader, setLoaderVisible] = useState(false);
+
+  useEffect(() => {
+    setLoaderVisible(true);
+    setTimeout(() => {
+      setLoaderVisible(false);
+    }, 500);
+  }, []);
   // -=-==-=-=-=-=-=-=-=-=-=-=-=-=-=--=-===-=
 
   return (
     <div>
-      {console.log("compamy")}
+      {loader ? (
+        <CategoriesLoader />
+      ) : (
       <Container
         style={{
           display: "flex",
@@ -347,7 +368,9 @@ function Company() {
                 />
               </div>
               <div>
-                <Button variant="contained">View</Button>
+              <Button variant="contained" onClick={() => viewpdf()}>
+                  View
+                </Button>
               </div>
             </div>
           </div>
@@ -357,7 +380,7 @@ function Company() {
               style={{
                 fontSize: "39px",
                 color: "#000300",
-                marginBottom: "20px",
+                zmarginBottom: "20px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -396,6 +419,25 @@ function Company() {
             </div>
           </div>
         </div>
+        {/* Modal */}
+        {modalOpen && (
+          <div>
+            <div>
+              {/* Close button */}
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <button>⬇️</button>
+                <button onClick={() => cloaspdf()}>❌</button>
+              </div>
+              {/* PDF viewer */}
+              <embed
+                src={URL}
+                type="application/pdf"
+                width="800vw"
+                height="500vh"
+              />
+            </div>
+          </div>
+        )}
         <div
           style={{
             margin: "5px 0px",
@@ -517,6 +559,7 @@ function Company() {
           </form>
         </InsideContainer>
       </Container>
+      )}
     </div>
   );
 }
