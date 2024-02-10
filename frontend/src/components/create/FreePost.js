@@ -16,7 +16,7 @@ import {
     InputBase,
     Button,
     // Text area autosize is giving resize error
-    TextareaAutosize, FormLabel, FormHelperText,
+    TextareaAutosize,
 } from "@mui/material";
 // icons
 import { AddCircle as Add } from "@mui/icons-material";

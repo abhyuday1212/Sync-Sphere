@@ -11,17 +11,16 @@ import { Link } from "react-router-dom";
 // -------------------------
 import {
   Box,
-  CardActions,
   CardContent,
   Paper,
   Typography,
   styled,
   Button,
   TextareaAutosize,
-  Card,
 } from "@mui/material";
 
 import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
+import CategoriesLoader from "../loader/CategoriesLoader";
 
 // ------------
 
@@ -116,8 +115,19 @@ function DetailView() {
     ? post.picture
     : "https://t4.ftcdn.net/jpg/04/29/64/57/360_F_429645702_EXZw2TFIzZBjegrXvBzg68gzd4aD62kB.jpg";
 
+    const [loader, setLoaderVisible] = useState(false);
+
+    useEffect(() => {
+      setLoaderVisible(true);
+      setTimeout(() => {
+        setLoaderVisible(false);
+      }, 500);
+    }, []);
   return (
     <>
+    {loader ? (
+        <CategoriesLoader />
+      ) : (
       <Container>
         <Paper
           elevation={24}
@@ -267,6 +277,7 @@ function DetailView() {
           </CardContent>
         </Paper>
       </Container>
+      )}
     </>
   );
 }

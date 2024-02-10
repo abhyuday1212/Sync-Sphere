@@ -1,13 +1,7 @@
 import React from 'react'
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Avatar, CardActionArea, CardMedia, Fab, Grid, Paper } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { Link } from 'react-router-dom';
+import { CardActionArea, CardMedia, Paper } from '@mui/material';
 
 const About = () => {
   const paperStyle = {
@@ -28,27 +22,31 @@ const About = () => {
 
       <Typography sx={{ fontSize: 100, fontWeight: 500, display: "flex", alignContent: "center", justifyContent: "center" }}>FEATURES We Offers</Typography>
 
-      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center",marginTop:7}}>1) Donate as Individual:</Typography>
+      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center", marginTop: 7 }}>1) Donate as Individual:</Typography>
       <Typography sx={{ fontSize: 40, display: "flex", alignContent: "center", justifyContent: "center", marginX: 17 }}>Our app empowers individuals to contribute directly to NGO projects. Streamlining the donation process, users can effortlessly support causes that resonate with them. Experience the simplicity of making a meaningful impact as we connect you directly with projects that align with your philanthropic vision.</Typography>
 
-      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center",marginTop:7 }}>2) Join as Volunteer:</Typography>
+      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center", marginTop: 7 }}>2) Join as Volunteer:</Typography>
       <Typography sx={{ fontSize: 40, display: "flex", alignContent: "center", justifyContent: "center", marginX: 17 }}>Our app goes beyond donations; individuals can explore NGO posts and seamlessly join as volunteers for specific projects. Experience a holistic approach to giving by connecting directly with causes, contributing funds, and actively participating in projects that align with your passion for positive change.</Typography>
 
-      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center",marginTop:7 }}>3) Create Post:</Typography>
+      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center", marginTop: 7 }}>3) Create Post:</Typography>
       <Typography sx={{ fontSize: 40, display: "flex", alignContent: "center", justifyContent: "center", marginX: 17 }}>Empowering NGOs and individuals alike, our app serves as a unified platform for social impact. Create and share posts for social work projects, attracting volunteers and donations from both individuals and companies. Fostering a collaborative environment, our app connects passionate contributors with meaningful causes, ensuring that social impact flourishes through collective efforts and diverse contributions. Join us in building a community where positive change is driven by shared dedication and impactful collaborations.</Typography>
 
-      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center",marginTop:7 }}>4) Get CSR documents:</Typography>
+      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center", marginTop: 7 }}>4) Get CSR documents:</Typography>
       <Typography sx={{ fontSize: 40, display: "flex", alignContent: "center", justifyContent: "center", marginX: 17 }}>Simplify corporate social responsibility decisions with our app. Big companies can effortlessly acquire CSR documents directly from NGOs, enabling a swift and efficient evaluation process. This direct access ensures transparency and empowers companies to make informed decisions on the eligibility of NGOs for Corporate Social Responsibility initiatives, fostering impactful and transparent corporate-community collaborations.</Typography>
 
-      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center",marginTop:7 }}>5) Chat with NGOs :</Typography>
+      <Typography sx={{ fontSize: 60, fontWeight: 500, display: "flex", alignContent: "center", marginTop: 7 }}>5) Chat with NGOs :</Typography>
       <Typography sx={{ fontSize: 40, display: "flex", alignContent: "center", justifyContent: "center", marginX: 17 }}>Elevate collaboration in our platform as major CSR companies and donors engage in direct, real-time conversations with NGOs. This unique feature enhances transparency, enabling constructive dialogues that lead to impactful partnerships. Foster meaningful connections and drive positive change by seamlessly connecting with NGOs, aligning visions, and collectively contributing to social betterment. Join us in creating a space where communication fuels transformative collaborations for a brighter future.</Typography>
 
-      <Typography sx={{ fontSize: 100, fontWeight: 600, display: "flex", alignContent: "center", justifyContent: "center" ,marginTop:7 }} >Out Team</Typography>
+      <Typography sx={{ fontSize: 100, fontWeight: 600, display: "flex", alignContent: "center", justifyContent: "center", marginTop: 7 }} >Out Team</Typography>
 
-      <div style={{ display: "flex", backgroundColor: "", justifyContent: "center", gap: 20  }}>
+      <div style={{ display: "flex", backgroundColor: "", justifyContent: "center", gap: 20 }}>
         {/* Abhyuday */}
         <Paper style={{ ...paperStyle, gap: 10 }}>
-          <CardActionArea>
+        <CardActionArea
+            onClick={() =>
+              window.open("https://www.linkedin.com/in/abhyuday12/", "_blank")
+            }
+          >
             <CardMedia
               component="img"
               height="250px"
@@ -70,7 +68,11 @@ const About = () => {
         </Paper>
         {/* Aditya Jaiswal */}
         <Paper style={{ ...paperStyle, gap: 10 }}>
-          <CardActionArea>
+        <CardActionArea
+            onClick={() =>
+              window.open("https://www.linkedin.com/in/aditya-jaiswal-14b453241/", "_blank")
+            }
+          >
             <CardMedia
               component="img"
               height="250px"
@@ -92,7 +94,11 @@ const About = () => {
         </Paper>
         {/* Akhilesh */}
         <Paper style={{ ...paperStyle, gap: 10 }}>
-          <CardActionArea>
+        <CardActionArea
+            onClick={() =>
+              window.open("https://www.linkedin.com/in/akhilesh-malik-44989b258/", "_blank")
+            }
+          >
             <CardMedia
               component="img"
               height="250px"
@@ -115,13 +121,16 @@ const About = () => {
 
         {/* Harsh */}
         <Paper style={{ ...paperStyle, gap: 10 }}>
-          <CardActionArea>
+          <CardActionArea
+            onClick={() =>
+              window.open("https://www.linkedin.com/in/kumar-harsh-468a22253/", "_blank")
+            }
+          >
             <CardMedia
               component="img"
               height="250px"
               style={{
-                backgroundImage:
-                  'url(https://media.licdn.com/dms/image/D4D35AQFEirsjdUZsVA/profile-framedphoto-shrink_400_400/0/1680705273847?e=1703012400&v=beta&t=SefdxBFGbFVkMpdBt4N4i57sAyfZtC8zDiC6g0h3PRY)',
+                backgroundImage: 'url("https://media.licdn.com/dms/image/D4D35AQFEirsjdUZsVA/profile-framedphoto-shrink_400_400/0/1680705273847?e=1708117200&v=beta&t=Lcor5xkDkbojEGX8z0mlZgYblKBiwgzsSk_JP2pmLOs")',
                 backgroundSize: "cover",
                 borderTopLeftRadius: "8px",
                 borderTopRightRadius: "8px",
