@@ -67,9 +67,11 @@ export const SERVICE_URLS = {
   // Aditya Sponsor Donation
 
   sponsorDonate: { url: '/sponsordonate', method: 'POST' },
-  individualDonate: { url: '/individualdonate', method: 'POST' }
+  individualDonate: { url: '/individualdonate', method: 'POST' },
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
+  // gemini
+  gemini: { url: "/gemini", method: "POST" }
 
 };
