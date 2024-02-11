@@ -49,6 +49,9 @@ export const SERVICE_URLS = {
   //pdf_api
   uploadPdfFile: { url: 'csr/pdfupload', method: 'POST' },
 
+  handleViewerDetails: { url: '/csrviewer', method: 'POST' },
+  getPdfDetailById: { url: '/pdfdetails', method: 'GET', query: true },
+
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
   createPost: { url: '/create', method: 'POST' },

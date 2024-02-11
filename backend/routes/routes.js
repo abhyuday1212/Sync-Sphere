@@ -15,6 +15,9 @@ import { sponsorDonate, individualDonate } from "../controller/donations-control
 
 import { geminiController } from "../controller/gemini-controller.js";
 
+import { getPdfDetails } from "../controller/pdf_controller.js"
+
+import { csrFileViewers } from "../controller/pdf_controller.js"
 
 const router = express.Router();
 
@@ -25,6 +28,8 @@ router.post('/login', loginUser);
 router.post('/file/upload', upload.single('file'), uploadImage);
 
 router.post('/csr/pdfupload', pdfMiddleware.single('csrfile'), uploadPdf);
+router.get('/pdfdetails/:id', getPdfDetails);
+router.post("/csrviewer", authenticateToken, csrFileViewers);
 
 router.get('/file/:filename', getImage);
 

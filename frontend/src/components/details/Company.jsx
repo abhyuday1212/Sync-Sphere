@@ -1,10 +1,12 @@
 import React from "react";
 
-import { useState, useRef,useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 
 import { API } from "../../service/Api";
+
+import { useContext } from "react";
 
 import {
   Box,
@@ -162,7 +164,7 @@ const TextInformationarea = styled(TextareaAutosize)`
 
 const initialPayment = {
   title: "",
-  number: "", 
+  number: "",
   budget: "",
   projectID: "",
   paymentID: "",
@@ -170,13 +172,71 @@ const initialPayment = {
   createdDate: new Date(),
 };
 
-
-const URL ='https://drive.google.com/file/d/1SuyOr8eucpXBxNSYugKdiJmvLwGRuuR-/preview'
+const initialPdfVisitorDetail = {
+  visitormail: "",
+  username: "",
+  projectID: "",
+};
 
 function Company() {
-  // Aditya this is the id where you can relate the payment with the project
+  const { id } = useParams();
+  const [title, setTitle] = useState("");
+  const [number, setNumber] = useState("");
+  const [budget, setBudget] = useState("");
 
+  const [payment, setPayment] = useState(initialPayment);
+
+  const [errorMessage, setErrorMessage] = useState("");
   const [checkout, setCheckout] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState("");
+  const [visitorDetails, setVisitorDetails] = useState(initialPdfVisitorDetail);
+
+  const { account } = useContext(DataContext);
+
+  useEffect(() => {
+    visitorDetails.username = account.username;
+  }, []);
+
+  const handlePdfEmailChange = (e) => {
+    setVisitorDetails({
+      ...visitorDetails,
+      [e.target.name]: e.target.value,
+      projectID: id,
+    });
+  };
+
+  async function viewpdf() {
+    try {
+      const response = await API.getPdfDetailById(id);
+      if (response.isSuccess === true) {
+        setPdfUrl(response.data);
+        setModalOpen(true);
+      } else {
+        console.error("Failed to fetch PDF details");
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+    }
+  }
+
+  const handleEmailApi = async () => {
+    try {
+      let response = await API.handleViewerDetails(visitorDetails);
+      if (response.isSuccess === true) {
+        await viewpdf();
+        console.log("Email Data Saved");
+      } else {
+        setErrorMessage("Error saving Email to db...Try Again");
+      }
+    } catch (error) {
+      setErrorMessage("An unexpected error in saving data.");
+    }
+  };
+
+  const clospdf = () => {
+    setModalOpen(false);
+  };
 
   const handleCheckout = () => {
     setCheckout(true);
@@ -189,79 +249,48 @@ function Company() {
   const paypal = useRef();
 
   useEffect(() => {
-    if (checkout ) {
-        window.paypal.Buttons({
-            createOrder: (data, actions, err) => {
-                return actions.order.create({
-                    intent: "CAPTURE",
-                    purchase_units: [
-                        {
-                            description: "Donation",
-                            amount: {
-                                currency_code: "USD",
-                                value: budget,
-                            }
-                        }
-                    ]
-                });
-            },
-            onApprove: async (data, actions) => {
-                const order = await actions.order.capture();
-                console.log(order);
-                
-                payment.payerID = order.payer.payer_id;
-                payment.paymentID = order.purchase_units[0].payments.captures[0].id;
-                console.log(payment);
-                try {
-                
-                  let response = await API.sponsorDonate(payment);
-                  if (response.isSuccess) {
-                      console.log("donation successful");
-                  }
-                  else {
-                      setErrorMessage('Error saving donation in DB!!!');
-                  }
+    if (checkout) {
+      window.paypal
+        .Buttons({
+          createOrder: (data, actions, err) => {
+            return actions.order.create({
+              intent: "CAPTURE",
+              purchase_units: [
+                {
+                  description: "Donation",
+                  amount: {
+                    currency_code: "USD",
+                    value: budget,
+                  },
+                },
+              ],
+            });
+          },
+          onApprove: async (data, actions) => {
+            const order = await actions.order.capture();
+            console.log(order);
 
-                } 
-                catch (error) {
-                  setErrorMessage('An unexpected error in saving data.');
-                }
-                
-            },
-            onError: (err) => {
-                console.log(err);
+            payment.payerID = order.payer.payer_id;
+            payment.paymentID = order.purchase_units[0].payments.captures[0].id;
+            console.log(payment);
+            try {
+              let response = await API.sponsorDonate(payment);
+              if (response.isSuccess) {
+                console.log("donation successful");
+              } else {
+                setErrorMessage("Error saving donation in DB!!!");
+              }
+            } catch (error) {
+              setErrorMessage("An unexpected error in saving data.");
             }
-        }).render(paypal.current); // Render the PayPal buttons inside the div referenced by 'paypal'
-
+          },
+          onError: (err) => {
+            console.log(err);
+          },
+        })
+        .render(paypal.current); // Render the PayPal buttons inside the div referenced by 'paypal'
     }
-}, [checkout]);
-
-
-
-  const { id } = useParams();
-
-  console.log(id);
-
-  const [post, setPost] = useState({});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let response = await API.getPostById(id);
-      if (response.isSuccess) {
-        setPost(response.data);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const [email, setEmail] = useState("");
-  const [title, setTitle] = useState("");
-  const [number, setNumber] = useState("");
-  const [budget, setBudget] = useState("");
-
-  const [payment, setPayment] = useState(initialPayment);
-
-  const [errorMessage, setErrorMessage] = useState('');
+  }, [checkout]);
 
   // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
 
@@ -293,16 +322,6 @@ function Company() {
     setBudget(restrictedInput);
   };
 
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const viewpdf = () => {
-    // call the pdf api here and then navigate it to a new pdf page
- setModalOpen(true)
-  };
-
-  const cloaspdf = () => {
-    setModalOpen(false);
-  };
   const handleChange = (e) => {
     setPayment({ ...payment, [e.target.name]: e.target.value, projectID: id });
   };
@@ -322,196 +341,204 @@ function Company() {
       {loader ? (
         <CategoriesLoader />
       ) : (
-      <Container
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          // background:"#86868666"
-        }}
-      >
-        <div style={{ display: "flex", gap: 56, margin: "20px 0px" }}>
-          <div>
-            <Card
-              style={{
-                fontSize: "39px",
-                color: "#000300",
-                marginBottom: "20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-             View CSR Documents
-            </Card>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 15,
-                marginBottom: 9,
-                border: "2px solid black",
-                padding: 4,
-                borderRadius: 9,
-              }}
-            >
-              <div
-                className="flex flex-row items-center"
-                // style={{ marginBottom: "20px" }}
-              >
-                <EmailOutlinedIcon />
-                <TextInformationarea
-                  placeholder="Enter Email (***@gmail.com)"
-                  name="email"
-                  required
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-              <div>
-              <Button variant="contained" onClick={() => viewpdf()}>
-                  View
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <Card
-              style={{
-                fontSize: "39px",
-                color: "#000300",
-                zmarginBottom: "20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              Request Physical Verificaton
-            </Card>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 15,
-                marginBottom: 9,
-                border: "2px solid black",
-                padding: 4,
-                borderRadius: 9,
-                marginBottom: 40,
-              }}
-            >
-              <div
-                className="flex flex-row items-center"
-                // style={{ marginBottom: "20px" }}
-              >
-                <EmailOutlinedIcon />
-                <TextInformationarea
-                  placeholder="Enter Email (***@gmail.com)"
-                  name="email"
-                  required
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-              <div>
-                <Button variant="contained">Submit</Button>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Modal */}
-        {modalOpen && (
-          <div>
+        <Container
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            // background:"#86868666"
+          }}
+        >
+          <div style={{ display: "flex", gap: 56, margin: "20px 0px" }}>
             <div>
-              {/* Close button */}
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <button>⬇️</button>
-                <button onClick={() => cloaspdf()}>❌</button>
+              <Card
+                style={{
+                  fontSize: "39px",
+                  color: "#000300",
+                  marginBottom: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                View CSR Documents
+              </Card>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 15,
+                  marginBottom: 9,
+                  border: "2px solid black",
+                  padding: 4,
+                  borderRadius: 9,
+                }}
+              >
+                <div
+                  className="flex flex-row items-center"
+                  // style={{ marginBottom: "20px" }}
+                >
+                  <EmailOutlinedIcon />
+                  <TextInformationarea
+                    placeholder="Enter Email (***@gmail.com)"
+                    name="visitormail"
+                    type="email"
+                    required
+                    onChange={(e) => handlePdfEmailChange(e)}
+                  />
+                </div>
+                <div>
+                  <Button variant="contained" onClick={() => handleEmailApi()}>
+                    View
+                  </Button>
+                </div>
               </div>
-              {/* PDF viewer */}
-              <embed
-                src={URL}
-                type="application/pdf"
-                width="800vw"
-                height="500vh"
-              />
+            </div>
+
+            <div>
+              <Card
+                style={{
+                  fontSize: "39px",
+                  color: "#000300",
+                  marginBottom: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                Request Physical Verificaton
+              </Card>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 15,
+                  marginBottom: 9,
+                  border: "2px solid black",
+                  padding: 4,
+                  borderRadius: 9,
+                  marginBottom: 40,
+                }}
+              >
+                <div
+                  className="flex flex-row items-center"
+                  // style={{ marginBottom: "20px" }}
+                >
+                  <EmailOutlinedIcon />
+                  <TextInformationarea
+                    placeholder="Enter Email (***@gmail.com)"
+                    name="email"
+                    required
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
+                <div>
+                  <Button variant="contained">Submit</Button>
+                </div>
+              </div>
             </div>
           </div>
-        )}
-        <div
-          style={{
-            margin: "5px 0px",
-            // display: "flex",
-            // justifyContent: "flex-start",
-            // alignItems:"flex-start"
-          }}
-        >
-          *If you want to get Physical verification Specifically from us for the
-          NGO, than you will be charged based on the slabbings.
-        </div>
-        <Card
-          style={{
-            fontSize: "39px",
-            color: "#000300",
-            marginTop: "60px",
-          }}
-        >
-          Donate For The Cause
-        </Card>
-        <InsideContainer>
-          <form>
-            <StyledFormControl>
-              <InputTextField
-                placeholder="Enter Your Name "
-                value={title}
-                required
-                name="title"
-                onChange={(e) => {
-                  handleTitleChange(e);
-                  handleChange(e);
-                }}
-              />
-            </StyledFormControl>
-
-            {/* *-*--*-*-*-*-*-*-*-Donation*-*-*-**-**-*-*-*/}
-
-            <div
-              style={{ marginTop: 2 }}
-              className="flex flex-row items-center"
-            >
-              <CurrencyRupeeOutlinedIcon fontSize="large" />
-              <TextDescriptionarea
-                placeholder="Enter Donation Amount"
-                name="budget"
-                value={budget}
-                required
-                onChange={(e) => {
-                  handleBudgetChange(e);
-                  handleChange(e);
-                }}
-              />
+          {/* Modal */}
+          {modalOpen && (
+            <div>
+              <div>
+                {/* Close button */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    border: "2px solid black",
+                  }}
+                >
+                  <button>⬇️</button>
+                  <button onClick={() => clospdf()}>❌</button>
+                </div>
+                {/* PDF viewer */}
+                <embed
+                  src={pdfUrl}
+                  type="application/pdf"
+                  border="2px solid red"
+                  width="750vw"
+                  height="600vh"
+                />
+              </div>
             </div>
-            {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
+          )}
+          <div
+            style={{
+              margin: "5px 0px",
+              // display: "flex",
+              // justifyContent: "flex-start",
+              // alignItems:"flex-start"
+            }}
+          >
+            *If you want to get Physical verification Specifically from us for
+            the NGO, than you will be charged based on the slabbings.
+          </div>
+          <Card
+            style={{
+              fontSize: "39px",
+              color: "#000300",
+              marginTop: "60px",
+            }}
+          >
+            Donate For The Cause
+          </Card>
+          <InsideContainer>
+            <form>
+              <StyledFormControl>
+                <InputTextField
+                  placeholder="Enter Your Name "
+                  value={title}
+                  required
+                  name="title"
+                  onChange={(e) => {
+                    handleTitleChange(e);
+                    handleChange(e);
+                  }}
+                />
+              </StyledFormControl>
 
-            <div
-              style={{ marginTop: 2 }}
-              className="flex flex-row items-center"
-            >
-              <LocalPhoneOutlinedIcon fontSize="large" />
-              <TextDescriptionarea
-                placeholder="Enter Mobile number (+91 **********)"
-                name="number"
-                // style={{ width: "100%" }}
-                value={number}
-                required
-                onChange={(e) => {
-                  handleNumberChange(e);
-                  handleChange(e);
-                }}
-              />
-            </div>
-            {/* *-*--*-*-*-*-* addresss -*-*-**-*-*-*-*-**-**-*-*-*/}
-            {/* <div className="flex flex-row items-center">
+              {/* *-*--*-*-*-*-*-*-*-Donation*-*-*-**-**-*-*-*/}
+
+              <div
+                style={{ marginTop: 2 }}
+                className="flex flex-row items-center"
+              >
+                <CurrencyRupeeOutlinedIcon fontSize="large" />
+                <TextDescriptionarea
+                  placeholder="Enter Donation Amount"
+                  name="budget"
+                  value={budget}
+                  required
+                  onChange={(e) => {
+                    handleBudgetChange(e);
+                    handleChange(e);
+                  }}
+                />
+              </div>
+              {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
+
+              <div
+                style={{ marginTop: 2 }}
+                className="flex flex-row items-center"
+              >
+                <LocalPhoneOutlinedIcon fontSize="large" />
+                <TextDescriptionarea
+                  placeholder="Enter Mobile number (+91 **********)"
+                  name="number"
+                  // style={{ width: "100%" }}
+                  value={number}
+                  required
+                  onChange={(e) => {
+                    handleNumberChange(e);
+                    handleChange(e);
+                  }}
+                />
+              </div>
+              {/* *-*--*-*-*-*-* addresss -*-*-**-*-*-*-*-**-**-*-*-*/}
+              {/* <div className="flex flex-row items-center">
                         <HomeOutlinedIcon />
                         <Textarea2
                             placeholder="Project Venue address..."
@@ -521,8 +548,8 @@ function Company() {
                         />
 
                     </div> */}
-            {/* *-*--*-*-*- Google Url-*-**-*-*-*-*-**-**-*-*-*/}
-            {/* <div className="flex flex-row items-center">
+              {/* *-*--*-*-*- Google Url-*-**-*-*-*-*-**-**-*-*-*/}
+              {/* <div className="flex flex-row items-center">
                         <LanguageOutlinedIcon />
                         <Textarea2
                             placeholder="Paste Google Maps Location URL..."
@@ -530,9 +557,9 @@ function Company() {
                             onChange={(e) => handleChange(e)}
                         />
                     </div> */}
-            {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+              {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
 
-            {/* <div className="flex flex-row items-center">
+              {/* <div className="flex flex-row items-center">
                         <DescriptionOutlinedIcon />
                         <Textarea2
                             placeholder="Write description..."
@@ -542,23 +569,26 @@ function Company() {
                         />
 
                     </div> */}
-            {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              {/* add button type= submit later for backend integration of Aditya */}
-              
-              
-              {checkout ? (
-                  <div >
-                  <div ref={paypal}></div>
-                  <Button variant="contained" onClick={handleCancelCheckout}>Cancel</Button></div>
-                ) : 
-                
-                (<Button variant="contained" onClick={handleCheckout}>Checkout</Button>)     
-              }
-            </div>
-          </form>
-        </InsideContainer>
-      </Container>
+              {/* *-*--*-*-*-*-*-*-*-*-**-*-*-*-*-**-*-*-*-*-**-**-*-*-*/}
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                {/* add button type= submit later for backend integration of Aditya */}
+
+                {checkout ? (
+                  <div>
+                    <div ref={paypal}></div>
+                    <Button variant="contained" onClick={handleCancelCheckout}>
+                      Cancel
+                    </Button>
+                  </div>
+                ) : (
+                  <Button variant="contained" onClick={handleCheckout}>
+                    Checkout
+                  </Button>
+                )}
+              </div>
+            </form>
+          </InsideContainer>
+        </Container>
       )}
     </div>
   );
