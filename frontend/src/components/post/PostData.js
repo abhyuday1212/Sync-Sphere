@@ -96,6 +96,36 @@ const PostData = ({ post }) => {
 
 
     const url = post.picture ? post.picture : 'https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+    //------------------------
+    const projectID = post._id;
+    const budget = post.budget
+    const [Remaining, getRemaining] = useState([]);
+
+    useEffect(() => {
+        const fetchRemaining = async () => {
+          console.log("projectID");
+          console.log(projectID);
+
+           
+          try {
+            let response = await API.getTotalDonation({ projectID: projectID || '' });
+            if (response.isSuccess) {
+              console.log(response.data.totalDonation);
+              const totalDonation = (response.data.totalDonation);
+              getRemaining(budget-totalDonation)
+            }
+          } catch (error) {
+            console.log("Error fetching tota donation for projectID");
+          }
+          finally {
+            
+          }
+    
+          
+        }
+    
+        fetchRemaining();
+      }, [projectID]);
 
     // ------------------------
     return (
@@ -178,7 +208,18 @@ const PostData = ({ post }) => {
                             top: "27.2rem"
 
                         }}
+                    >Remainig budget:<CurrencyRupeeOutlinedIcon fontSize="icon" />{Remaining}</Typography>
+
+                    <Typography
+                        style={{
+                            position: "absolute",
+                            top: "28.5rem"
+
+                        }}
                     >CSR Verrified :  {csrSymbol}</Typography>
+
+                    
+
 
 
 
@@ -186,7 +227,7 @@ const PostData = ({ post }) => {
                         display: "flex",
                         justifyContent: "space-between",
                         position: "absolute",
-                        top: "28.9rem",
+                        top: "29.4rem",
                         width: "85%",
                         margin: "2px",
                         height: "2.2rem"

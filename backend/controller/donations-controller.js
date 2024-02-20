@@ -31,4 +31,37 @@ export const individualDonate = async (request, response) => {
     }
 }
 
+export const getTotalDonation= async(request,response)=>{
 
+    const projectID = request.query.projectID;
+    console.log("backend")
+    console.log(projectID)
+
+      try {
+        // Quering the "individual donate" collection
+        const individualResultCursor = individualPayment.aggregate([
+            { $match: { projectID: projectID } },
+            { $group: { _id: null, totalBudget: { $sum: '$budget' } } }
+        ]);
+        
+        // Convert the cursor to an array of documents
+        console.log(individualResultCursor)
+        const individualResult = await individualResultCursor.exec();
+        console.log(individualResult)
+
+        // Querien the "sponsor donate" collection
+        const sponsorResult = await Payment.aggregate([
+          { $match: { projectID: projectID } },
+          { $group: { _id: null, totalBudget: { $sum: '$budget' } } }
+        ]).exec();
+
+        // Calculating total budget from both collections
+        const totalDonation = await ((individualResult[0]?.totalBudget || 0) + (sponsorResult[0]?.totalBudget || 0));
+
+        response.status(200).json({ totalDonation });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        response.status(500).json({ error: 'Internal Server Error' });
+      }
+
+}

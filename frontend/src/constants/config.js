@@ -72,6 +72,8 @@ export const SERVICE_URLS = {
   sponsorDonate: { url: '/sponsordonate', method: 'POST' },
   individualDonate: { url: '/individualdonate', method: 'POST' },
 
+  getTotalDonation: {url:'/gettotaldonation', method: 'GET', params:true},
+
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 
   // gemini

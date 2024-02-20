@@ -48,6 +48,8 @@ const Posts = () => {
           hideCategoriesLoader();
         }, 600);
       }
+
+      
     }
 
     fetchData();
