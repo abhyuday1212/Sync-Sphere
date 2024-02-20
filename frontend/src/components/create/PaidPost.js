@@ -206,6 +206,7 @@ const Image = styled('img')({
 const initialPost = {
     name: '',
     title: '',
+    csrnumber :'',
     summary: '',
     budget: '',
     usertype: 'Individual',
@@ -236,7 +237,7 @@ function PaidPost() {
 
     const [csrfile, setCsrPdf] = useState('')
 
-    const defaultUserType = 'Individual'
+    const defaultUserType = 'Ngo'
     const [usertype, setUserType] = useState(defaultUserType)
 
     const { account } = useContext(DataContext);
@@ -246,6 +247,7 @@ function PaidPost() {
 
     const [formErrors, setFormErrors] = useState({
         title: false,
+        csrnumber: false,
         summary: false,
         budget: false,
         number: false,
@@ -489,6 +491,16 @@ function PaidPost() {
                             />
                         </StyledFileInput>
                     </div>
+                    {/* *-*--*-*-*-*-*-*-*- csr number -*-*-**-**-*-*-*/}
+
+                    <Textarea
+                        placeholder="Enter the CSR Registration number (for NGO's Only) {CSR000XXXX}"
+                        name="csrnumber"
+                        required
+                        onChange={(e) => {
+                            handleChange(e);
+                        }}
+                    />
                     {/* *-*--*-*-*-*-*-*-*- summary -*-*-**-**-*-*-*/}
 
                     <Textarea
@@ -539,9 +551,9 @@ function PaidPost() {
                                 name="usertype"
                                 onChange={handleUserTypeChange}
                             >
-                                <MenuItem value={defaultUserType}>Individual</MenuItem>
+                                <MenuItem value="Individual">Individual</MenuItem>
 
-                                <MenuItem value="Ngo">Non-Profit Orgz.</MenuItem>
+                                <MenuItem value={defaultUserType}>Non-Profit Orgz.</MenuItem>
 
                                 <MenuItem value="Company">Company</MenuItem>
                             </StyledSelect>

@@ -17,6 +17,10 @@ const PostSchema = mongoose.Schema({
         type: String,
         required: false
     },
+    csrnumber: {
+        type: String,
+        required: false
+    },
     summary: {
         type: String,
         required: true
@@ -27,7 +31,7 @@ const PostSchema = mongoose.Schema({
     },
     usertype: {
         type: String,
-        required:false
+        required: false
     },
     number: {
         type: Number,
