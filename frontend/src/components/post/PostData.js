@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { DataContext } from "../../context/DataProvider";
 import { API } from "../../service/Api";
 // ----------------------
-import { Paper } from "@mui/material";
+import { LinearProgress, Paper } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -28,7 +28,7 @@ const Container = styled(Box)`
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 32rem;
+  height: 33rem;
   & > img,
   & > p {
     padding: 0 5px 5px 5px;
@@ -142,6 +142,7 @@ const PostData = ({ post }) => {
         fetchRemaining();
       }, [projectID]);
 
+      const progress = ((post.budget - Remaining) / post.budget) * 100;
     // ------------------------
     return (
         <>
@@ -181,7 +182,7 @@ const PostData = ({ post }) => {
                             top: "16rem"
 
                         }}>
-                        {addElippsis(post.summary, 165)}
+                        {addElippsis(post.summary, 130)}
                     </Details>
 
                     <Typography
@@ -233,19 +234,34 @@ const PostData = ({ post }) => {
                         }}
                     >CSR Verrified :  {csrSymbol}</Typography>
 
-                    
-
-
-
-
+<div
+                        style={{
+                            position: "absolute",
+                            top: "30rem",
+                            width: "100%",
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent:"space-around"
+                        }}>
+                            
+                        <LinearProgress
+                            color="success" 
+                            style={{
+                                width: "85%",
+                                height: "1.6vh",
+                                borderRadius:'8px'
+                            }}
+                            type='secondary' variant="determinate" value={progress} />
+                        <Typography variant="body2">{progress.toFixed(0)}%</Typography>
+                    </div>
                     <CardActions style={{
                         display: "flex",
                         justifyContent: "space-between",
                         position: "absolute",
-                        top: "29.4rem",
+                        top: "30.8rem",
                         width: "85%",
                         margin: "2px",
-                        height: "2.2rem"
+                        height: "2rem"
                     }}>
 
                         <Button
@@ -282,13 +298,6 @@ const PostData = ({ post }) => {
 
                         </Link>
 
-                        <AvatarGroup
-                            renderSurplus={(surplus) => <span>+{surplus.toString()[0]}k</span>}
-                            total={4251}
-                        >
-                            <Avatar style={{ background: 'purple' }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-
-                        </AvatarGroup>
                     </CardActions>
                 </StyledCardContent>
             </Container>

@@ -60,14 +60,14 @@ const Posts = () => {
     <>
       {loaderVisible && <CategoriesLoader />}
       {!loaderVisible && posts && posts.length > 0 ? posts.map(post => (
-        <Grid item lg={4} sm={3} xs={1}>
-          <Link to={`details/${post._id}`}
-            style={{
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          {/* <Link to={`details/${post._id}`} */}
+            {/* style={{
               textDecoration: 'none', color: 'inherit',
               transition: 'color 0.3s',
-            }}>
+            }}> */}
             <PostData post={post} />
-          </Link>
+          {/* </Link> */}
         </Grid>
       )) : !loaderVisible ? (
         <Box style={{ color: '878787', margin: '30px 80px', fontSize: 18 }}>
