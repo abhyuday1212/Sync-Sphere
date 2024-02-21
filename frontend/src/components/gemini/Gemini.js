@@ -50,9 +50,16 @@ const Gemini = () => {
 
     <div style={{ backgroundColor: '#A9A9A9 ', height: '100vh', position: "relative", overflowX: 'hidden', display: "flex" }}>
       <div style={{ backgroundColor: '', width: "14vw", borderRight: "2px solid black", overflowX: 'hidden',  }}>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', }}>history</Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', }}>history history history history</Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', }}>history</Button>
+        <Button  style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',  }}>
+          History
+          </Button>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' }}>
+          What is sync sphere ?
+          </Button>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' ,marginTop:"3px"}}>How can I list a project on SyncSphere?</Button>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' ,marginTop:"3px"}}>Is SyncSphere a free platform?</Button>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' ,marginTop:"3px"}}>How do I use the chat app on SyncSphere?</Button>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' ,marginTop:"3px"}}>How to use the Platform</Button>
 
         <Button variant="contained" color="success" style={{
           // width: "13.6vw", position: 'fixed', bottom: '.5vh', opacity: ".7"
@@ -63,6 +70,7 @@ const Gemini = () => {
           FAQs
         </Button></div>
       <div className=" mx-auto max-w-5xl max-h-9xl  " style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#A9A9A9", color: 'black' }}>
+        
         {isModalOpen && (
           <>
             <div style={{ maxHeight:"80vh", marginTop: "2vh", border: "3px solid black", padding: "5px", marginBottom: "100vh", borderRadius: '6px', boxShadow: '0px 0px 5px 2px rgba(0,0,0,0.75)' , overflowX:'hidden' }} >

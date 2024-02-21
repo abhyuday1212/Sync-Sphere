@@ -52,7 +52,7 @@ const About = () => {
               height="250px"
               style={{
                 backgroundImage:
-                  'url(https://media.licdn.com/dms/image/D5603AQGz04hWpzY5BA/profile-displayphoto-shrink_400_400/0/1691682380587?e=1707955200&v=beta&t=6wNSG83y70vfUU6GMIuoTZDgvNkAlWyl8w9CXkKFerk)',
+                  'url(https://media.licdn.com/dms/image/D5603AQGz04hWpzY5BA/profile-displayphoto-shrink_400_400/0/1691682380587?e=1714003200&v=beta&t=ZldbaLJj3ze3MhTuEw-JFlvP3wU3iohH1_gzh-G20IU)',
                 backgroundSize: "cover",
                 borderTopLeftRadius: "8px",
                 borderTopRightRadius: "8px",
@@ -78,7 +78,7 @@ const About = () => {
               height="250px"
               style={{
                 backgroundImage:
-                  'url(https://media.licdn.com/dms/image/D4D03AQE_oWt6MAg4XA/profile-displayphoto-shrink_400_400/0/1702232605015?e=1707955200&v=beta&t=FsFJAxhj3KT90cwX0EtB3IwcjMBIc2ZEJDQZC3sLJdE)',
+                  'url(https://media.licdn.com/dms/image/D4D03AQE_oWt6MAg4XA/profile-displayphoto-shrink_400_400/0/1702232605015?e=1714003200&v=beta&t=XklVfEAPuYoACCj95m-2dmVtSUQrJnxebmcRDnGZNbc)',
                 backgroundSize: "cover",
                 borderTopLeftRadius: "8px",
                 borderTopRightRadius: "8px",
@@ -104,7 +104,7 @@ const About = () => {
               height="250px"
               style={{
                 backgroundImage:
-                  'url(https://media.licdn.com/dms/image/D4D03AQEiUOkRj-jE_w/profile-displayphoto-shrink_400_400/0/1700816224174?e=1707955200&v=beta&t=OCp07eDZC3rqwdVjDLAAIG1r-OqEIn7kFBS7h0q9pVY)',
+                  'url(https://media.licdn.com/dms/image/D4D03AQEiUOkRj-jE_w/profile-displayphoto-shrink_400_400/0/1700816224174?e=1714003200&v=beta&t=Tiq54qyoqw68dcBQ3PhspP_Fi4JDa6-H3177lS8OKcs)',
                 backgroundSize: "cover",
                 borderTopLeftRadius: "8px",
                 borderTopRightRadius: "8px",
@@ -130,7 +130,7 @@ const About = () => {
               component="img"
               height="250px"
               style={{
-                backgroundImage: 'url("https://media.licdn.com/dms/image/D4D35AQFEirsjdUZsVA/profile-framedphoto-shrink_400_400/0/1680705273847?e=1708117200&v=beta&t=Lcor5xkDkbojEGX8z0mlZgYblKBiwgzsSk_JP2pmLOs")',
+                backgroundImage: 'url("https://media.licdn.com/dms/image/D4D35AQFEirsjdUZsVA/profile-framedphoto-shrink_400_400/0/1680705273847?e=1709132400&v=beta&t=urWBOyiaKPZifjO1z1my6QSwa1LsRioOyTSuZCl4EOQ")',
                 backgroundSize: "cover",
                 borderTopLeftRadius: "8px",
                 borderTopRightRadius: "8px",
