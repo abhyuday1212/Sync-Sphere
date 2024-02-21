@@ -3,7 +3,7 @@ import { API } from "../../service/Api";
 import { Accordion, AccordionDetails, AccordionSummary, Button, ButtonGroup, Card, TextareaAutosize, Typography } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ClearIcon from '@mui/icons-material/Clear';
 import { faqs } from "../constants/data";
 
@@ -48,18 +48,18 @@ const Gemini = () => {
 
   return (
 
-    <div style={{ backgroundColor: '#A9A9A9 ', height: '100vh', position: "relative", overflowX: 'hidden', display: "flex" }}>
-      <div style={{ backgroundColor: '', width: "14vw", borderRight: "2px solid black", overflowX: 'hidden',  }}>
+    <div style={{ backgroundColor: '#424549', height: '100vh', position: "relative", overflowX: 'hidden', display: "flex" }}>
+      <div style={{ backgroundColor: '#36393e', width: "14vw", borderRight: "2px solid black", overflowX: 'hidden' }}>
         <Button  style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',  }}>
           History
           </Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' }}>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  }}>
           What is sync sphere ?
           </Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' ,marginTop:"3px"}}>How can I list a project on SyncSphere?</Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' ,marginTop:"3px"}}>Is SyncSphere a free platform?</Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' ,marginTop:"3px"}}>How do I use the chat app on SyncSphere?</Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block', color:'black' ,marginTop:"3px"}}>How to use the Platform</Button>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  ,marginTop:"3px"}}>How can I list a project on SyncSphere?</Button>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  ,marginTop:"3px"}}>Is SyncSphere a free platform?</Button>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  ,marginTop:"3px"}}>How do I use the chat app on SyncSphere?</Button>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  ,marginTop:"3px"}}>How to use the Platform</Button>
 
         <Button variant="contained" color="success" style={{
           // width: "13.6vw", position: 'fixed', bottom: '.5vh', opacity: ".7"
@@ -69,7 +69,7 @@ const Gemini = () => {
         >
           FAQs
         </Button></div>
-      <div className=" mx-auto max-w-5xl max-h-9xl  " style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#A9A9A9", color: 'black' }}>
+      <div className=" mx-auto max-w-5xl max-h-9xl  " style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#424549", color: 'white' }}>
         
         {isModalOpen && (
           <>
@@ -128,7 +128,7 @@ const Gemini = () => {
             <Button variant="text" size="medium"
               onClick={handleGetAnswer}
             >
-              {isLoading ? "Loading..." : "Answer"}
+              {isLoading ? "Loading..." : <ArrowUpwardIcon style={{color:'black'}}/>}
             </Button>
           </div>
         </Card>
