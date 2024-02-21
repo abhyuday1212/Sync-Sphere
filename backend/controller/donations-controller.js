@@ -6,7 +6,7 @@ import individualPayment from '../model/individualPayment.js';
 
 dotenv.config();
 const client_id = process.env.DB_URI;
-const client_secret = process.env.DB_URI_AD;
+// const client_secret = process.env.DB_URI_AD;
 
 
 export const sponsorDonate = async (request, response) => {
@@ -34,8 +34,6 @@ export const individualDonate = async (request, response) => {
 export const getTotalDonation= async(request,response)=>{
 
     const projectID = request.query.projectID;
-    console.log("backend")
-    console.log(projectID)
 
       try {
         // Quering the "individual donate" collection
@@ -45,9 +43,8 @@ export const getTotalDonation= async(request,response)=>{
         ]);
         
         // Convert the cursor to an array of documents
-        console.log(individualResultCursor)
         const individualResult = await individualResultCursor.exec();
-        console.log(individualResult)
+        
 
         // Querien the "sponsor donate" collection
         const sponsorResult = await Payment.aggregate([
