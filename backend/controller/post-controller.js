@@ -1,4 +1,5 @@
 import Post from "../model/post.js"
+import csrnumbermodel from "../model/csrNumberModel.js"
 
 
 export const createPost = async (request, response) => {
@@ -40,6 +41,23 @@ export const getPost = async (request, response) => {
     }
 }
 
+export const checkCsrNumber = async (request, response) => {
+    const csrnumber = request.query.csrnumber;
+    try {
+        // Query the database to check if csrNumber exists in csr_number_db collection
+        try {
 
+            const csrEntry = await csrnumbermodel.findOne({ csrnumber });
+            const exists = !!csrEntry;
+            
+            response.status(200).json({ exists: !!csrEntry });
+        } catch (error) {
+            console.error('Error querying database:', error);
+        }
+    } catch (error) {
+        console.error('Error checking CSR number:', error);
+        response.status(500).json({ error: 'Internal Server Error' });
+    }
+}
 
 

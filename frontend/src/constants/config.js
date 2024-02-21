@@ -73,6 +73,9 @@ export const SERVICE_URLS = {
   individualDonate: { url: '/individualdonate', method: 'POST' },
 
   getTotalDonation: {url:'/gettotaldonation', method: 'GET', params:true},
+  // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
+
+  checkCsrNumber: {url:'/checkCsrNumber', method: 'GET', params:true},
 
   // ==**=*=*=*=*=*=**=**=*=*=*=*=*=*=*
 

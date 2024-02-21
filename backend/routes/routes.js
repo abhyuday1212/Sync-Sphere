@@ -19,6 +19,8 @@ import { getPdfDetails } from "../controller/pdf_controller.js"
 
 import { csrFileViewers } from "../controller/pdf_controller.js"
 
+import { checkCsrNumber } from "../controller/post-controller.js";
+
 const router = express.Router();
 
 router.post('/signup', signupUser);
@@ -41,6 +43,8 @@ router.get('/post/:id', authenticateToken, getPost)
 router.post('/sponsordonate', sponsorDonate)
 router.post('/individualdonate', individualDonate)
 router.get('/gettotaldonation', getTotalDonation)
+
+router.get('/checkCsrNumber', checkCsrNumber  )
 
 // router.get('/success', successPage)
 

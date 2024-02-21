@@ -71,6 +71,9 @@ const StyledCardContent = styled(CardContent)`
 
 const PostData = ({ post }) => {
 
+    
+    const csrnumber = post.csrnumber
+
     const paperStyle = {
         width: "97%",
         borderRadius: 3,
@@ -83,15 +86,30 @@ const PostData = ({ post }) => {
 
 
     useEffect(() => {
-        function changeCsrSymbol() {
+        const changeCsrSymbol = async () => {
+            console.log('here');
             if (post.csrfile !== "" && post.csrfile !== null && post.csrfile !== undefined) {
-                setCsrSymbol("Verified ✅");
+                try {
+                    
+                    const response = await API.checkCsrNumber({ csrnumber: post.csrnumber || '' });
+                    const exists = response.data.exists;
+                    
+                    if (exists) {
+                        setCsrSymbol("Verified ✅");
+                    } else {
+                        setCsrSymbol("NOT VERIFIED ❌");
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    // Handle error, e.g., set csrSymbol to an error message
+                }
             } else {
                 setCsrSymbol("NOT VERIFIED ❌");
             }
         }
         changeCsrSymbol();
-    }, [post.csrfile]);
+    }, [post.csrfile, post.csrnumber]);
+
 
 
 
@@ -103,14 +121,11 @@ const PostData = ({ post }) => {
 
     useEffect(() => {
         const fetchRemaining = async () => {
-          console.log("projectID");
-          console.log(projectID);
 
            
           try {
             let response = await API.getTotalDonation({ projectID: projectID || '' });
             if (response.isSuccess) {
-              console.log(response.data.totalDonation);
               const totalDonation = (response.data.totalDonation);
               getRemaining(budget-totalDonation)
             }
