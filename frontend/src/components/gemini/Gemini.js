@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { API } from "../../service/Api";
 import { Accordion, AccordionDetails, AccordionSummary, Button, ButtonGroup, Card, TextareaAutosize, Typography } from "@mui/material";
 import ReactMarkdown from "react-markdown";
@@ -6,6 +6,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ClearIcon from '@mui/icons-material/Clear';
 import { faqs } from "../constants/data";
+
 
 const initialPrompt = {
   userPrompt: "",
@@ -17,10 +18,15 @@ const Gemini = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [chatHistory, setChatHistory] = useState([]); // Array to store question and answer pairs
+  const chatHistoryRef = useRef(); 
 
   const handleInputChange = (event) => {
     const { value } = event.target;
     setPrompt({ userPrompt: value });
+    if (value.trim() !== "") {
+      setAnswer(""); // Clear the answer div when user starts typing
+    }
   };
 
   const handleGetAnswer = async () => {
@@ -31,6 +37,7 @@ const Gemini = () => {
       console.log(generatedResponse);
       console.log("data toh aa");
       setAnswer(generatedResponse.data);
+      setChatHistory([...chatHistory, { question: prompt.userPrompt, answer: generatedResponse.data }]); // Add question and answer pair to chat history
       setError(null);
     } catch (error) {
       console.error("Error fetching answer:", error);
@@ -53,13 +60,25 @@ const Gemini = () => {
         <Button  style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',  }}>
           History
           </Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  }}>
-          What is sync sphere ?
-          </Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  ,marginTop:"3px"}}>How can I list a project on SyncSphere?</Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  ,marginTop:"3px"}}>Is SyncSphere a free platform?</Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  ,marginTop:"3px"}}>How do I use the chat app on SyncSphere?</Button>
-        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  ,marginTop:"3px"}}>How to use the Platform</Button>
+          
+          
+        <div ref={chatHistoryRef}>
+          {chatHistory.slice().reverse().map((chat, index) => (
+            <Button
+              key={index}
+              variant="outlined"
+              style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block', color: "white", marginTop: "3px" }}
+              onClick={() => {
+                setPrompt({ userPrompt: chat.question });
+                setAnswer(chat.answer);
+              }}
+            >
+              {chat.question}
+            </Button>
+          ))}
+        </div>
+        <Button variant="outlined" style={{ width: "13.6vw", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block',color:"white"  ,marginTop:"3px"}}>What is Sync spher?</Button>
+        
 
         <Button variant="contained" color="success" style={{
           // width: "13.6vw", position: 'fixed', bottom: '.5vh', opacity: ".7"
