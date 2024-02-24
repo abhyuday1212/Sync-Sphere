@@ -8,7 +8,7 @@ This Project is made for Google Solution Challenge by Alpha Coders -
 || [Kumar Harsh](https://www.linkedin.com/in/kumar-harsh-468a22253)
 
 ### Resources
-- [Pototype](https://youtu.be/8Q1m73rQItk)
+- [Pototype](https://youtu.be/dhV69KjNwKM?si=FplO35hlBIhyPgut)
 - [PPT](https://docs.google.com/presentation/d/10xkjkaXJCpM1EIH4Gzt9etC32eXmJFR8/edit?usp=drive_link)
 - [Drive](https://drive.google.com/drive/folders/1ebpinrDJRa6qmq6rUbSVv83nTx9dIkB6?usp=sharing)
 
