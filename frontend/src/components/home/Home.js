@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className="text-white my-35 bg-[#000300] ">
-      <div className=" mt-[-96px] w-full h-screen mx-auto text-center flex flex-col justify-center">
+    <div className="text-white my-35 ">
+      <div className=" mt-[-96px] w-full h-screen mx-auto text-center flex flex-col justify-center bg-[#000300] color-[#ffff] ">
         <p className="text-[#00df9a] font-bold p-2 text-xl">
-          Building Together, Thriving Together
+          Empowering Research and Development
         </p>
         <h1 className="md:text-6xl sm:text-6xl text-2xl font-bold md:py-3">
-          A World Connected for Progress
+          Shaping the Future of Engineering and Technology
         </h1>
         <div className="flex justify-center items-center my-3">
           <p className="md:text-5xl sm:text-4xl text-xl font-bold py-4">
