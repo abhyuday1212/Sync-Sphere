@@ -9,8 +9,8 @@ This Project is made for Google Solution Challenge by Alpha Coders -
 
 ### Resources
 - [Pototype](https://youtu.be/dhV69KjNwKM?si=FplO35hlBIhyPgut)
-- [PPT](https://docs.google.com/presentation/d/10xkjkaXJCpM1EIH4Gzt9etC32eXmJFR8/edit?usp=drive_link)
-- [Drive](https://drive.google.com/drive/folders/1ebpinrDJRa6qmq6rUbSVv83nTx9dIkB6?usp=sharing)
+- [PPT](https://docs.google.com/presentation/d/1sNe9oJ43-EtZBqNz-faLomwxc8w_-bZL/edit?usp=sharing&ouid=102958168798562091089&rtpof=true&sd=true)
+
 
 # 1. Introduction
 
