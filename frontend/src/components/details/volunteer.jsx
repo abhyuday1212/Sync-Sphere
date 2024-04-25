@@ -13,30 +13,31 @@ function Volunteer() {
   }, []);
   return (
     <>
-   {loader ? (
+      {loader ? (
         <CategoriesLoader />
       ) : (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: 50,
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: 50,
 
-        backgroundColor: "black",
-        height: "84.5vh",
-      }}
-    >
-      <Card
-        style={{
-          border: "2px solid black",
-          width: "75%",
-          borderRadius:"26px"
-        }}
-      >
-        This section is working And Will be integrated soon from Harsh Chat App
-      </Card>
-    </div>
+            backgroundColor: "black",
+            height: "84.5vh",
+          }}
+        >
+          <Card
+            style={{
+              border: "2px solid black",
+              width: "75%",
+              borderRadius: "26px",
+            }}
+          >
+            This section is working And Will be integrated soon from Harsh Chat
+            App
+          </Card>
+        </div>
       )}
     </>
   );

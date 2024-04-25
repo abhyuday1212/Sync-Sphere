@@ -49,7 +49,7 @@ const Posts = () => {
         }, 600);
       }
 
-      
+
     }
 
     fetchData();
@@ -60,13 +60,13 @@ const Posts = () => {
     <>
       {loaderVisible && <CategoriesLoader />}
       {!loaderVisible && posts && posts.length > 0 ? posts.map(post => (
-        <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Grid item xs={12} sm={6} md={4} lg={4}>
           {/* <Link to={`details/${post._id}`} */}
-            {/* style={{
+          {/* style={{
               textDecoration: 'none', color: 'inherit',
               transition: 'color 0.3s',
             }}> */}
-            <PostData post={post} />
+          <PostData post={post} />
           {/* </Link> */}
         </Grid>
       )) : !loaderVisible ? (

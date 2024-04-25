@@ -138,8 +138,8 @@ const Gemini = () => {
           transform: 'translateX(-50%)',
         }}>
           <TextareaAutosize
-            className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-white-500"
-            style={{ height: "7vh", fontSize: "x-large" }}
+            className="w-full max-h-max px-3 py-2 rounded-md focus:outline-none focus:border-white-500"
+            style={{ height: "fixed", fontSize: "x-large" }}
             onChange={handleInputChange}
             placeholder="Enter your question"
           />

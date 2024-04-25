@@ -603,7 +603,7 @@ function FreePost() {
                     <div className="flex flex-row items-center">
                         <DescriptionOutlinedIcon />
                         <Textarea2
-                            placeholder="Write detailed description in Headings and points..."
+                            placeholder="Explain the method of How you are going to solve the problems..."
                             name="description"
                             required
                             onChange={(e) => handleChange(e)}

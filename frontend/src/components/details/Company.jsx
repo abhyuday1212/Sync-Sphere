@@ -406,7 +406,7 @@ function Company() {
                   justifyContent: "center",
                 }}
               >
-                Request Physical Verificaton
+                Request Donation Access
               </Card>
               <div
                 style={{
@@ -427,7 +427,7 @@ function Company() {
                 >
                   <EmailOutlinedIcon />
                   <TextInformationarea
-                    placeholder="Enter Email (***@gmail.com)"
+                    placeholder="Enter Company Registration ID"
                     name="email"
                     required
                     onChange={(e) => handleChange(e)}
@@ -465,17 +465,7 @@ function Company() {
               </div>
             </div>
           )}
-          <div
-            style={{
-              margin: "5px 0px",
-              // display: "flex",
-              // justifyContent: "flex-start",
-              // alignItems:"flex-start"
-            }}
-          >
-            *If you want to get Physical verification Specifically from us for
-            the NGO, than you will be charged based on the slabbings.
-          </div>
+
           <Card
             style={{
               fontSize: "39px",

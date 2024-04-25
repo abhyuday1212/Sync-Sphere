@@ -20,6 +20,13 @@ export const signupUser = async (request, response) => {
       name: request.body.name,
       password: hashedPassword,
     };
+
+    const ExistingUser = await UserModel.findOne({ username: request.body.username })
+
+    if (ExistingUser) {
+      return response.status(400).send("Username already exists...")
+    }
+
     const newUser = new UserModel(user);
     await newUser.save();
 
@@ -82,7 +89,7 @@ export const checkUsername = async (request, response) => {
   const { username } = request.body;
 
   try {
-  
+
     const user = await UserModel.findOne({ username });
 
     const exists = !!user;

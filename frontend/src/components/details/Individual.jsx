@@ -160,7 +160,7 @@ const TextInformationarea = styled(TextareaAutosize)`
 
 const initialPayment = {
   title: "",
-  number: "", 
+  number: "",
   budget: "",
   projectID: "",
   paymentID: "",
@@ -169,7 +169,6 @@ const initialPayment = {
 };
 
 function Individual() {
-
   const [checkout, setCheckout] = useState(false);
 
   const handleCheckout = () => {
@@ -183,56 +182,48 @@ function Individual() {
   const paypal = useRef();
 
   useEffect(() => {
-    if (checkout ) {
-        window.paypal.Buttons({
-            createOrder: (data, actions, err) => {
-                return actions.order.create({
-                    intent: "CAPTURE",
-                    purchase_units: [
-                        {
-                            description: "Donation",
-                            amount: {
-                                currency_code: "USD",
-                                value: budget,
-                            }
-                        }
-                    ]
-                });
-            },
-            onApprove: async (data, actions) => {
-                const order = await actions.order.capture();
-                console.log(order);
-                
-                payment.payerID = order.payer.payer_id;
-                payment.paymentID = order.purchase_units[0].payments.captures[0].id;
-                console.log(payment);
-                try {
-                
-                  let response = await API.individualDonate(payment);
-                  if (response.isSuccess) {
-                      console.log("donation successful");
-                  }
-                  else {
-                      setErrorMessage('Error saving donation in DB!!!');
-                  }
+    if (checkout) {
+      window.paypal
+        .Buttons({
+          createOrder: (data, actions, err) => {
+            return actions.order.create({
+              intent: "CAPTURE",
+              purchase_units: [
+                {
+                  description: "Donation",
+                  amount: {
+                    currency_code: "USD",
+                    value: budget,
+                  },
+                },
+              ],
+            });
+          },
+          onApprove: async (data, actions) => {
+            const order = await actions.order.capture();
+            console.log(order);
 
-                } 
-                catch (error) {
-                  setErrorMessage('An unexpected error in saving data.');
-                }
-                
-            },
-            onError: (err) => {
-                console.log(err);
+            payment.payerID = order.payer.payer_id;
+            payment.paymentID = order.purchase_units[0].payments.captures[0].id;
+            console.log(payment);
+            try {
+              let response = await API.individualDonate(payment);
+              if (response.isSuccess) {
+                console.log("donation successful");
+              } else {
+                setErrorMessage("Error saving donation in DB!!!");
+              }
+            } catch (error) {
+              setErrorMessage("An unexpected error in saving data.");
             }
-        }).render(paypal.current); // Render the PayPal buttons inside the div referenced by 'paypal'
-
+          },
+          onError: (err) => {
+            console.log(err);
+          },
+        })
+        .render(paypal.current); // Render the PayPal buttons inside the div referenced by 'paypal'
     }
-}, [checkout]);
-
-
-
-
+  }, [checkout]);
 
   // Aditya this is the id where you can relate the payment with the project
   const { id } = useParams();
@@ -258,7 +249,7 @@ function Individual() {
 
   const [payment, setPayment] = useState(initialPayment);
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   // -*-*-*-*-**-***-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**
 
@@ -314,104 +305,108 @@ function Individual() {
       {loader ? (
         <CategoriesLoader />
       ) : (
-      <Container
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Card
+        <Container
           style={{
-            fontSize: "39px",
-            color: "#000300",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          Donate For The Cause
-        </Card>
-        <InsideContainer>
-          <form>
-            <StyledFormControl>
-              <InputTextField
-                placeholder="Enter Your Name "
-                value={title}
-                required
-                name="title"
-                onChange={(e) => {
-                  handleTitleChange(e);
-                  handleChange(e);
-                }}
-              />
-            </StyledFormControl>
+          <Card
+            style={{
+              fontSize: "39px",
+              color: "#000300",
+            }}
+          >
+            Donate For The Cause
+          </Card>
+          <InsideContainer>
+            <form>
+              <StyledFormControl>
+                <InputTextField
+                  placeholder="Enter Your Name "
+                  value={title}
+                  required
+                  name="title"
+                  onChange={(e) => {
+                    handleTitleChange(e);
+                    handleChange(e);
+                  }}
+                />
+              </StyledFormControl>
 
-            {/* *-*--*-*-*-*-*-*-*-Donation*-*-*-**-**-*-*-*/}
+              {/* *-*--*-*-*-*-*-*-*-Donation*-*-*-**-**-*-*-*/}
 
-            <div
-              style={{ marginTop: 2 }}
-              className="flex flex-row items-center"
-            >
-              <CurrencyRupeeOutlinedIcon fontSize="large" />
-              <TextDescriptionarea
-                placeholder="Enter Donation Amount"
-                name="budget"
-                value={budget}
-                required
-                onChange={(e) => {
-                  handleBudgetChange(e);
-                  handleChange(e);
-                }}
-              />
-            </div>
-            {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                margin: "5px 0px",
-                padding: "5px 0px",
-              }}
-            >
-              <div className="flex flex-row items-center">
-                <LocalPhoneOutlinedIcon />
-                <TextInformationarea
-                  placeholder="Enter Mobile number (+91 **********)"
-                  name="number"
-                  // style={{ width: "100%" }}
-                  value={number}
+              <div
+                style={{ marginTop: 2 }}
+                className="flex flex-row items-center"
+              >
+                <CurrencyRupeeOutlinedIcon fontSize="large" />
+                <TextDescriptionarea
+                  placeholder="Enter Donation Amount"
+                  name="budget"
+                  value={budget}
                   required
                   onChange={(e) => {
-                    handleNumberChange(e);
+                    handleBudgetChange(e);
                     handleChange(e);
                   }}
                 />
               </div>
+              {/* *-*--*-*-*-*-*-*-*- mobile & email*-*-*-**-**-*-*-*/}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  margin: "5px 0px",
+                  padding: "5px 0px",
+                }}
+              >
+                <div className="flex flex-row items-center">
+                  <LocalPhoneOutlinedIcon />
+                  <TextInformationarea
+                    placeholder="Enter Mobile number (+91 **********)"
+                    name="number"
+                    // style={{ width: "100%" }}
+                    value={number}
+                    required
+                    onChange={(e) => {
+                      handleNumberChange(e);
+                      handleChange(e);
+                    }}
+                  />
+                </div>
 
-              <div className="flex flex-row items-center">
-                <EmailOutlinedIcon />
-                <TextInformationarea
-                  placeholder="Enter Email (***@gmail.com)"
-                  name="email"
-                  required
-                  onChange={(e) => handleChange(e)}
-                />
+                <div className="flex flex-row items-center">
+                  <EmailOutlinedIcon />
+                  <TextInformationarea
+                    placeholder="Enter Email (***@gmail.com)"
+                    name="email"
+                    required
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              {/* add button type= submit later for backend integration of Aditya or call a functiion using onclick*/}
-              {checkout ? (
-                  <div >
-                  <div ref={paypal}></div>
-                  <Button variant="contained" onClick={handleCancelCheckout}>Cancel</Button></div>
-                ) : 
-                
-                (<Button variant="contained" onClick={handleCheckout}>Checkout</Button>)     
-              }
-            </div>
-          </form>
-        </InsideContainer>
-      </Container>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                {/* add button type= submit later for backend integration of Aditya or call a functiion using onclick*/}
+                {checkout ? (
+                  <div>
+                    <div ref={paypal}></div>
+                    <Button variant="contained" onClick={handleCancelCheckout}>
+                      Cancel
+                    </Button>
+                  </div>
+                ) : (
+                  <Button variant="contained" onClick={handleCheckout}>
+                    Checkout
+                  </Button>
+                )}
+              </div>
+            </form>
+          </InsideContainer>
+        </Container>
       )}
     </div>
   );
